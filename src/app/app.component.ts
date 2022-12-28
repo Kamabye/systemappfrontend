@@ -5,6 +5,9 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
-  title = 'system-app';
+  title = 'Bienvenido a System';
+  obra = 'Sonriendo entre las nubes';
+  genero = 'Son';
 }
