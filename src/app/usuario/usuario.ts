@@ -1,7 +1,7 @@
 export class Usuario {
-    id: number = 0;
+    idUsuario: number = 0;
     nombre : string = '';
-    apellido : string = '';
+    apellidoPaterno : string = '';
     email : string = '';
-    fecha: string = '';
+    fechaCreacion: string = '';
 }
