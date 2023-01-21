@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Rol } from './rol';
 import { RolService } from './rol.service';
 import { Router } from '@angular/router';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-formrol',
@@ -16,9 +17,12 @@ export class FormrolComponent {
   }
 
   public crearRol(): void{
-    this.rolService.crearRol(this.rol).subscribe(
-      response => this.router.navigate(['/roles'])
-    )
+    this.rolService.crearRol(this.rol)
+    .subscribe(response => {
+      this.router.navigate(['/roles'])
+      swal.fire('Nuevo Rol', `Rol ${response.rol} creado con éxito!`,'success')
+    }
+    );
   }
 
 
