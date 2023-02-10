@@ -23,7 +23,15 @@ export class RolService {
     return this.http.post<Rol>(this.urlEndPoint, rol, {headers:this.httpHeaders});
   }
 
-  obtenerRol(id : string): Observable<Rol>{
-    return this.http.get<Rol>(`${this.urlEndPoint}/${id}`)
+  obtenerRol(idRol : number): Observable<Rol>{
+    return this.http.get<Rol>(`${this.urlEndPoint}/${idRol}`);
+  }
+
+  actualizarRol(rol : Rol) : Observable<Rol>{
+    return this.http.put<Rol>(`${this.urlEndPoint}/${rol.idRol}`, rol, {headers:this.httpHeaders});
+  }
+
+  eliminarRol(idRol : number) : Observable<Rol>{
+    return this.http.delete<Rol>(`${this.urlEndPoint}/${idRol}`, {headers:this.httpHeaders});
   }
 }

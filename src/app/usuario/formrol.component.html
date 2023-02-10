@@ -1,5 +1,5 @@
 <div>
-    <form (ngSubmit)="crearRol()">
+    <form>
         <div class="col-2">
             <label for="exampleInputEmail1" class="form-label">Rol</label>
             <input type="text" class="form-control" id="exampleInputEmail1" name="rol" [(ngModel)]="rol.rol">
@@ -12,6 +12,9 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Permiso de Escritura</label>
         </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-primary" (click)='crearRol()' *ngIf="!rol.idRol else elseBlock">Crear</button>
+        <ng-template #elseBlock>
+            <button type="submit" class="btn btn-primary" (click)='actualizarRol()'>Actualizar</button>
+        </ng-template>
     </form>
 </div>

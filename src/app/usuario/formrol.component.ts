@@ -23,9 +23,9 @@ export class FormrolComponent {
 
   cargarRol(): void{
     this.activateRoute.params.subscribe(params =>{
-      let id = params['id']
-      if(id){
-        this.rolService.obtenerRol(id).subscribe( (rol) => this.rol = rol)
+      let idRol = params['idRol']
+      if(idRol){
+        this.rolService.obtenerRol(idRol).subscribe( (rol) => this.rol = rol)
       }
     }
     )
@@ -39,6 +39,14 @@ export class FormrolComponent {
     }
     );
   }
+
+  public actualizarRol() : void{
+    this.rolService.actualizarRol(this.rol).subscribe( response => {
+      this.router.navigate(['/roles'])
+      swal.fire('El Rol', `Rol ${response.rol} fue modificado con éxito!`,'success')
+    })
+  }
+
 
 
 
