@@ -22,4 +22,8 @@ export class RolService {
   crearRol(rol : Rol) : Observable<Rol>{
     return this.http.post<Rol>(this.urlEndPoint, rol, {headers:this.httpHeaders});
   }
+
+  obtenerRol(id : string): Observable<Rol>{
+    return this.http.get<Rol>(`${this.urlEndPoint}/${id}`)
+  }
 }

@@ -25,6 +25,7 @@ const routes : Routes = [
   { path: 'usuarios', component: UsuarioComponent},
   { path: 'roles', component: RolComponent},
   { path: 'roles/form', component: FormrolComponent},
+  { path: 'roles/form/:id', component: FormrolComponent},
 ]
 
 @NgModule({
