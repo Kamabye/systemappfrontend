@@ -4,19 +4,19 @@
     <thead>
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
+        <th scope="col">Nombres</th>
+        <th scope="col">ApellidoPaterno</th>
+        <th scope="col">ApellidoMaterno</th>
         <th scope="col">Email</th>
-        <th scope="col">Fecha</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let usuario of usuarios">
-        <th>{{usuario.idUsuario}}</th>
-        <th>{{usuario.nombre}}</th>
+        <th>{{usuario.id}}</th>
+        <th>{{usuario.nombres}}</th>
         <th>{{usuario.apellidoPaterno}}</th>
+        <th>{{usuario.apellidoMaterno}}</th>
         <th>{{usuario.email}}</th>
-        <th>{{usuario.fechaCreacion}}</th>
       </tr>
     </tbody>
   </table>

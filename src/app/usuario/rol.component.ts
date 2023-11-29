@@ -39,7 +39,7 @@ public eliminarRol(rol : Rol): void{
     reverseButtons: true
   }).then((result) => {
     if (result.isConfirmed) {
-      this.rolService.eliminarRol(rol.idRol).subscribe(response =>{
+      this.rolService.eliminarRol(rol.id).subscribe(response =>{
         this.roles = this.roles.filter(r => r !== rol)
         swalWithBootstrapButtons.fire(
           'Eliminado!',

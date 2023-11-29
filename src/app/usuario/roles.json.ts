@@ -1,7 +1,7 @@
 import { Rol } from './rol';
-export const ROLES : Rol[] = [
-    {idRol: 1, rol: 'Admin', fechaCreacion:'01-01-2022', fechaModificacion: '01-01-2022'},
-    {idRol: 2, rol: 'Super', fechaCreacion:'01-01-2022', fechaModificacion: '01-01-2022'},
-    {idRol: 3, rol: 'User', fechaCreacion:'01-01-2022', fechaModificacion: '01-01-2022'},
-    {idRol: 4, rol: 'Temp', fechaCreacion:'01-01-2022', fechaModificacion: '01-01-2022'}
-      ];
+export const ROLES: Rol[] = [
+  { id: 1, rol: 'Admin' },
+  { id: 2, rol: 'Super' },
+  { id: 3, rol: 'User' },
+  { id: 4, rol: 'Temp' }
+];

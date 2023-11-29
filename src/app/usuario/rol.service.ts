@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class RolService {
-  private urlEndPoint : string = 'http://localhost:8080/api/roles';
+  private urlEndPoint : string = 'http://localhost:8081/system/apiv1/rol';
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
 
 
@@ -28,7 +28,7 @@ export class RolService {
   }
 
   actualizarRol(rol : Rol) : Observable<Rol>{
-    return this.http.put<Rol>(`${this.urlEndPoint}/${rol.idRol}`, rol, {headers:this.httpHeaders});
+    return this.http.put<Rol>(`${this.urlEndPoint}/${rol.id}`, rol, {headers:this.httpHeaders});
   }
 
   eliminarRol(idRol : number) : Observable<Rol>{

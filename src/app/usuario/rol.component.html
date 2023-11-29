@@ -4,24 +4,20 @@
   <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/roles/form']">Nuevo Rol</button>
 </div>
 
-<table class="table">
+<table class="table" *ngIf="roles.length>0">
     <thead>
       <tr>
         <th scope="col">IDRol</th>
         <th scope="col">Rol</th>
-        <th scope="col">Fecha Creacion</th>
-        <th scope="col">Fecha Modificacion</th>
         <th scope="col">Editar</th>
         <th scope="col">Eliminar</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let rol of roles">
-        <th>{{rol.idRol}}</th>
+        <th>{{rol.id}}</th>
         <th>{{rol.rol}}</th>
-        <th>{{rol.fechaCreacion}}</th>
-        <th>{{rol.fechaModificacion}}</th>
-        <th><button type="submit" class="btn btn-primary" [routerLink]="['/roles/form',rol.idRol]">Editar</button></th>        
+        <th><button type="submit" class="btn btn-primary" [routerLink]="['/roles/form',rol.id]">Editar</button></th>        
         <th><button type="submit" class="btn btn-danger" (click)='eliminarRol(rol)'>Eliminar</button></th> 
       </tr>
     </tbody>

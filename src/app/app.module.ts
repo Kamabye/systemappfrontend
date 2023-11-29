@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { DirectivaComponent } from './directiva/directiva.component';
 
 import { UsuarioComponent } from './usuario/usuario.component';
 import { RolComponent } from './usuario/rol.component';
@@ -21,7 +20,6 @@ import { FormrolComponent } from './usuario/formrol.component';
 
 const routes : Routes = [
   { path: '',redirectTo: '/', pathMatch: 'full'},
-  { path: 'directivas', component: DirectivaComponent},
   { path: 'usuarios', component: UsuarioComponent},
   { path: 'roles', component: RolComponent},
   { path: 'roles/form', component: FormrolComponent},
@@ -33,7 +31,6 @@ const routes : Routes = [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    DirectivaComponent,
     UsuarioComponent,
     RolComponent,
     FormrolComponent

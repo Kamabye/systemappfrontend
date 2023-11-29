@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private urlEndPoint : string = 'http://localhost:8080/api/users';
+  private urlEndPoint : string = 'http://localhost:8081/system/apiv1/user';
   constructor(private http : HttpClient) { }
 
   getUsuarios() : Observable<Usuario[]>{
