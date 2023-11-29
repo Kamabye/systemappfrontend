@@ -5,17 +5,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { BodyComponent } from './components/body/body.component';
 
-import { UsuarioComponent } from './usuario/usuario.component';
-import { RolComponent } from './usuario/rol.component';
+import { UsuarioComponent } from './components/usuario/usuario.component';
+import { RolComponent } from './components/rol/rol.component';
 
-import { UsuarioService } from './usuario/usuario.service';
-import { RolService } from './usuario/rol.service';
+import { UsuarioService } from './services/usuario.service';
+import { RolService } from './services/rol.service';
 
 import { FormsModule } from '@angular/forms';
-import { FormrolComponent } from './usuario/formrol.component';
+import { FormrolComponent } from './components/rol/formrol.component';
 
 
 const routes : Routes = [
@@ -30,6 +31,7 @@ const routes : Routes = [
   declarations: [
     AppComponent,
     HeaderComponent,
+    BodyComponent,
     FooterComponent,
     UsuarioComponent,
     RolComponent,

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Rol } from './rol';
-import { RolService } from './rol.service';
+import { Rol } from '../../models/rol';
+import { RolService } from '../../services/rol.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 

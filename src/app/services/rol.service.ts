@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {ROLES} from './roles.json';
-import { Rol } from './rol';
+import {ROLES} from '../components/rol/roles.json';
+import { Rol } from '../models/rol';
 import { of, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
