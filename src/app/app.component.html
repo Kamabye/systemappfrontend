@@ -1,6 +1,13 @@
-<app-header></app-header>
+<div class="container">
+    
+    <app-header></app-header>
 
-<router-outlet></router-outlet> 
+    <div class="row">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="row">
+        <app-body></app-body>
+    </div>
 
-<app-body></app-body> 
-<app-footer></app-footer>
+    <app-footer></app-footer>
+</div>

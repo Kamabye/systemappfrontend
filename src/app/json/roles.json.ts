@@ -1,4 +1,4 @@
-import { Rol } from '../../models/rol';
+import { Rol } from '../models/rol';
 export const ROLES: Rol[] = [
   { id: 1, rol: 'Admin' },
   { id: 2, rol: 'Super' },

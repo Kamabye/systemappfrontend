@@ -1,37 +1,40 @@
 import { Injectable } from '@angular/core';
-import {ROLES} from '../components/rol/roles.json';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+//import {ROLES} from '../json/roles.json';
 import { Rol } from '../models/rol';
-import { of, Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class RolService {
-  private urlEndPoint : string = 'http://localhost:8081/system/apiv1/rol';
-  private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+
+  private urlEndPoint: string = 'http://localhost:8081/system/apiv1/rol';
+  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
 
-  constructor(private http : HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getRoles() : Observable<Rol[]>{
+  getRoles(): Observable<Rol[]> {
     //return of(ROLES);
-    return this.http.get<Rol[]>(this.urlEndPoint);
+    return this.http.get<Rol[]>(`${this.urlEndPoint}`);
   }
 
-  crearRol(rol : Rol) : Observable<Rol>{
-    return this.http.post<Rol>(this.urlEndPoint, rol, {headers:this.httpHeaders});
+  crearRol(rol: Rol): Observable<HttpResponse<Rol>> {
+    return this.http.post<Rol>(this.urlEndPoint, rol, { headers: this.httpHeaders, observe: 'response' });
   }
 
-  obtenerRol(idRol : number): Observable<Rol>{
-    return this.http.get<Rol>(`${this.urlEndPoint}/${idRol}`);
+  obtenerRol(idRol: number): Observable<HttpResponse<Rol>> {
+    return this.http.get<Rol>(`${this.urlEndPoint}/${idRol}`, { observe: 'response' });
   }
 
-  actualizarRol(rol : Rol) : Observable<Rol>{
-    return this.http.put<Rol>(`${this.urlEndPoint}/${rol.id}`, rol, {headers:this.httpHeaders});
+  actualizarRol(rol: Rol): Observable<Rol> {
+    return this.http.put<Rol>(`${this.urlEndPoint}/${rol.id}`, rol, { headers: this.httpHeaders });
   }
 
-  eliminarRol(idRol : number) : Observable<Rol>{
-    return this.http.delete<Rol>(`${this.urlEndPoint}/${idRol}`, {headers:this.httpHeaders});
+  eliminarRol(idRol: number): Observable<Rol> {
+    return this.http.delete<Rol>(`${this.urlEndPoint}/${idRol}`);
   }
 }

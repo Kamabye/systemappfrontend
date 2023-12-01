@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { RouterModule, Routes } from '@angular/router';
+
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -20,7 +21,8 @@ import { FormrolComponent } from './components/rol/formrol.component';
 
 
 const routes : Routes = [
-  { path: '',redirectTo: '/', pathMatch: 'full'},
+  { path: '',redirectTo: '/', pathMatch: 'full'}, // Ruta por defecto
+  //{ path: '', component: UsuarioComponent}, // Ruta por defecto que muestra un componente en el Index.html
   { path: 'usuarios', component: UsuarioComponent},
   { path: 'roles', component: RolComponent},
   { path: 'roles/form', component: FormrolComponent},
@@ -43,6 +45,7 @@ const routes : Routes = [
     FormsModule,
     RouterModule.forRoot(routes)
   ],
+  exports: [RouterModule],
   providers: [UsuarioService, RolService],
   bootstrap: [AppComponent]
 })
