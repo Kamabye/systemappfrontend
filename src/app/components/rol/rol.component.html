@@ -18,6 +18,7 @@
           <th scope="col">Creado</th>
           <th scope="col">Modificado</th>
           <th scope="col">Acciones</th>
+          <th scope="col">Acciones</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
@@ -27,6 +28,8 @@
           <th>{{rol.modifiedAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
           <th>
             <button type="submit" class="btn btn-primary" [routerLink]="['/roles/form',rol.id]">Editar</button>
+          </th>
+          <th>
             <button type="submit" class="btn btn-danger" (click)='eliminarRol(rol)'>Eliminar</button>
           </th>
         </tr>

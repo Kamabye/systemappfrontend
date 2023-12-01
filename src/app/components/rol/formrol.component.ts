@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { Rol } from '../../models/rol';
 import { RolService } from '../../services/rol.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import swal from 'sweetalert2';
 
-import { IRol } from 'src/app/interfaces/rol';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-formrol',
@@ -25,21 +25,27 @@ export class FormrolComponent implements OnInit {
 
   cargarRol(): void {
     this.activateRoute.params.subscribe(params => {
+
       let idRol = params['idRol']
+
       if (idRol) {
         this.rolService.obtenerRol(idRol).subscribe(
           (response) => {
+
             if (response.body !== null) {
               this.rol = response.body;
-              console.log('Rol obtenido exitosamente:', this.rol);
             } else {
               console.error('El cuerpo de la respuesta es nulo.');
             }
+
           },
           error => {
-            console.error("Error: ", error);
+            this.router.navigate(['/roles'])
+            swal.fire('Error: ', `${error.error.error} ${error.error.mensaje}`, 'warning')
+            console.error("Error al obtener el rol: ", error);
           })
       }
+
     }
     )
   }
@@ -57,8 +63,8 @@ export class FormrolComponent implements OnInit {
 
         },
         error => {
-          swal.fire('Error: ', "Al parecer hubo un error", 'warning')
-          console.error("Error: ", error);
+          swal.fire('Error: ', error.messege, 'warning')
+          console.error("Error: ", error.messege);
         }
       );
   }
