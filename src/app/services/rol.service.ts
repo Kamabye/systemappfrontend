@@ -17,9 +17,9 @@ export class RolService {
 
   constructor(private http: HttpClient) { }
 
-  getRoles(): Observable<Rol[]> {
+  getRoles(): Observable<HttpResponse<Rol[]>> {
     //return of(ROLES);
-    return this.http.get<Rol[]>(`${this.urlEndPoint}`);
+    return this.http.get<Rol[]>(`${this.urlEndPoint}`, { observe: 'response' });
   }
 
   crearRol(rol: Rol): Observable<HttpResponse<Rol>> {
@@ -30,11 +30,11 @@ export class RolService {
     return this.http.get<Rol>(`${this.urlEndPoint}/${idRol}`, { observe: 'response' });
   }
 
-  actualizarRol(rol: Rol): Observable<Rol> {
-    return this.http.put<Rol>(`${this.urlEndPoint}/${rol.id}`, rol, { headers: this.httpHeaders });
+  actualizarRol(rol: Rol): Observable<HttpResponse<Rol>> {
+    return this.http.put<Rol>(`${this.urlEndPoint}/${rol.id}`, rol, { headers: this.httpHeaders, observe: 'response' });
   }
 
-  eliminarRol(idRol: number): Observable<Rol> {
-    return this.http.delete<Rol>(`${this.urlEndPoint}/${idRol}`);
+  eliminarRol(idRol: number): Observable<HttpResponse<Rol>> {
+    return this.http.delete<Rol>(`${this.urlEndPoint}/${idRol}`, { observe: 'response' });
   }
 }

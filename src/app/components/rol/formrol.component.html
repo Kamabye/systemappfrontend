@@ -1,18 +1,10 @@
 <div>
     <form>
-        <div class="col-2">
-            <label for="exampleInputEmail1" class="form-label">Rol</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="rol" [(ngModel)]="rol.rol">
+        <div class="form-floating col-2">
+            <input placeholder="Escribe el rol" type="text" class="form-control" id="rol" name="rol" [(ngModel)]="rol.rol">
+            <label for="rol">Escribe el rol</label>
         </div>
-        <div class="col-2 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Permiso de Lectura</label>
-        </div>
-        <div class="col-2 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Permiso de Escritura</label>
-        </div>
-        <button type="submit" class="btn btn-primary" (click)='crearRol()'
+        <button type="submit" class="btn btn-success" (click)='crearRol()'
             *ngIf="!rol.id; else elseBlock">Crear</button>
         <ng-template #elseBlock>
             <button type="submit" class="btn btn-primary" (click)='actualizarRol()'>Actualizar</button>

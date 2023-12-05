@@ -5,7 +5,7 @@
   </div>
   <div class="row">
     <div>
-      <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/roles/form']">Nuevo Rol</button>
+      <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/rol/form']">Nuevo Rol</button>
     </div>
 
   </div>
@@ -27,7 +27,7 @@
           <th>{{rol.createdAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
           <th>{{rol.modifiedAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
           <th>
-            <button type="submit" class="btn btn-primary" [routerLink]="['/roles/form',rol.id]">Editar</button>
+            <button type="submit" class="btn btn-primary" [routerLink]="['/rol/form',rol.id]">Editar</button>
           </th>
           <th>
             <button type="submit" class="btn btn-danger" (click)='eliminarRol(rol)'>Eliminar</button>

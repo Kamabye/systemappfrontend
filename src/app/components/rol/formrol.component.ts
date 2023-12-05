@@ -41,7 +41,7 @@ export class FormrolComponent implements OnInit {
           },
           error => {
             this.router.navigate(['/roles'])
-            swal.fire('Error: ', `${error.error.error} ${error.error.mensaje}`, 'warning')
+            swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
             console.error("Error al obtener el rol: ", error);
           })
       }
@@ -56,27 +56,25 @@ export class FormrolComponent implements OnInit {
         response => {
           if (response.body !== null) {
             this.router.navigate(['/roles'])
-            swal.fire('Nuevo Rol', `Rol ${response.body} creado con éxito!`, 'success')
+            swal.fire('Mensaje', `Rol: ${response.body.rol} creado con éxito!`, 'success')
           } else {
             console.error('El cuerpo de la respuesta es nulo.');
           }
 
         },
         error => {
-          swal.fire('Error: ', error.messege, 'warning')
-          console.error("Error: ", error.messege);
+          this.router.navigate(['/roles'])
+          swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
+          console.error("Error al crear el rol: ", error);
         }
       );
   }
 
   public actualizarRol(): void {
-    this.rolService.actualizarRol(this.rol).subscribe(response => {
-      this.router.navigate(['/roles'])
-      swal.fire('El Rol', `Rol ${response.rol} fue modificado con éxito!`, 'success')
-    })
+    this.rolService.actualizarRol(this.rol).subscribe(
+      response => {
+        this.router.navigate(['/roles'])
+        swal.fire('El Rol', `Rol ${response.body?.rol} fue modificado con éxito!`, 'success')
+      })
   }
-
-
-
-
 }

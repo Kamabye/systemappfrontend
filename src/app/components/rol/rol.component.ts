@@ -18,17 +18,18 @@ export class RolComponent implements OnInit {
 
   ngOnInit() {
     this.rolService.getRoles().subscribe(
-      (datos) => { 
-        this.roles = datos; 
+      (response) => {
+
+        if (response.body !== null) {
+          this.roles = response.body;
+        } else {
+          console.error('El cuerpo de la respuesta es nulo.');
+        }
 
       },
       (error) => {
-        if (error.status === 404) {
-          console.log('Recurso no encontrado');
-          // Puedes mostrar un mensaje al usuario o redirigir a otra página
-        } else {
-          console.error('Error inesperado', error);
-        }
+        swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
+        console.error("Error al obtener los roles: ", error);
       }
     );
   }
@@ -54,10 +55,11 @@ export class RolComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.rolService.eliminarRol(rol.id).subscribe(response => {
+
           this.roles = this.roles.filter(r => r !== rol)
           swalWithBootstrapButtons.fire(
             'Eliminado!',
-            'Rol eliminado con éxito',
+            `Rol ${response.body?.rol} eliminado con éxito`,
             'success'
           )
         })
