@@ -1,59 +1,67 @@
+
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { RouterModule, Routes } from '@angular/router';
 
+import { FormsModule } from '@angular/forms';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { JwtModule } from '@auth0/angular-jwt';
 
 import { UsuarioService } from './services/usuario.service';
 import { RolService } from './services/rol.service';
+import { AuthService } from './services/auth.service';
+
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { BodyComponent } from './components/body/body.component';
-import { FooterComponent } from './components/footer/footer.component';
 
-import { UsuarioComponent } from './components/usuario/usuario.component';
-import { RolComponent } from './components/rol/rol.component';
+import { HomeComponent } from './components/home/home.component';
 
-import { FormsModule } from '@angular/forms';
-import { FormrolComponent } from './components/rol/formrol.component';
-import { FormusuarioComponent } from './components/usuario/formusuario.component';
+import { AccountModule } from './account/account.module';
+import { AdminModule } from './admin/admin.module';
 
 import { LoggingInterceptor } from './services/interceptor';
 
-
-
-const routes : Routes = [
-  { path: '',redirectTo: '/', pathMatch: 'full'}, // Ruta por defecto
-  //{ path: '', component: UsuarioComponent}, // Ruta por defecto que muestra un componente en el Index.html
-  { path: 'usuarios', component: UsuarioComponent},
-  { path: 'usuario/form', component: FormusuarioComponent},
-  { path: 'usuario/form/:idUsuario', component: FormusuarioComponent},
-  { path: 'roles', component: RolComponent},
-  { path: 'rol/form', component: FormrolComponent},
-  { path: 'rol/form/:idRol', component: FormrolComponent},
-]
+import { LoginComponent } from './components/login/login.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    BodyComponent,
-    FooterComponent,
-    UsuarioComponent,
-    FormusuarioComponent,
-    RolComponent,
-    FormrolComponent
+    HomeComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot(routes)
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        },
+      },
+    }),
+    AppRoutingModule,
+    AccountModule,
+    AdminModule
   ],
   exports: [RouterModule],
-  providers: [UsuarioService, RolService, { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true }],
+  providers: [
+    UsuarioService,
+    RolService,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoggingInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
