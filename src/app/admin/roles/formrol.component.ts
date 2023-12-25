@@ -4,80 +4,80 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RolService } from 'src/app/services/rol.service';
 import { Rol } from 'src/app/models/rol';
 
+
 import swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-formrol',
-    templateUrl: './formrol.component.html'
-  })
+  selector: 'app-formrol',
+  templateUrl: './formrol.component.html'
+})
 
 
 export class FormrolComponent implements OnInit {
 
-    public rol: Rol = new Rol();
-  
-    constructor(private rolService: RolService, private router: Router, private activateRoute: ActivatedRoute) {
-  
-    }
-  
-    ngOnInit() {
-      this.cargarRol()
-    }
-  
-  
-    cargarRol(): void {
-      this.activateRoute.params.subscribe(params => {
-  
-        let idRol = params['idRol']
-  
-        if (idRol) {
-          this.rolService.obtenerRol(idRol).subscribe(
-            (response) => {
-  
-              if (response.body !== null) {
-                this.rol = response.body;
-              } else {
-                console.error('El cuerpo de la respuesta es nulo.');
-              }
-  
-            },
-            error => {
-              this.router.navigate(['/roles'])
-              swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
-              console.error("Error al obtener el rol: ", error);
-            })
-        }
-  
-      }
-      )
-    }
-  
-    public crearRol(): void {
-      this.rolService.crearRol(this.rol)
-        .subscribe(
-          response => {
+  public rol: Rol = new Rol();
+
+  constructor(private rolService: RolService, private router: Router, private activateRoute: ActivatedRoute) {
+
+  }
+
+  ngOnInit() {
+    this.cargarRol()
+  }
+
+
+  cargarRol(): void {
+    this.activateRoute.params.subscribe(params => {
+
+      let idRol = params['idRol']
+
+      if (idRol) {
+        this.rolService.obtenerRol(idRol).subscribe(
+          (response) => {
+
             if (response.body !== null) {
-              this.router.navigate(['/roles'])
-              swal.fire('Mensaje', `Rol: ${response.body.rol} creado con éxito!`, 'success')
+              this.rol = response.body;
             } else {
               console.error('El cuerpo de la respuesta es nulo.');
             }
-  
+
           },
           error => {
             this.router.navigate(['/roles'])
-            swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
-            console.error("Error al crear el rol: ", error);
-          }
-        );
+            swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
+            console.error("Error al obtener el rol: ", error);
+          })
+      }
+
     }
-  
-    public actualizarRol(): void {
-      this.rolService.actualizarRol(this.rol).subscribe(
-        response => {
-          this.router.navigate(['/roles'])
-          swal.fire('El Rol', `Rol ${response.body?.rol} fue modificado con éxito!`, 'success')
-        })
-    }
+    )
   }
-  
+
+  public crearRol(): void {
+    this.rolService.crearRol(this.rol)
+      .subscribe(
+        response => {
+          if (response.body !== null) {
+            this.router.navigate(['/roles'])
+            swal.fire('Mensaje', `Rol: ${response.body.rol} creado con éxito!`, 'success')
+          } else {
+            console.error('El cuerpo de la respuesta es nulo.');
+          }
+
+        },
+        error => {
+          this.router.navigate(['/roles'])
+          swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
+          console.error("Error al crear el rol: ", error);
+        }
+      );
+  }
+
+  public actualizarRol(): void {
+    this.rolService.actualizarRol(this.rol).subscribe(
+      response => {
+        this.router.navigate(['/roles'])
+        swal.fire('El Rol', `Rol ${response.body?.rol} fue modificado con éxito!`, 'success')
+      })
+  }
+}

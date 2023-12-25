@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../auth.guard';
 
+import { FormsModule } from '@angular/forms';
+
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { FooterComponent } from './footer/footer.component';
@@ -15,9 +17,9 @@ const routes: Routes = [
   {
     path: 'admin', component: DashboardComponent,
     children: [
-      { path: 'roles', component: RolesComponent },
-      { path: 'roles/form', component: FormrolComponent },
-      { path: 'roles/form/:idRol', component: FormrolComponent },
+      { path: 'rol', component: RolesComponent },
+      { path: 'rol/form', component: FormrolComponent },
+      { path: 'rol/form/:idRol', component: FormrolComponent },
     ]
   },
 ];
@@ -29,10 +31,11 @@ const routes: Routes = [
     FooterComponent,
     HeaderComponent,
     NavbarComponent,
-    RolesComponent
+    RolesComponent,
+    FormrolComponent
   ],
   imports: [
-    CommonModule, RouterModule.forChild(routes)
+    CommonModule, RouterModule.forChild(routes),FormsModule
   ],
   exports: [RouterModule],
   providers: [AuthGuard],
