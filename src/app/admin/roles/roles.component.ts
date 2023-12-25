@@ -18,6 +18,7 @@ export class RolesComponent implements OnInit {
   constructor(private rolService: RolService) { }
 
   ngOnInit(): void {
+    console.info("RolesComponent ngOnInit");
     this.rolService.getRoles().subscribe(
       (response) => {
 

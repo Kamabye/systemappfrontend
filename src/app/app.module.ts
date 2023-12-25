@@ -24,7 +24,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AccountModule } from './account/account.module';
 import { AdminModule } from './admin/admin.module';
 
-import { LoggingInterceptor } from './services/interceptor';
+import { AuthInterceptor } from './auth-interceptor';
 
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
@@ -58,7 +58,7 @@ import { LogoutComponent } from './components/logout/logout.component';
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: LoggingInterceptor,
+      useClass: AuthInterceptor,
       multi: true
     }
   ],

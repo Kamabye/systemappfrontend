@@ -6,12 +6,14 @@ import { AuthGuard } from '../auth.guard';
 import { FormsModule } from '@angular/forms';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { UsersComponent } from './users/users.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { NavbarComponent } from './navbar/navbar.component';
+
 import { RolesComponent } from './roles/roles.component';
 import { FormrolComponent } from './roles/formrol.component';
+
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
   {
@@ -27,12 +29,12 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     DashboardComponent,
-    UsersComponent,
     FooterComponent,
     HeaderComponent,
     NavbarComponent,
     RolesComponent,
-    FormrolComponent
+    FormrolComponent,
+    UsersComponent,
   ],
   imports: [
     CommonModule, RouterModule.forChild(routes),FormsModule
