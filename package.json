@@ -20,7 +20,7 @@
     "@angular/router": "^17.0.8",
     "@auth0/angular-jwt": "^5.2.0",
     "gentelella": "^1.4.0",
-    "rxjs": "~7.5.0",
+    "rxjs": "~7.8.1",
     "sweetalert2": "^11.7.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
