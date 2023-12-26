@@ -14,6 +14,7 @@ import { RolesComponent } from './roles/roles.component';
 import { FormrolComponent } from './roles/formrol.component';
 
 import { UsersComponent } from './users/users.component';
+import { FormusuarioComponent } from './users/formusuario.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,9 @@ const routes: Routes = [
       { path: 'rol', component: RolesComponent },
       { path: 'rol/form', component: FormrolComponent },
       { path: 'rol/form/:idRol', component: FormrolComponent },
+      { path: 'user', component: UsersComponent },
+      { path: 'user/form', component: FormusuarioComponent },
+      { path: 'user/form/:idRol', component: FormusuarioComponent },
     ]
   },
 ];
@@ -35,6 +39,7 @@ const routes: Routes = [
     RolesComponent,
     FormrolComponent,
     UsersComponent,
+    FormusuarioComponent
   ],
   imports: [
     CommonModule, RouterModule.forChild(routes),FormsModule
