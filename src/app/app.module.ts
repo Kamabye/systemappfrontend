@@ -3,10 +3,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { RouterModule, Routes } from '@angular/router';
-
-import { FormsModule } from '@angular/forms';
-
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { JwtModule } from '@auth0/angular-jwt';
@@ -19,27 +15,18 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 
-import { HomeComponent } from './components/home/home.component';
-
-import { AccountModule } from './account/account.module';
-import { AdminModule } from './admin/admin.module';
+import { AccountModule } from './modules/account/account.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 import { AuthInterceptor } from './auth-interceptor';
 
-import { LoginComponent } from './components/login/login.component';
-import { LogoutComponent } from './components/logout/logout.component';
-
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    LoginComponent,
-    LogoutComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -51,8 +38,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     AccountModule,
     AdminModule
   ],
-  exports: [RouterModule],
   providers: [
+    AdminModule,
     UsuarioService,
     RolService,
     AuthService,

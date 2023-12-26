@@ -20,11 +20,14 @@ export class AuthInterceptor implements HttpInterceptor {
     console.info("AuthInterceptor intercept()");
 
     if (this.statusAuthInterceptor) {
+      console.info("AuthInterceptor habilitado");
       const url = request.url;
 
       if (url.includes('/apiv1/auth')) {
+        console.info("AuthInterceptor url contiene /apiv1/auth");
         return next.handle(request);
       }
+
       const token = localStorage.getItem('token');
 
       if (token) {
@@ -36,6 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
       }
 
     }
+    console.info("AuthInterceptor sin acciones");
     return next.handle(request);
   }
 }
