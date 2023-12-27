@@ -22,11 +22,13 @@ export class FormrolComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.info("FormrolComponent ngOnInit()");
     this.cargarRol()
   }
 
 
   cargarRol(): void {
+    console.info("FormrolComponent cargarRol()");
     this.activateRoute.params.subscribe(params => {
 
       let idRol = params['idRol']
@@ -43,7 +45,7 @@ export class FormrolComponent implements OnInit {
 
           },
           error => {
-            this.router.navigate(['/roles'])
+            this.router.navigate(['admin/rol'])
             swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
             console.error("Error al obtener el rol: ", error);
           })
@@ -58,7 +60,7 @@ export class FormrolComponent implements OnInit {
       .subscribe(
         response => {
           if (response.body !== null) {
-            this.router.navigate(['/roles'])
+            this.router.navigate(['admin/rol'])
             swal.fire('Mensaje', `Rol: ${response.body.rol} creado con éxito!`, 'success')
           } else {
             console.error('El cuerpo de la respuesta es nulo.');
@@ -66,7 +68,7 @@ export class FormrolComponent implements OnInit {
 
         },
         error => {
-          this.router.navigate(['/roles'])
+          this.router.navigate(['admin/rol'])
           swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
           console.error("Error al crear el rol: ", error);
         }
@@ -76,7 +78,7 @@ export class FormrolComponent implements OnInit {
   public actualizarRol(): void {
     this.rolService.actualizarRol(this.rol).subscribe(
       response => {
-        this.router.navigate(['/roles'])
+        this.router.navigate(['admin/rol'])
         swal.fire('El Rol', `Rol ${response.body?.rol} fue modificado con éxito!`, 'success')
       })
   }

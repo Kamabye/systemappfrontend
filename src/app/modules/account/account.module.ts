@@ -1,15 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
 import { AccountComponent } from './account/account.component';
+import { AuthGuard } from 'src/app/auth.guard';
+import { FormsModule } from '@angular/forms';
 
-import { Routes } from '@angular/router';
+import { ObrasComponent } from './obras/obras.component';
+import { HeaderComponent } from './header/header.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 
 const routes: Routes = [
   {
     path: 'account',
     component: AccountComponent,
     children: [
-      // otras rutas del módulo account
+      { path: 'obras', component: ObrasComponent },
+      //{ path: 'rol/form', component: FormrolComponent },
+      //{ path: 'rol/form/:idRol', component: FormrolComponent },
     ]
   }
 ];
@@ -17,10 +25,16 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AccountComponent
+    AccountComponent,
+    HeaderComponent,
+    NavbarComponent,
+    FooterComponent,
+    ObrasComponent
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule, RouterModule.forChild(routes),FormsModule
+  ],
+  exports: [RouterModule],
+  providers: [AuthGuard],
 })
 export class AccountModule { }

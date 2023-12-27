@@ -28,7 +28,7 @@ const routes: Routes = [
       { path: 'rol/form/:idRol', component: FormrolComponent },
       { path: 'user', component: UsersComponent },
       { path: 'user/form', component: FormusuarioComponent },
-      { path: 'user/form/:idRol', component: FormusuarioComponent },
+      { path: 'user/form/:idUser', component: FormusuarioComponent },
       
 
 

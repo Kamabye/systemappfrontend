@@ -28,7 +28,7 @@ export class FormusuarioComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.info("FormusuarioComponent ngOnInit()")
     this.rolService.getRoles().subscribe(
       (response) => {
         if (response.body !== null) {
@@ -61,9 +61,10 @@ export class FormusuarioComponent implements OnInit {
   }
 
   cargarUsuario(): void {
+    console.info("FormusuarioComponent cargarUsuario()")
     this.activateRoute.params.subscribe(params => {
 
-      let idUsuario = params['idUsuario']
+      let idUsuario = params['idUser']
 
       if (idUsuario) {
         this.usuarioService.obtenerUsuario(idUsuario).subscribe(
@@ -77,7 +78,7 @@ export class FormusuarioComponent implements OnInit {
 
           },
           error => {
-            this.router.navigate(['/usuarios'])
+            this.router.navigate(['/admin/user'])
             swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
             console.error("Error al obtener el usuario: ", error);
           })
@@ -92,7 +93,7 @@ export class FormusuarioComponent implements OnInit {
       .subscribe(
         response => {
           if (response.body !== null) {
-            this.router.navigate(['/usuarios'])
+            this.router.navigate(['/admin/user'])
             swal.fire('Mensaje', `Usuario: ${response.body.email} creado con éxito!`, 'success')
           } else {
             console.error('El cuerpo de la respuesta es nulo.');
@@ -100,7 +101,7 @@ export class FormusuarioComponent implements OnInit {
 
         },
         error => {
-          this.router.navigate(['/usuarios'])
+          this.router.navigate(['/admin/user'])
           swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
           console.error("Error al crear el usuario: ", error);
         }
@@ -118,7 +119,7 @@ export class FormusuarioComponent implements OnInit {
       .subscribe(
         response => {
           if (response.body !== null) {
-            this.router.navigate(['/usuarios'])
+            this.router.navigate(['/admin/user'])
             swal.fire('Mensaje', `Usuario: ${response.body.email} creado con éxito!`, 'success')
           } else {
             console.error('El cuerpo de la respuesta es nulo.');
@@ -126,7 +127,7 @@ export class FormusuarioComponent implements OnInit {
 
         },
         error => {
-          this.router.navigate(['/usuarios'])
+          this.router.navigate(['/admin/user'])
           swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
           console.error("Error al crear el usuario: ", error);
         }
@@ -136,7 +137,7 @@ export class FormusuarioComponent implements OnInit {
   public actualizarUsuario(): void {
     this.usuarioService.actualizarUsuario(this.usuario).subscribe(
       response => {
-        this.router.navigate(['/usuarios'])
+        this.router.navigate(['/admin/user'])
         swal.fire('El Usuario', `El Usuario ${response.body?.email} fue modificado con éxito!`, 'success')
       })
   }
@@ -150,7 +151,7 @@ export class FormusuarioComponent implements OnInit {
     this.usuarioService.actualizarUsuarioFormData(formData).subscribe(
       response => {
         if (response.body !== null) {
-          this.router.navigate(['/usuarios'])
+          this.router.navigate(['/admin/user'])
           swal.fire('El Usuario', `El Usuario ${response.body?.email} fue modificado con éxito!`, 'success')
         } else {
           console.error('El cuerpo de la respuesta es nulo.');
@@ -158,7 +159,7 @@ export class FormusuarioComponent implements OnInit {
 
       },
       error => {
-        this.router.navigate(['/usuarios'])
+        this.router.navigate(['/admin/user'])
         swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
         console.error("Error al crear el usuario: ", error);
       })

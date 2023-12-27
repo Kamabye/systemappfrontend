@@ -11,6 +11,7 @@ import { LoginComponent } from './components/login/login.component';
 
 import { AuthGuard } from './auth.guard';
 import { DashboardComponent } from './modules/admin/dashboard/dashboard.component';
+import { AccountComponent } from './modules/account/account/account.component';
 
 const routes: Routes = [
   
@@ -19,7 +20,7 @@ const routes: Routes = [
   //{ path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'admin', component: DashboardComponent, loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)},
   //{ path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [AuthGuard]},
-  { path: 'account', loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule)},
+  { path: 'account', component : AccountComponent, loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule)},
   //{ path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule), canActivate: [AuthGuard]},
   
   { path: 'login', component: LoginComponent },
