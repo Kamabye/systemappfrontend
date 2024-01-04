@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 
+import { HomeModule } from './modules/home/home.module';
 import { AccountModule } from './modules/account/account.module';
 import { AdminModule } from './modules/admin/admin.module';
 
@@ -36,7 +37,8 @@ import { AuthInterceptor } from './auth-interceptor';
     }),
     AppRoutingModule,
     AccountModule,
-    AdminModule
+    AdminModule,
+    HomeModule,
   ],
   providers: [
     AdminModule,

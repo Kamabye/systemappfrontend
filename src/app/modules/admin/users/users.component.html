@@ -20,6 +20,7 @@
             <th scope="col">Apellido Materno</th>
             <th scope="col">Email</th>
             <th scope="col">Estatus</th>
+            <th scope="col">Creado</th>
             <th scope="col">Modificado</th>
             <th scope="col">Acciones</th>
             <th scope="col">Acciones</th>
@@ -36,6 +37,7 @@
             <ng-template #elseBlock>
               <th>Bloqueado</th>
             </ng-template>
+            <th>{{usuario.createdAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
             <th>{{usuario.modifiedAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
             <th>
               <button type="submit" class="btn btn-primary" [routerLink]="['/admin/user/form',usuario.id]">Editar</button>

@@ -4,18 +4,17 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
 
-import { HomeComponent } from './components/home/home.component';
-
 import { LogoutComponent } from './components/logout/logout.component';
 import { LoginComponent } from './components/login/login.component';
 
 import { AuthGuard } from './auth.guard';
 import { DashboardComponent } from './modules/admin/dashboard/dashboard.component';
 import { AccountComponent } from './modules/account/account/account.component';
+import { IndexComponent } from './modules/home/index/index.component';
 
 const routes: Routes = [
   
-  { path: '', component: HomeComponent },
+  { path: 'home', component: IndexComponent, loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)},
   
   //{ path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'admin', component: DashboardComponent, loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)},
@@ -26,13 +25,12 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
 
-  //{ path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   //{ path: '**', redirectTo: 'home', pathMatch: 'full' },
 ];
 
 @NgModule({
   declarations: [
-    HomeComponent,
     LoginComponent,
     LogoutComponent
   ],

@@ -9,8 +9,8 @@ export class Usuario {
     apellidoMaterno : string = '';
     email : string = '';
     estatus : boolean = true;
+    estatusBloqueo : boolean = true;
     createdAt: Date = new Date();
     modifiedAt: Date = new Date();
-    imagen: number[] = [];
     roles : Rol[] = [];
 }

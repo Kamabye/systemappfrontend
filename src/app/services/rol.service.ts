@@ -18,7 +18,7 @@ export class RolService {
   constructor(private http: HttpClient) { }
 
   getRoles(): Observable<HttpResponse<Rol[]>> {
-    //return of(ROLES);
+
     return this.http.get<Rol[]>(`${this.urlEndPoint}`, { observe: 'response' });
   }
 

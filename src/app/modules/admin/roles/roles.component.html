@@ -19,6 +19,8 @@
             <th scope="col">Rol</th>
             <th scope="col">Creado</th>
             <th scope="col">Modificado</th>
+            <th scope="col">Creado Por</th>
+            <th scope="col">Modificado Por</th>
             <th scope="col">Acciones</th>
             <th scope="col">Acciones</th>
           </tr>
@@ -28,6 +30,8 @@
             <th>{{rol.rol}}</th>
             <th>{{rol.createdAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
             <th>{{rol.modifiedAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
+            <th>{{rol.createdBy | date:'dd/MM/yyyy HH:mm:ss'}}</th>
+            <th>{{rol.modifiedBy | date:'dd/MM/yyyy HH:mm:ss'}}</th>
             <th>
               <button type="submit" class="btn btn-primary" [routerLink]="['/admin/rol/form',rol.id]">Editar</button>
             </th>

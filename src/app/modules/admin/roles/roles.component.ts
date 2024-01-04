@@ -5,6 +5,7 @@ import { RolService } from 'src/app/services/rol.service';
 import { Rol } from 'src/app/models/rol';
 
 import swal from 'sweetalert2';
+import { IRol } from 'src/app/interfaces/rol.interface';
 
 @Component({
   selector: 'app-roles',
@@ -14,6 +15,7 @@ import swal from 'sweetalert2';
 export class RolesComponent implements OnInit {
 
   roles: Rol[] = [];
+  iroles: IRol[] = [];
 
   constructor(private rolService: RolService) { }
 
@@ -22,7 +24,8 @@ export class RolesComponent implements OnInit {
     this.rolService.getRoles().subscribe(
       (response) => {
 
-        if (response.body !== null) {
+        if (response.body != null) {
+          console.info('Avemus Datiux');
           this.roles = response.body;
         } else {
           console.error('El cuerpo de la respuesta es nulo.');

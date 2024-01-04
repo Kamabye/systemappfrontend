@@ -5,19 +5,23 @@ import { AccountComponent } from './account/account.component';
 import { AuthGuard } from 'src/app/auth.guard';
 import { FormsModule } from '@angular/forms';
 
-import { ObrasComponent } from './obras/obras.component';
 import { HeaderComponent } from './header/header.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+
+
+import { ObrasComponent } from './obras/obras.component';
+import { ObraformComponent } from './obras/obraform.component';
+
 
 const routes: Routes = [
   {
     path: 'account',
     component: AccountComponent,
     children: [
-      { path: 'obras', component: ObrasComponent },
-      //{ path: 'rol/form', component: FormrolComponent },
-      //{ path: 'rol/form/:idRol', component: FormrolComponent },
+      { path: 'obra', component: ObrasComponent },
+      { path: 'obra/form', component: ObraformComponent },
+      { path: 'obra/form/:idObra', component: ObraformComponent },
     ]
   }
 ];
@@ -29,7 +33,8 @@ const routes: Routes = [
     HeaderComponent,
     NavbarComponent,
     FooterComponent,
-    ObrasComponent
+    ObrasComponent,
+    ObraformComponent
   ],
   imports: [
     CommonModule, RouterModule.forChild(routes),FormsModule
