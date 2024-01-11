@@ -29,7 +29,8 @@ export class ObraService {
   }
 
   getObraJSON(idObra : number): Observable<any> {
-    const objetoEncontrado = OBRAS.find(objeto => objeto.id === idObra);
+    console.info("El id Obra es " + idObra);
+    const objetoEncontrado = OBRAS.find(objeto => objeto.id == idObra);
     return of(objetoEncontrado);
   }
 
@@ -39,6 +40,18 @@ export class ObraService {
 
   getObra(idObra: number): Observable<HttpResponse<Obra>> {
     return this.http.get<Obra>(`${this.urlEndPoint}/${idObra}`, { observe: 'response' });
+  }
+
+  crearObraFormData(formData: FormData): Observable<HttpResponse<Obra>> {
+    return this.http.post<Obra>(this.urlEndPoint, formData, { observe: 'response' });
+  }
+
+  actualizarObraFormData(formData: FormData, idObra : number): Observable<HttpResponse<Obra>> {
+    return this.http.put<Obra>(`${this.urlEndPoint}/${idObra}`, formData, { observe: 'response' });
+  }
+
+  eliminarObra(idObra: number): Observable<HttpResponse<Obra>> {
+    return this.http.delete<Obra>(`${this.urlEndPoint}/${idObra}`, { observe: 'response' });
   }
 
 }

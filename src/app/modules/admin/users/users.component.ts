@@ -58,7 +58,7 @@ export class UsersComponent implements OnInit {
       if (result.isConfirmed) {
         this.usuarioService.eliminarUsuario(usuario.id).subscribe(response => {
 
-          this.usuarios = this.usuarios.filter(r => r !== usuario)
+          this.usuarios = this.usuarios.filter(r => r != usuario)
           swalWithBootstrapButtons.fire(
             'Eliminado!',
             `Usuario ${response.body?.email} eliminado con éxito`,

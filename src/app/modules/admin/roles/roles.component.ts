@@ -5,7 +5,6 @@ import { RolService } from 'src/app/services/rol.service';
 import { Rol } from 'src/app/models/rol';
 
 import swal from 'sweetalert2';
-import { IRol } from 'src/app/interfaces/rol.interface';
 
 @Component({
   selector: 'app-roles',
@@ -15,7 +14,6 @@ import { IRol } from 'src/app/interfaces/rol.interface';
 export class RolesComponent implements OnInit {
 
   roles: Rol[] = [];
-  iroles: IRol[] = [];
 
   constructor(private rolService: RolService) { }
 
@@ -59,15 +57,16 @@ export class RolesComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        this.rolService.eliminarRol(rol.id).subscribe(response => {
+        this.rolService.eliminarRol(rol.id).subscribe(
+          response => {
 
-          this.roles = this.roles.filter(r => r !== rol)
-          swalWithBootstrapButtons.fire(
-            'Eliminado!',
-            `Rol ${response.body?.rol} eliminado con éxito`,
-            'success'
-          )
-        })
+            this.roles = this.roles.filter(r => r !== rol)
+            swalWithBootstrapButtons.fire(
+              'Eliminado!',
+              `Rol ${response.body?.rol} eliminado con éxito`,
+              'success'
+            )
+          })
 
       }
     })

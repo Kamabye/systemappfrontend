@@ -16,7 +16,7 @@ import swal from 'sweetalert2';
 export class ObraformComponent implements OnInit {
 
   public obra: Obra = new Obra();
-  public imagen: File = new File([], '');
+  public audio: File = new File([], '');
 
   public partituras: Partitura[] = [];
   //public rolesSeleccionados: Rol[] = [];
@@ -28,27 +28,38 @@ export class ObraformComponent implements OnInit {
 
   ngOnInit() {
     console.info("ObraformComponent ngOnInit()")
-    //this.cargarObra()
-    this.cargarObraJSON()
+    this.cargarObra()
+    //this.cargarObraJSON()
 
 
   }
   cargarObraJSON() {
-    this.obraService.getObraJSON(1).subscribe(
-      (response) => {
-        if (response != null) {
-          this.obra = response;
-          console.info(this.obra);
-        } else {
-          console.error('El cuerpo de la respuesta es nulo.');
-        }
 
-      },
-      error => {
-        this.router.navigate(['/admin/obras'])
-        swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
-        console.error("Error al obtener el usuario: ", error);
-      })
+    this.activateRoute.params.subscribe(params => {
+      let idObra = params['idObra']
+
+      if (idObra) {
+        this.obraService.getObraJSON(idObra).subscribe(
+          (response) => {
+            if (response != null) {
+              this.obra = response;
+              console.info(this.obra);
+            } else {
+              console.error('El cuerpo de la respuesta es nulo.');
+            }
+
+          },
+          error => {
+            this.router.navigate(['/admin/obras'])
+            swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
+            console.error("Error al obtener el usuario: ", error);
+          })
+      }
+    });
+
+
+
+
   }
 
   cargarObra(): void {
@@ -78,10 +89,59 @@ export class ObraformComponent implements OnInit {
   }
 
   handleFileInput(event: any): void {
-    this.imagen = event.target.files[0];
+    this.audio = event.target.files[0];
   }
 
   crearObraFormData(): void {
+    const formData = new FormData();
+    formData.set('audio', this.audio);
+    const obraJSON = JSON.stringify(this.obra, null, 2);
+    formData.set('obraJSON', obraJSON);
+
+
+    this.obraService.crearObraFormData(formData, )
+      .subscribe(
+        response => {
+          if (response.body != null) {
+            this.router.navigate(['/account/obra'])
+            swal.fire('Mensaje', `Obra: ${response.body.nombre} creado con éxito!`, 'success')
+          } else {
+            console.error('El cuerpo de la respuesta es nulo.');
+          }
+
+        },
+        error => {
+          this.router.navigate(['/account/obra'])
+          swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
+          console.error("Error al crear la obra: ", error);
+        }
+      );
+
   }
-  actualizarObraFormData(): void {}
+  actualizarObraFormData(): void {
+    const formData = new FormData();
+    formData.set('audio', this.audio);
+    const obraJSON = JSON.stringify(this.obra, null, 2);
+    formData.set('obraJSON', obraJSON);
+
+
+    this.obraService.actualizarObraFormData(formData, this.obra.id)
+      .subscribe(
+        response => {
+          if (response.body != null) {
+            this.router.navigate(['/account/obra'])
+            swal.fire('Mensaje', `Obra: ${response.body.nombre} creado con éxito!`, 'success')
+          } else {
+            console.error('El cuerpo de la respuesta es nulo.');
+          }
+
+        },
+        error => {
+          this.router.navigate(['/account/obra'])
+          swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
+          console.error("Error al crear la obra: ", error);
+        }
+      );
+
+  }
 }
