@@ -1,0 +1,82 @@
+<div class="row">
+
+  <h1>Pacientes Registrados</h1>
+
+  <div class="card">
+    <div class="card-header">
+      <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <h1>
+            <button class="btn btn-rounded btn-success btn-lg" type="button" [routerLink]="['/home/paciente/form']"><i
+                class="fas fa-user-plus"></i>Nuevo
+            </button>
+          </h1>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+              [formControl]="searchControl">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover" *ngIf="pacientes.length > 0">
+          <thead>
+            <tr>
+              <th>Nombres</th>
+              <th>Primer Apellido</th>
+              <th>Segundo Apellido</th>
+              <th>Celular</th>
+              <th>Direccion</th>
+              <th>Edad Calculada</th>
+              <th>Expediente</th>
+              <th>Nuevo Exámen</th>
+              <th>Editar</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr *ngFor="let paciente of pacientes">
+              <th>{{paciente.nombres}}</th>
+              <th>{{paciente.primerApellido}}</th>
+              <th>{{paciente.segundoApellido}}</th>
+              <th>{{paciente.celular}}</th>
+              <th>{{paciente.direccion}}</th>
+              <th>{{paciente.edadCalculada}}</th>
+              <th>
+                <button type="submit" class="btn btn-success btn-lg"
+                  [routerLink]="['/home/consulta/',paciente.idPaciente]"><i
+                    class="fas fa-search"></i>Expediente</button>
+              </th>
+              <th>
+                <button type="submit" class="btn btn-primary btn-lg" (click)='eliminarPaciente(paciente)'><i
+                    class="fas fa-book-medical"></i>Nuevo Exámen</button>
+              </th>
+              <th>
+                <button type="submit" class="btn btn-warning btn-lg"
+                  [routerLink]="['/home/paciente/form',paciente.idPaciente]"><i
+                    class="fas fa-user-edit"></i>Editar</button>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center">
+        <p>Mostrando {{ page?.numberOfElements }} de {{ page?.totalElements }} pacientes</p>
+        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0">Anterior</button>
+        <span>Página {{ currentPage + 1 }} de {{ page?.totalPages }}</span>
+        <button (click)="onPageChange(currentPage + 1)"
+          [disabled]="currentPage+1 === page?.totalPages">Siguiente</button>
+      </div>
+
+
+
+
+
+    </div>
+    <!-- /.card-body -->
+  </div>
+
+</div>

@@ -3,6 +3,7 @@ export class Rol {
     rol : string = '';
     createdAt: Date = new Date();
     modifiedAt: Date = new Date();
-    createdBy: Date = new Date();
-    modifiedBy: Date = new Date();
+
+    modifiedBy: string = '';
+    createdBy: string = '';
 }

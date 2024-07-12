@@ -1,0 +1,113 @@
+<h1>formpaciente.component.html</h1>
+<div class="container-fluid">
+  <div class="col-sm-6">
+    <a href="/home/paciente" class="btn btn-success"><i class="fas fa-home"></i> Inicio</a>
+  </div>
+  <div class="row mb-2">
+    <div class="col-sm-12">
+      <h1>Datos Paciente</h1>
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+</div>
+<div class="card card-primary">
+  <!-- /.card-header -->
+  <!-- form start -->
+  <form #formulario="ngForm">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-sm-4">
+          <!-- text input -->
+          <div class="form-group">
+            <label>Nombre:</label> <input [(ngModel)]="paciente.nombres" name="nombres" type="text" class="form-control"
+              placeholder="Nombres" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <!-- text input -->
+          <div class="form-group">
+            <label>Primer Apellido:</label> <input [(ngModel)]="paciente.primerApellido" name="primerApellido"
+              type="text" class="form-control" placeholder="Primer Apellido" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <!-- text input -->
+          <div class="form-group">
+            <label>Segundo Apellido:</label> <input [(ngModel)]="paciente.segundoApellido" name="segundoApellido"
+              type="text" class="form-control" placeholder="Segundo Apellido" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <!-- text input -->
+          <div class="form-group">
+            <label>Celular:</label> <input [(ngModel)]="paciente.celular" name="celular" type="text"
+              class="form-control" placeholder="Celular" autocomplete="off">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <!-- text input -->
+          <div class="form-group">
+            <label>Telefono:</label> <input [(ngModel)]="paciente.telefono" name="telefono" type="text"
+              class="form-control" placeholder="Teléfono" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <!-- text input -->
+          <div class="form-group">
+            <label>Edad:</label> <input [(ngModel)]="paciente.edad" name="edad" type="text" class="form-control"
+              placeholder="Edad" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Sexo:</label>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group input-group mb-3">
+              <div class="custom-control custom-radio col-sm-12">
+                <input [(ngModel)]="paciente.sexo" class="custom-control-input" type="radio" value="Mujer"
+                  id="customRadio1" name="sexo"> <label for="customRadio1" class="custom-control-label">Mujer</label>
+              </div>
+              <div class="custom-control custom-radio col-sm-12">
+                <input [(ngModel)]="paciente.sexo" class="custom-control-input" type="radio" value="Hombre"
+                  id="customRadio2" name="sexo"> <label for="customRadio2" class="custom-control-label">Hombre</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- textarea -->
+          <div class="form-group">
+            <label>Dirección:</label>
+            <textarea [(ngModel)]="paciente.direccion" name="direccion" class="form-control" rows="5"
+              placeholder="Dirección"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+      <div class="row">
+        <div class="col-sm-6">
+          <button type="submit" class="btn btn-success" (click)='crearpaciente()'
+            *ngIf="!paciente.idPaciente; else elseBlock">Crear</button>
+          <ng-template #elseBlock>
+            <button type="submit" class="btn btn-primary" (click)='actualizarpaciente()'>Actualizar</button>
+          </ng-template>
+        </div>
+        <div class="col-sm-6">
+          <button type="submit" class="btn btn-danger" (click)='eliminarPaciente()'>Eliminar</button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

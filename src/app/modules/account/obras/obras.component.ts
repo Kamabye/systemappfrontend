@@ -67,7 +67,7 @@ export class ObrasComponent implements OnInit {
   cargarObras() {
     this.obraService.getObras().subscribe(
       (response) => {
-        console.info("ObrasComponent response");
+        //console.info("ObrasComponent response");
         if (response.body != null) {
           this.obras = response.body;
         } else {

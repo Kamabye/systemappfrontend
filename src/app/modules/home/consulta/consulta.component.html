@@ -1,0 +1,64 @@
+<div class="row">
+
+    <h1>Consultas Registrados</h1>
+  
+    <div class="card">
+      <div class="card-header">
+        <nav class="navbar bg-body-tertiary">
+          <div class="container-fluid">
+            <h1>
+              <button class="btn btn-rounded btn-success btn-lg" type="button" [routerLink]="['/home/consulta/form']"><i
+                  class="fas fa-user-plus"></i>Nuevo
+              </button>
+            </h1>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [formControl]="searchControl">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </nav>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body table-responsive">
+        <table class="table table-hover" *ngIf="consultas.length > 0">
+          <thead>
+            <tr>
+                <th>FechaCreacion</th>
+                <th>SubjetivoLejosDerecho</th>
+                <th>SubjetivoLejosIzquierdo</th>
+                <th>Ver</th>
+                <th>Editar</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr *ngFor="let consulta of consultas">
+              <th>{{consulta.createdAt | date:'dd-MMMM-yyyy'}}</th>
+              <th>{{consulta.subLejDer}}</th>
+              <th>{{consulta.subLejIzq}}</th>
+              <th>
+                <button type="submit" class="btn btn-success btn-lg"
+                  [routerLink]="['/home/consulta/',consulta.idConsulta]"><i class="fas fa-search"></i>Expediente</button>
+              </th>
+              <th>
+                <button type="submit" class="btn btn-primary btn-lg" (click)='eliminarConsulta(consulta)'><i
+                    class="fas fa-book-medical"></i>Nuevo Exámen</button>
+              </th>
+              <th>
+                <button type="submit" class="btn btn-warning btn-lg"
+                  [routerLink]="['/home/paciente/form',consulta.idConsulta]"><i
+                    class="fas fa-user-edit"></i>Editar</button>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center">
+          <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0">Anterior</button>
+          <span>Página {{ currentPage + 1 }} de {{ page?.totalPages }}</span>
+          <button (click)="onPageChange(currentPage + 1)"
+            [disabled]="currentPage+1 === page?.totalPages">Siguiente</button>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+  
+  </div>

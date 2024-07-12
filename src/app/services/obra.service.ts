@@ -24,20 +24,6 @@ export class ObraService {
     return this.http.get<Obra[]>(`${this.urlEndPoint}`, { observe: 'response' });
   }
 
-  getObrasJSON(): Observable<Obra[]> {
-    return of(OBRAS);
-  }
-
-  getObraJSON(idObra : number): Observable<any> {
-    console.info("El id Obra es " + idObra);
-    const objetoEncontrado = OBRAS.find(objeto => objeto.id == idObra);
-    return of(objetoEncontrado);
-  }
-
-  getObraView(idObra: number): Observable<HttpResponse<Blob>> {
-    return this.http.get<Blob>(`${this.urlEndPointPartitura}/view/${idObra}`, { observe: 'response' });
-  }
-
   getObra(idObra: number): Observable<HttpResponse<Obra>> {
     return this.http.get<Obra>(`${this.urlEndPoint}/${idObra}`, { observe: 'response' });
   }
@@ -46,7 +32,7 @@ export class ObraService {
     return this.http.post<Obra>(this.urlEndPoint, formData, { observe: 'response' });
   }
 
-  actualizarObraFormData(formData: FormData, idObra : number): Observable<HttpResponse<Obra>> {
+  actualizarObraFormData(formData: FormData, idObra: number): Observable<HttpResponse<Obra>> {
     return this.http.put<Obra>(`${this.urlEndPoint}/${idObra}`, formData, { observe: 'response' });
   }
 
@@ -54,4 +40,17 @@ export class ObraService {
     return this.http.delete<Obra>(`${this.urlEndPoint}/${idObra}`, { observe: 'response' });
   }
 
+  getObraView(idObra: number): Observable<HttpResponse<Blob>> {
+    return this.http.get<Blob>(`${this.urlEndPointPartitura}/view/${idObra}`, { observe: 'response' });
+  }
+  
+  getObrasJSON(): Observable<Obra[]> {
+    return of(OBRAS);
+  }
+
+  getObraJSON(idObra: number): Observable<any> {
+    console.info("El id Obra es " + idObra);
+    const objetoEncontrado = OBRAS.find(objeto => objeto.id == idObra);
+    return of(objetoEncontrado);
+  }
 }

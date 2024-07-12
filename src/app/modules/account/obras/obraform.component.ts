@@ -95,11 +95,12 @@ export class ObraformComponent implements OnInit {
   crearObraFormData(): void {
     const formData = new FormData();
     formData.set('audio', this.audio);
-    const obraJSON = JSON.stringify(this.obra, null, 2);
+    //const obraJSON = JSON.stringify(this.obra, null, 2);
+    const obraJSON = JSON.stringify(this.obra);
     formData.set('obraJSON', obraJSON);
 
 
-    this.obraService.crearObraFormData(formData, )
+    this.obraService.crearObraFormData(formData,)
       .subscribe(
         response => {
           if (response.body != null) {
