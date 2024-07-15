@@ -8,6 +8,7 @@ import { IndexComponent } from './index/index.component';
 import { FormpacienteComponent } from './paciente/formpaciente.component';
 import { PacienteComponent } from './paciente/paciente.component';
 import { ConsultaComponent } from './consulta/consulta.component';
+import { TicketComponent } from './ticket/ticket.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'paciente/form', component: FormpacienteComponent },
       { path: 'paciente/form/:idPaciente', component: FormpacienteComponent },
       { path: 'consulta', component: ConsultaComponent },
+      { path: 'ticket', component: TicketComponent },
     ]
   },
   //{path: '', redirectTo: 'home1', pathMatch: 'full'},
@@ -30,7 +32,8 @@ const routes: Routes = [
     IndexComponent,
     PacienteComponent,
     FormpacienteComponent,
-    ConsultaComponent
+    ConsultaComponent,
+    TicketComponent
   ],
   imports: [
     CommonModule, RouterModule.forChild(routes), ReactiveFormsModule, FormsModule
