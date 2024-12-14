@@ -9,6 +9,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 
 import swal from 'sweetalert2';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-paciente',
@@ -16,11 +17,7 @@ import swal from 'sweetalert2';
 })
 export class PacienteComponent implements OnInit {
 
-
-
-
-
-  pacientes: Paciente[] = [];
+  pacientes: Paciente[] = []; 
   page: Page<Paciente> | undefined;
   currentPage = 0;
   pageSize = 10;
@@ -31,41 +28,44 @@ export class PacienteComponent implements OnInit {
 
   ngOnInit(): void {
     console.info("PacienteComponent ngOnInit()");
+
+
+    this.searchControl.setValue('');
+
     this.searchControl.valueChanges.pipe(
       debounceTime(1000), // Espera 1000ms después de que el usuario deje de escribir
-      distinctUntilChanged(), // Evita emitir si el valor es el mismo que el anterior
-      switchMap(value => this.pacienteService.getPacientesByString(this.currentPage, this.pageSize, value))
-    ).subscribe({
-      next: data => {
-        if (data) {
-          this.page = data.body!;
-          this.pacientes = data.body?.content ?? [];
-        } else {
-          console.error('No data in response');
-          this.pacientes = [];
-        }
-      },
-      error: err => {
-        swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
-        console.error("Error al obtener los pacientes: ", err);
-      },
-      complete: () => {
-        console.log('Pacientes loaded');
-      }
+      distinctUntilChanged() // Evita emitir si el valor es el mismo que el anterior
+    ).subscribe(searchTerm => {
+      this.pacientes = [];
+      this.currentPage = 0;
+      this.fetchPacientes(searchTerm);
+
     });
+    ;
+
+
 
     this.loadPacientes();
+  }
 
+  fetchPacientes(searchTerm: string) {
+    this.pacienteService.getPacientesByString(this.currentPage, this.pageSize, searchTerm).pipe(
+      switchMap((response: any) => {
+        this.page = response.body;
+        this.pacientes = this.page?.content ?? [];
+        return of(response); // Emitir la respuesta para que la suscripción la reciba
+      })
+    ).subscribe();
   }
 
   loadPacientes(): void {
-    this.pacienteService.getPacientesByString(this.currentPage, this.pageSize, "").subscribe({
+    this.pacienteService.getPacientesByString(this.currentPage, this.pageSize, this.searchControl.value).subscribe({
       next: data => {
         if (data) {
           this.page = data.body!;
-          this.pacientes = data.body?.content ?? [];
+          this.pacientes = this.page?.content ?? [];
         } else {
-          swal.fire('Sin datos','', 'warning')
+          swal.fire('Sin datos', '', 'warning')
           console.error('No data in response');
           this.pacientes = [];
         }
