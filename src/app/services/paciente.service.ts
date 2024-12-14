@@ -13,10 +13,11 @@ import { Paciente } from '../models/paciente';
 })
 export class PacienteService {
 
-    private urlEndPointPaciente: string = 'http://localhost:8081/system/apiv1/optica/paciente';
-    private urlEndPointConsulta: string = 'http://localhost:8081/system/apiv1/optica/consulta';
+    //private urlEndPointPaciente: string = 'http://localhost:8081/system/apiv1/optica/pacientes';
+    //private urlEndPointConsulta: string = 'http://localhost:8081/system/apiv1/optica/consultas';
 
-    //private urlEndPointPaciente: string = 'https://kamabye.herokuapp.com/apiv1/optica/paciente';
+    private urlEndPointPaciente: string = 'https://system-i73z.onrender.com/system/apiv1/optica/pacientes';
+    private urlEndPointConsulta: string = 'https://system-i73z.onrender.com/system/apiv1/optica/consultas';
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
