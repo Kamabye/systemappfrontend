@@ -15,7 +15,7 @@ import { Paciente } from '../models/paciente';
 })
 export class PacienteService {
 
-    private urlEndPointPaciente: string = `${environment.apiBaseURL}'+'/system/apiv1/optica/pacientes`;
+    private urlEndPointPaciente: string = `${environment.apiBaseURL}/system/apiv1/optica/pacientes`;
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
