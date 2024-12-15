@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
+import { environment } from 'src/environments/environment';
+
 import { Page } from '../interfaces/page';
 
 import { Consulta } from '../models/consulta';
@@ -11,8 +13,9 @@ import { Consulta } from '../models/consulta';
 })
 
 export class ConsultaService{
-    //private urlEndPointConsulta: string = 'http://localhost:8081/system/apiv1/optica/consulta';
-    private urlEndPointConsulta: string = '${enviroment.apiUrl}'+'/system/apiv1/optica/consultas';
+    
+    
+    private urlEndPointConsulta: string = `${environment.apiBaseURL}'+'/system/apiv1/optica/consultas`;
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

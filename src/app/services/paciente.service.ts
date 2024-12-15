@@ -15,13 +15,7 @@ import { Paciente } from '../models/paciente';
 })
 export class PacienteService {
 
-    //private urlEndPointPaciente: string = 'http://localhost:8081/system/apiv1/optica/pacientes';
-    //private urlEndPointConsulta: string = 'http://localhost:8081/system/apiv1/optica/consultas';
-
-    //apiUrl = environment.apiBaseURL;
-
-    private urlEndPointPaciente: string = '${enviroment.apiUrl}'+'/system/apiv1/optica/pacientes';
-    private urlEndPointConsulta: string = '${enviroment.apiUrl}'+'/system/apiv1/optica/consultas';
+    private urlEndPointPaciente: string = `${environment.apiBaseURL}'+'/system/apiv1/optica/pacientes`;
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
