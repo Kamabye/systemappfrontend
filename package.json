@@ -47,10 +47,5 @@
   "engines": {
     "node": "20.10.0",
     "npm": "10.2.3"
-  },
-  "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.",
-  "main": "server.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  }
 }
