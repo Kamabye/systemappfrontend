@@ -12,7 +12,7 @@ import { Consulta } from '../models/consulta';
 
 export class ConsultaService{
     //private urlEndPointConsulta: string = 'http://localhost:8081/system/apiv1/optica/consulta';
-    private urlEndPointConsulta: string = 'https://system-i73z.onrender.com/system/apiv1/optica/consultas';
+    private urlEndPointConsulta: string = '${enviroment.apiUrl}'+'/system/apiv1/optica/consultas';
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
