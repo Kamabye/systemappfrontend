@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from 'src/app/auth.guard';
 
 import { FormsModule } from '@angular/forms';
 
@@ -53,6 +52,6 @@ const routes: Routes = [
     CommonModule, RouterModule.forChild(routes),FormsModule
   ],
   exports: [RouterModule],
-  providers: [AuthGuard],
+  providers: [],
 })
 export class AdminModule { }
