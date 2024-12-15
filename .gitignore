@@ -3,6 +3,8 @@
 # Compiled output
 #/dist
 /tmp
+/.angular
+/.vscode
 /out-tsc
 /bazel-out
 
@@ -41,4 +43,5 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/*.env
+/src/environments/*
+.env*

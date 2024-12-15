@@ -1,4 +1,4 @@
 export const environment = {
-    production : true,
-    apiBaseURL : 'https://condoy-875dc07633c3.herokuapp.com'
-}
+    production: true,
+    apiUrl: 'https://system-i73z.onrender.com'
+};
