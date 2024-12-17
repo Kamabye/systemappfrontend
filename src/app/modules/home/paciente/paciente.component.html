@@ -50,8 +50,9 @@
                     class="fas fa-search"></i>Expediente</button>
               </th>
               <th>
-                <button type="submit" class="btn btn-primary btn-lg" (click)='eliminarPaciente(paciente)'><i
-                    class="fas fa-book-medical"></i>Nuevo Exámen</button>
+                <button type="submit" class="btn btn-warning btn-lg"
+                  [routerLink]="['/home/consulta/form',paciente.idPaciente]"><i
+                    class="fas fa-user-edit"></i>Nuevo Examen</button>
               </th>
               <th>
                 <button type="submit" class="btn btn-warning btn-lg"
