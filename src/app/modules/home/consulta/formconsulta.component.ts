@@ -7,8 +7,6 @@ import { PacienteService } from 'src/app/services/paciente.service';
 import { Consulta } from 'src/app/models/consulta';
 import { ConsultaService } from 'src/app/services/consulta.service';
 
-
-
 import swal from 'sweetalert2';
 
 @Component({
@@ -18,6 +16,7 @@ import swal from 'sweetalert2';
 
   export class FormconsultaComponent implements OnInit {
 
+    public paciente: Paciente = new Paciente();
     public consulta: Consulta = new Consulta();
 
   constructor(private pacienteService: PacienteService, private consultaService: ConsultaService, private router: Router, private activateRoute: ActivatedRoute) {
@@ -28,7 +27,7 @@ import swal from 'sweetalert2';
     console.info("FormconsultaComponent ngOnInit()")
 
     this.cargarpaciente()
-    this.cargarconsulta()
+    //this.cargarconsulta()
 
   }
 

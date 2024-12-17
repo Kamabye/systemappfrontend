@@ -5,10 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IndexComponent } from './index/index.component';
-import { FormpacienteComponent } from './paciente/formpaciente.component';
 import { PacienteComponent } from './paciente/paciente.component';
+import { FormpacienteComponent } from './paciente/formpaciente.component';
+import { FormconsultaComponent } from './consulta/formconsulta.component';
 import { ConsultaComponent } from './consulta/consulta.component';
 import { TicketComponent } from './ticket/ticket.component';
+import { Paciente } from 'src/app/models/paciente';
+import { Consulta } from 'src/app/models/consulta';
 
 const routes: Routes = [
   {
@@ -19,7 +22,9 @@ const routes: Routes = [
       { path: 'paciente', component: PacienteComponent },
       { path: 'paciente/form', component: FormpacienteComponent },
       { path: 'paciente/form/:idPaciente', component: FormpacienteComponent },
-      { path: 'consulta', component: ConsultaComponent },
+      { path: 'consulta/form/:idPaciente', component: FormconsultaComponent },
+      { path: 'consulta/view/:idPaciente', component: ConsultaComponent },
+      { path: 'consulta/edit/:idConsulta', component: FormconsultaComponent },
       { path: 'ticket', component: TicketComponent },
     ]
   },
@@ -33,6 +38,7 @@ const routes: Routes = [
     PacienteComponent,
     FormpacienteComponent,
     ConsultaComponent,
+    FormconsultaComponent,
     TicketComponent
   ],
   imports: [

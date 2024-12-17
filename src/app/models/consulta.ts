@@ -36,6 +36,9 @@ export class Consulta {
     avderSnellen : string = "";
     avizqSnellen : string = "";
 
+    fechaCreacion: Date = new Date();
+    fechaModificacion: Date = new Date();
+
     createdAt: Date = new Date();
     modifiedAt: Date = new Date();
 

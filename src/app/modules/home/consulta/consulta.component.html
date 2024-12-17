@@ -6,15 +6,7 @@
       <div class="card-header">
         <nav class="navbar bg-body-tertiary">
           <div class="container-fluid">
-            <h1>
-              <button class="btn btn-rounded btn-success btn-lg" type="button" [routerLink]="['/home/consulta/form']"><i
-                  class="fas fa-user-plus"></i>Nuevo
-              </button>
-            </h1>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" [formControl]="searchControl">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <a href="/home/paciente" class="btn btn-success"><i class="fas fa-home"></i> Inicio</a>
           </div>
         </nav>
       </div>
@@ -32,7 +24,7 @@
           </thead>
           <tbody class="table-group-divider">
             <tr *ngFor="let consulta of consultas">
-              <th>{{consulta.createdAt | date:'dd-MMMM-yyyy'}}</th>
+              <th>{{consulta.fechaModificacion | date:'dd-MMMM-yyyy'}}</th>
               <th>{{consulta.subLejDer}}</th>
               <th>{{consulta.subLejIzq}}</th>
               <th>

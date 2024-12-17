@@ -37,8 +37,7 @@ export class ConsultaService{
 
         const params = new HttpParams()
             .set('pageNumber', pageNumber.toString())
-            .set('pageSize', pageSize.toString())
-            .set('idPaciente', idPaciente);
+            .set('pageSize', pageSize.toString());
 
         //return this.http.get<Page<Paciente[]>>(`${this.urlEndPointPaciente}?page=${page}&size=${size}`, { observe: 'response' });
         return this.http.get<Page<Consulta>>(`${this.urlEndPointConsulta}/${idPaciente}`, { observe: 'response' });
