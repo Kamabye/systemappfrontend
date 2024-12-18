@@ -45,7 +45,10 @@ export class ConsultaService{
     }
 
     getConsulta(idConsulta: number): Observable<HttpResponse<Consulta>> {
-        return this.http.get<Consulta>(`${this.urlEndPointConsulta}/${idConsulta}`, { observe: 'response' });
+        const params = new HttpParams()
+            .set('idConsulta', idConsulta);
+
+        return this.http.get<Consulta>(`${this.urlEndPointConsulta}`, { params, observe: 'response' });
     }
 
     crearConsulta(consulta: Consulta): Observable<HttpResponse<Consulta>> {

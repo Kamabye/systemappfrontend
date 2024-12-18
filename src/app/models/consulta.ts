@@ -42,5 +42,5 @@ export class Consulta {
     createdAt: Date = new Date();
     modifiedAt: Date = new Date();
 
-    paciente : Paciente = new Paciente;
+    paciente : Paciente = new Paciente();
 }
