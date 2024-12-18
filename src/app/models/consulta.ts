@@ -3,35 +3,33 @@ import { Paciente } from "./paciente";
 export class Consulta {
     idConsulta: number = 0;
 
-    totalDer : number = 0.0;
-    totalIzq : number = 0.0;
+    totalDer : number = 0.00;
+    totalIzq : number = 0.00;
 
-    totalAstigDer : number = 0.0;
-    totalAstigIzq : number = 0.0;
+    totalAstigDer : number = 0.00;
+    totalAstigIzq : number = 0.00;
 
-    totalAngDer : number = 0.0;
-    totalAngIzq : number = 0.0;
+    totalAngDer : number = 0.00;
+    totalAngIzq : number = 0.00;
 
-    subLejDer : number = 0.0;
-    subLejIzq : number = 0.0;
+    subLejDer : number = 0.00;
+    subLejIzq : number = 0.00;
 
-    subLejAstigDer : number = 0.0;
-    subLejAstigIzq : number = 0.0;
+    subLejAstigDer : number = 0.00;
+    subLejAstigIzq : number = 0.00;
 
-    subLejAngDer : number = 0.0;
-    subLejAngIzq : number = 0.0;
+    subLejAngDer : number = 0.00;
+    subLejAngIzq : number = 0.00;
 
-    addDer : number = 0.0;
-    addIzq : number = 0.0;
+    addDer : number = 0.00;
+    addIzq : number = 0.00;
 
-    dip : number = 0.0;
+    dip : number = 0.00;
 
     rx : string = "";
 
-    ocupacion : string = "";
-
-    avizq : number = 0.0;
-    avder : number = 0.0;
+    avizq : number = 0.00;
+    avder : number = 0.00;
 
     avderSnellen : string = "";
     avizqSnellen : string = "";

@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Paciente } from 'src/app/models/paciente';
 import { Consulta } from 'src/app/models/consulta';
-import { PacienteService } from 'src/app/services/paciente.service';
+
 import { ConsultaService } from 'src/app/services/consulta.service';
 
 import swal from 'sweetalert2';
@@ -16,9 +16,9 @@ export class DatosconsultaComponent implements OnInit {
 
   
   public consulta: Consulta = new Consulta();
-  //public paciente: Paciente = new Paciente();
+  public paciente: Paciente = new Paciente();
 
-  constructor(private pacienteService: PacienteService, private consultaService: ConsultaService, private router: Router, private activateRoute: ActivatedRoute) {
+  constructor(private consultaService: ConsultaService, private router: Router, private activateRoute: ActivatedRoute) {
 
   }
 
@@ -37,6 +37,7 @@ export class DatosconsultaComponent implements OnInit {
           next: data => {
             if (data.body !== null) {
               this.consulta = data.body;
+              this.cargarPaciente();
               console.info(this.consulta);
             } else {
               console.error('El cuerpo de la respuesta es nulo.');
@@ -55,6 +56,34 @@ export class DatosconsultaComponent implements OnInit {
     });
 
 
+  }
+  cargarPaciente() {
+    console.info("DatosconsultaComponent cargarPaciente()")
+    this.activateRoute.params.subscribe(params => {
+
+      let idConsulta = params['idConsulta']
+
+      if (idConsulta) {
+        this.consultaService.getPacienteByIdConsulta(idConsulta).subscribe({
+          next: data => {
+            if (data.body !== null) {
+              this.paciente = data.body;
+              console.info(this.consulta);
+            } else {
+              console.error('El cuerpo de la respuesta es nulo.');
+            }
+
+          },
+          error: err => {
+            swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+            console.error("Error al obtener el paciente: ", err);
+          },
+          complete: () => {
+            console.log('DatosConsulta loaded');
+          }
+        });
+      }
+    });
   }
 
 }

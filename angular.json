@@ -55,9 +55,16 @@
                 }
               ],
               "outputHashing": "all"
+            },
+            "development": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
-          },
-          "defaultConfiguration": "production"
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -67,12 +74,9 @@
             },
             "development": {
               "buildTarget": "system-app:build:development"
-            },
-            "qa": {
-              "buildTarget": "system-app:build:qa"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

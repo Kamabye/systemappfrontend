@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { Page } from '../interfaces/page';
 
 import { Consulta } from '../models/consulta';
+import { Paciente } from '../models/paciente';
 
 @Injectable({
     providedIn: 'root'
@@ -49,6 +50,12 @@ export class ConsultaService{
             .set('idConsulta', idConsulta);
 
         return this.http.get<Consulta>(`${this.urlEndPointConsulta}`, { params, observe: 'response' });
+    }
+
+    getPacienteByIdConsulta(idConsulta: number): Observable<HttpResponse<Paciente>> {
+        const params = new HttpParams()
+            .set('idConsulta', idConsulta);
+        return this.http.get<Paciente>(`${this.urlEndPointConsulta}/getPaciente`, { params, observe: 'response' });
     }
 
     crearConsulta(consulta: Consulta): Observable<HttpResponse<Consulta>> {
