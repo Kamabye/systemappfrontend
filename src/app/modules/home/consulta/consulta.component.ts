@@ -43,7 +43,6 @@ export class ConsultaComponent implements OnInit {
                     next: data => {
                         if (data.body !== null) {
                             this.paciente = data.body;
-                            
                             console.info(this.paciente);
                             console.info("Datos del paciente");
                             this.loadConsultas();

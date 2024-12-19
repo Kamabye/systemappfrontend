@@ -70,9 +70,9 @@ export class FormpacienteComponent implements OnInit {
 
         },
         error => {
-          this.router.navigate(['/home/paciente'])
-          swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
-          console.error("Error al crear el paciente: ", error);
+            this.router.navigate(['/home/paciente'])
+            swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
+            console.error("Error al crear el paciente: ", error);
         }
       );
   }

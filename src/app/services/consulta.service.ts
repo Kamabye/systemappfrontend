@@ -13,10 +13,9 @@ import { Paciente } from '../models/paciente';
     providedIn: 'root'
 })
 
-export class ConsultaService{
-    
-    
-    private urlEndPointConsulta: string = `${environment.apiBaseURL}/system/apiv1/optica/consultas`;
+export class ConsultaService {
+
+    private urlEndPointConsulta: string = `${environment.apiBaseURL}/consultas`;
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

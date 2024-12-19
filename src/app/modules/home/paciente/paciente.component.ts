@@ -17,7 +17,7 @@ import { of } from 'rxjs';
 })
 export class PacienteComponent implements OnInit {
 
-  pacientes: Paciente[] = []; 
+  pacientes: Paciente[] = [];
   page: Page<Paciente> | undefined;
   currentPage = 0;
   pageSize = 10;

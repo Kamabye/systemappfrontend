@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IndexComponent } from './index/index.component';
+import { IndexHomeComponent } from './index/indexhome.component';
 import { PacienteComponent } from './paciente/paciente.component';
 import { FormpacienteComponent } from './paciente/formpaciente.component';
 import { ConsultaComponent } from './consulta/consulta.component';
@@ -16,9 +16,11 @@ import { TicketComponent } from './ticket/ticket.component';
 const routes: Routes = [
   {
     path: '',
-    component: IndexComponent,
+    component: IndexHomeComponent,
     children: [
-      {path: '', redirectTo: 'paciente', pathMatch: 'full'},
+      
+      { path: '', redirectTo: 'paciente', pathMatch: 'full' },
+
       { path: 'paciente', component: PacienteComponent },
       { path: 'paciente/form', component: FormpacienteComponent },
       { path: 'paciente/form/:idPaciente', component: FormpacienteComponent },
@@ -31,7 +33,7 @@ const routes: Routes = [
       { path: 'consulta/view/:idConsulta', component: DatosconsultaComponent },
       //Editar la consulta
       { path: 'consulta/edit/:idConsulta', component: FormconsultaComponent },
-      
+
 
       { path: 'ticket', component: TicketComponent },
     ]
@@ -42,7 +44,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    IndexComponent,
+    IndexHomeComponent,
     PacienteComponent,
     FormpacienteComponent,
     ConsultaComponent,

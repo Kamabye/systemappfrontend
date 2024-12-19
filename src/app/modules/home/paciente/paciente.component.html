@@ -1,83 +1,79 @@
+<p>paciente.component.html</p>
 <div class="row">
+  <h1>Pacientes</h1>
+</div>
 
-  <h1>Pacientes Registrados</h1>
-
-  <div class="card">
-    <div class="card-header">
-      <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-          <h1>
-            <button class="btn btn-rounded btn-success btn-lg" type="button" [routerLink]="['/home/paciente/form']"><i
-                class="fas fa-user-plus"></i>Nuevo
-            </button>
-          </h1>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search"
-              [formControl]="searchControl" ngDefaultControl="">
-            <button class="btn btn-outline-success" type="submit">Buscar...</button>
-          </form>
-        </div>
-      </nav>
-    </div>
-    <!-- /.card-header -->
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-hover" *ngIf="pacientes.length > 0">
-          <thead>
-            <tr>
-              <th>Nombres</th>
-              <th>Primer Apellido</th>
-              <th>Segundo Apellido</th>
-              <th>Celular</th>
-              <th>Direccion</th>
-              <th>Edad Calculada</th>
-              <th>Expediente</th>
-              <th>Nuevo Exámen</th>
-              <th>Editar</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <tr *ngFor="let paciente of pacientes">
-              <th>{{paciente.nombres}}</th>
-              <th>{{paciente.primerApellido}}</th>
-              <th>{{paciente.segundoApellido}}</th>
-              <th>{{paciente.celular}}</th>
-              <th>{{paciente.direccion}}</th>
-              <th>{{paciente.edadCalculada}}</th>
-              <th>
-                <button type="submit" class="btn btn-success btn-lg"
-                  [routerLink]="['/home/consulta/find',paciente.idPaciente]"><i
-                    class="fas fa-search"></i>Expediente</button>
-              </th>
-              <th>
-                <button type="submit" class="btn btn-warning btn-lg"
-                  [routerLink]="['/home/consulta/form',paciente.idPaciente]"><i
-                    class="fas fa-user-edit"></i>Nuevo Examen</button>
-              </th>
-              <th>
-                <button type="submit" class="btn btn-warning btn-lg"
-                  [routerLink]="['/home/paciente/form',paciente.idPaciente]"><i
-                    class="fas fa-user-edit"></i>Editar</button>
-              </th>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="text-center">
-        <p>Mostrando {{ page?.numberOfElements }} de {{ page?.totalElements }} pacientes</p>
-        <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 0">Anterior</button>
-        <span>Página {{ currentPage + 1 }} de {{ page?.totalPages }}</span>
-        <button (click)="onPageChange(currentPage + 1)"
-          [disabled]="currentPage+1 === page?.totalPages">Siguiente</button>
-      </div>
-
-
-
-
-
-    </div>
-    <!-- /.card-body -->
+<div class="row">
+  <div class="col">
+    <button class="btn btn-rounded btn-success btn-lg" type="button" [routerLink]="['/home/paciente/form']"><i
+        class="fas fa-user-plus"></i> Nuevo Paciente
+    </button>
   </div>
+  <div class="col text-center">
+    <nav aria-label="Page navigation example">
+      <div class="pagination justify-content-center">
+        <button class="page-item page-link" *ngIf="currentPage > 0" (click)="onPageChange(currentPage - 1)"
+          [disabled]="currentPage === 0">&laquo;</button>
+        <button class="page-item page-link" (click)="onPageChange(0)" [disabled]="currentPage === 0">1</button>
+        <button class="page-item page-link" *ngIf="currentPage > 0" (click)="onPageChange(currentPage - 1)"
+          [disabled]="true">{{currentPage+1}}</button>
+        <button class="page-item page-link" *ngIf="(currentPage+1) < (page?.totalPages ?? 0)" (click)="onPageChange((page?.totalPages ?? 1) -1)"
+          [disabled]="currentPage+1 === page?.totalPages">{{page?.totalPages ?? 1 -1}}</button>
+        <button class="page-item page-link" *ngIf="(currentPage+1) < (page?.totalPages ?? 0)" (click)="onPageChange(currentPage + 1)"
+          [disabled]="currentPage+1 === page?.totalPages">&raquo;</button>
+      </div>
+    </nav>
 
+  </div>
+  <div class="col">
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search"
+        [formControl]="searchControl" ngDefaultControl="">
+      <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-magnifying-glass"></i></span>
+    </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="table-responsive">
+    <table class="table table-hover" *ngIf="pacientes.length > 0">
+      <thead>
+        <tr>
+          <th>Paciente</th>
+          <th>Celular</th>
+          <th>Direccion</th>
+          <th>Edad Calculada</th>
+          <th>Expediente</th>
+          <th>Nuevo Exámen</th>
+          <th>Editar</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let paciente of pacientes">
+          <th>{{paciente.nombres}} {{paciente.primerApellido}} {{paciente.segundoApellido}}</th>
+          <th>{{paciente.celular}}</th>
+          <th>{{paciente.direccion}}</th>
+          <th>{{paciente.edadCalculada}}</th>
+          <th>
+            <button type="submit" class="btn btn-primary btn-lg"
+              [routerLink]="['/home/consulta/find',paciente.idPaciente]">
+              <i class="fa-solid fa-eye"></i> Expediente</button>
+          </th>
+          <th>
+            <button type="submit" class="btn btn-warning btn-lg"
+              [routerLink]="['/home/consulta/form',paciente.idPaciente]"><i class="fa-solid fa-file-circle-plus"></i> Nuevo
+              Examen</button>
+          </th>
+          <th>
+            <button type="submit" class="btn btn-success btn-lg"
+              [routerLink]="['/home/paciente/form',paciente.idPaciente]"><i class="fas fa-user-edit"></i> Editar</button>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <p>Footer</p>
 </div>
