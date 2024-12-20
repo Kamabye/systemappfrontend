@@ -3,7 +3,8 @@ import { Obra } from 'src/app/models/obra';
 
 import { ObraService } from 'src/app/services/obra.service';
 
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
+
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -31,7 +32,7 @@ export class ObrasComponent implements OnInit {
   eliminarObra(obra: Obra) {
 
 
-    const swalWithBootstrapButtons = swal.mixin({
+    const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
         cancelButton: 'btn btn-danger'
@@ -76,7 +77,7 @@ export class ObrasComponent implements OnInit {
 
       },
       (error) => {
-        swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
+        Swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
         console.error("Error al obtener las obras: ", error);
       }
     );
@@ -94,7 +95,7 @@ export class ObrasComponent implements OnInit {
 
       },
       (error) => {
-        swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
+        Swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
         console.error("Error al obtener las obras: ", error);
       }
     );

@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { RolService } from 'src/app/services/rol.service';
 import { Rol } from 'src/app/models/rol';
 
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-roles',
@@ -31,7 +31,7 @@ export class RolesComponent implements OnInit {
 
       },
       (error) => {
-        swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
+        Swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
         console.error("Error al obtener los roles: ", error);
       }
     );
@@ -39,7 +39,7 @@ export class RolesComponent implements OnInit {
 
   public eliminarRol(rol: Rol): void {
 
-    const swalWithBootstrapButtons = swal.mixin({
+    const SwalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
         cancelButton: 'btn btn-danger'
@@ -47,7 +47,7 @@ export class RolesComponent implements OnInit {
       buttonsStyling: false
     })
 
-    swalWithBootstrapButtons.fire({
+    SwalWithBootstrapButtons.fire({
       title: '¿Estás seguro?',
       text: `Estas seguro de eliminar al rol ${rol.rol}`,
       icon: 'warning',
@@ -61,7 +61,7 @@ export class RolesComponent implements OnInit {
           response => {
 
             this.roles = this.roles.filter(r => r !== rol)
-            swalWithBootstrapButtons.fire(
+            SwalWithBootstrapButtons.fire(
               'Eliminado!',
               `Rol ${response.body?.rol} eliminado con éxito`,
               'success'

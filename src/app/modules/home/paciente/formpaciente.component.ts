@@ -5,7 +5,7 @@ import { Paciente } from 'src/app/models/paciente';
 
 import { PacienteService } from 'src/app/services/paciente.service';
 
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-formpaciente',
@@ -44,7 +44,7 @@ export class FormpacienteComponent implements OnInit {
 
           },
           error: err => {
-            swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+            Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
             console.error("Error al obtener el paciente: ", err);
           },
           complete: () => {
@@ -63,7 +63,7 @@ export class FormpacienteComponent implements OnInit {
         data => {
           if (data.body !== null) {
             this.router.navigate(['/home/paciente'])
-            swal.fire('Mensaje', `paciente: ${data.body.email} creado con éxito!`, 'success')
+            Swal.fire('Mensaje', `paciente: ${data.body.email} creado con éxito!`, 'success')
           } else {
             console.error('El cuerpo de la respuesta es nulo.');
           }
@@ -71,7 +71,7 @@ export class FormpacienteComponent implements OnInit {
         },
         error => {
             this.router.navigate(['/home/paciente'])
-            swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
+            Swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
             console.error("Error al crear el paciente: ", error);
         }
       );
@@ -83,14 +83,14 @@ export class FormpacienteComponent implements OnInit {
       next: data => {
         if (data.body !== null) {
           this.router.navigate(['/home/paciente'])
-          swal.fire('El paciente', `El paciente ${data.body?.nombres} fue modificado con éxito!`, 'success')
+          Swal.fire('El paciente', `El paciente ${data.body?.nombres} fue modificado con éxito!`, 'success')
         } else {
           console.error('El cuerpo de la respuesta es nulo.');
         }
 
       },
       error: err => {
-        swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+        Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
         console.error("Error al obtener el paciente: ", err);
       },
       complete: () => {
@@ -103,7 +103,7 @@ export class FormpacienteComponent implements OnInit {
     this.pacienteService.eliminarPaciente(this.paciente.idPaciente).subscribe(
       data => {
         this.router.navigate(['/home/paciente'])
-        swal.fire('El paciente', `El paciente ${data.body?.nombres} fue eliminado con éxito!`, 'success')
+        Swal.fire('El paciente', `El paciente ${data.body?.nombres} fue eliminado con éxito!`, 'success')
       })
   }
 

@@ -1,4 +1,5 @@
 <p>paciente.component.html</p>
+
 <div class="row">
   <h1>Pacientes</h1>
 </div>
@@ -37,16 +38,14 @@
 
 <div class="row">
   <div class="table-responsive">
-    <table class="table table-hover" *ngIf="pacientes.length > 0">
+    <table class="table  align-middle table-hover" *ngIf="pacientes.length > 0">
       <thead>
         <tr>
           <th>Paciente</th>
           <th>Celular</th>
           <th>Direccion</th>
           <th>Edad Calculada</th>
-          <th>Expediente</th>
-          <th>Nuevo Exámen</th>
-          <th>Editar</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
@@ -58,14 +57,10 @@
           <th>
             <a type="submit" class="btn btn-primary btn-lg" [routerLink]="['/home/consulta/find',paciente.idPaciente]">
               <i class="fa-solid fa-eye"></i> Expediente</a>
-          </th>
-          <th>
             <a type="submit" class="btn btn-warning btn-lg"
               [routerLink]="['/home/consulta/form',paciente.idPaciente]"><i class="fa-solid fa-file-circle-plus"></i>
               Nuevo
               Examen</a>
-          </th>
-          <th>
             <a type="submit" class="btn btn-success btn-lg"
               [routerLink]="['/home/paciente/form',paciente.idPaciente]"><i class="fas fa-user-edit"></i> Editar</a>
           </th>

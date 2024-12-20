@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -29,7 +29,7 @@ export class UsersComponent implements OnInit {
 
       },
       (error) => {
-        swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
+        Swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
         console.error("Error al obtener los usuarios: ", error);
       }
     );
@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
 
   public eliminarUsuario(usuario: Usuario): void {
 
-    const swalWithBootstrapButtons = swal.mixin({
+    const SwalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
         cancelButton: 'btn btn-danger'
@@ -46,7 +46,7 @@ export class UsersComponent implements OnInit {
       buttonsStyling: false
     })
 
-    swalWithBootstrapButtons.fire({
+    SwalWithBootstrapButtons.fire({
       title: '¿Estás seguro?',
       text: `Estas seguro de eliminar al usuario ${usuario.email}`,
       icon: 'warning',
@@ -59,7 +59,7 @@ export class UsersComponent implements OnInit {
         this.usuarioService.eliminarUsuario(usuario.id).subscribe(response => {
 
           this.usuarios = this.usuarios.filter(r => r != usuario)
-          swalWithBootstrapButtons.fire(
+          SwalWithBootstrapButtons.fire(
             'Eliminado!',
             `Usuario ${response.body?.email} eliminado con éxito`,
             'success'

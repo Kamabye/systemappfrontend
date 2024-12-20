@@ -7,7 +7,7 @@ import { PacienteService } from 'src/app/services/paciente.service';
 import { Consulta } from 'src/app/models/consulta';
 import { ConsultaService } from 'src/app/services/consulta.service';
 
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-formconsulta',
@@ -49,7 +49,7 @@ export class FormconsultaComponent implements OnInit {
 
           },
           error: err => {
-            swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+            Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
             console.error("Error al obtener el paciente: ", err);
           },
           complete: () => {
@@ -70,14 +70,14 @@ export class FormconsultaComponent implements OnInit {
         if (data) {
           this.consulta = data.body!;
           this.router.navigate(['/home/paciente'])
-          swal.fire('Mensaje', `consulta: ${data.body?.idConsulta} creado con éxito!`, 'success')
+          Swal.fire('Mensaje', `consulta: ${data.body?.idConsulta} creado con éxito!`, 'success')
         } else {
           console.error('El cuerpo de la respuesta es nulo.');
         }
       },
       error: err => {
         this.router.navigate(['/home/paciente']);
-        swal.fire('Mensaje', `${err.error.mensaje}`, 'warning');
+        Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning');
         console.error("Error al crear la consulta: ", err);
       },
       complete: () => {

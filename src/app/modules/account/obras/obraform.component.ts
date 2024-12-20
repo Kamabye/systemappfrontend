@@ -7,7 +7,7 @@ import { Partitura } from 'src/app/models/partitura';
 import { ObraService } from 'src/app/services/obra.service';
 //import { PartituraService}
 
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-obraform',
@@ -51,7 +51,7 @@ export class ObraformComponent implements OnInit {
           },
           error => {
             this.router.navigate(['/admin/obras'])
-            swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
+            Swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
             console.error("Error al obtener el usuario: ", error);
           })
       }
@@ -81,7 +81,7 @@ export class ObraformComponent implements OnInit {
           },
           error => {
             this.router.navigate(['/admin/obras'])
-            swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
+            Swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
             console.error("Error al obtener el usuario: ", error);
           })
       }
@@ -105,7 +105,7 @@ export class ObraformComponent implements OnInit {
         response => {
           if (response.body != null) {
             this.router.navigate(['/account/obra'])
-            swal.fire('Mensaje', `Obra: ${response.body.nombre} creado con éxito!`, 'success')
+            Swal.fire('Mensaje', `Obra: ${response.body.nombre} creado con éxito!`, 'success')
           } else {
             console.error('El cuerpo de la respuesta es nulo.');
           }
@@ -113,7 +113,7 @@ export class ObraformComponent implements OnInit {
         },
         error => {
           this.router.navigate(['/account/obra'])
-          swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
+          Swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
           console.error("Error al crear la obra: ", error);
         }
       );
@@ -131,7 +131,7 @@ export class ObraformComponent implements OnInit {
         response => {
           if (response.body != null) {
             this.router.navigate(['/account/obra'])
-            swal.fire('Mensaje', `Obra: ${response.body.nombre} creado con éxito!`, 'success')
+            Swal.fire('Mensaje', `Obra: ${response.body.nombre} creado con éxito!`, 'success')
           } else {
             console.error('El cuerpo de la respuesta es nulo.');
           }
@@ -139,7 +139,7 @@ export class ObraformComponent implements OnInit {
         },
         error => {
           this.router.navigate(['/account/obra'])
-          swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
+          Swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
           console.error("Error al crear la obra: ", error);
         }
       );

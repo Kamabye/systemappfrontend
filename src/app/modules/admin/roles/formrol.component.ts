@@ -5,7 +5,7 @@ import { RolService } from 'src/app/services/rol.service';
 import { Rol } from 'src/app/models/rol';
 
 
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-formrol',
@@ -46,7 +46,7 @@ export class FormrolComponent implements OnInit {
           },
           error => {
             this.router.navigate(['admin/rol'])
-            swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
+            Swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
             console.error("Error al obtener el rol: ", error);
           })
       }
@@ -61,7 +61,7 @@ export class FormrolComponent implements OnInit {
         response => {
           if (response.body !== null) {
             this.router.navigate(['admin/rol'])
-            swal.fire('Mensaje', `Rol: ${response.body.rol} creado con éxito!`, 'success')
+            Swal.fire('Mensaje', `Rol: ${response.body.rol} creado con éxito!`, 'success')
           } else {
             console.error('El cuerpo de la respuesta es nulo.');
           }
@@ -69,7 +69,7 @@ export class FormrolComponent implements OnInit {
         },
         error => {
           this.router.navigate(['admin/rol'])
-          swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
+          Swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
           console.error("Error al crear el rol: ", error);
         }
       );
@@ -79,7 +79,7 @@ export class FormrolComponent implements OnInit {
     this.rolService.actualizarRol(this.rol).subscribe(
       response => {
         this.router.navigate(['admin/rol'])
-        swal.fire('El Rol', `Rol ${response.body?.rol} fue modificado con éxito!`, 'success')
+        Swal.fire('El Rol', `Rol ${response.body?.rol} fue modificado con éxito!`, 'success')
       })
   }
 }

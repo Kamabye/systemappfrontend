@@ -8,7 +8,8 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { FormControl } from '@angular/forms';
 
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
+
 import { of } from 'rxjs';
 
 @Component({
@@ -65,13 +66,13 @@ export class PacienteComponent implements OnInit {
           this.page = data.body!;
           this.pacientes = this.page?.content ?? [];
         } else {
-          swal.fire('Sin datos', '', 'warning')
+          Swal.fire('Sin datos', '', 'warning')
           console.error('No data in response');
           this.pacientes = [];
         }
       },
       error: err => {
-        swal.fire('Error al cargar los datos', `${err.error.mensaje}`, 'warning')
+        Swal.fire('Error al cargar los datos', `${err.error.mensaje}`, 'warning')
         console.error("Error al obtener los pacientes: ", err);
       },
       complete: () => {
@@ -83,7 +84,7 @@ export class PacienteComponent implements OnInit {
 
   public eliminarPaciente(paciente: Paciente): void {
 
-    const swalWithBootstrapButtons = swal.mixin({
+    const SwalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton: 'btn btn-success',
         cancelButton: 'btn btn-danger'
@@ -91,7 +92,7 @@ export class PacienteComponent implements OnInit {
       buttonsStyling: false
     })
 
-    swalWithBootstrapButtons.fire({
+    SwalWithBootstrapButtons.fire({
       title: '¿Estás seguro?',
       text: `Estas seguro de eliminar al paciente ${paciente.nombres}`,
       icon: 'warning',
@@ -104,7 +105,7 @@ export class PacienteComponent implements OnInit {
         this.pacienteService.eliminarPaciente(paciente.idPaciente).subscribe(response => {
 
           this.pacientes = this.pacientes.filter(r => r != paciente)
-          swalWithBootstrapButtons.fire(
+          SwalWithBootstrapButtons.fire(
             'Eliminado!',
             `Paciente ${response.body?.nombres} eliminado con éxito`,
             'success'

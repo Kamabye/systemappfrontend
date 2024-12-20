@@ -5,7 +5,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { FormControl } from '@angular/forms';
 
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 import { Page } from 'src/app/interfaces/page';
 import { Paciente } from 'src/app/models/paciente';
@@ -52,7 +52,7 @@ export class ConsultaComponent implements OnInit {
 
                     },
                     error: err => {
-                        swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+                        Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
                         console.error("Error al obtener el paciente: ", err);
                     },
                     complete: () => {
@@ -78,7 +78,7 @@ export class ConsultaComponent implements OnInit {
                 }
             },
             error: err => {
-                swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+                Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
                 console.error("Error al obtener los pacientes: ", err);
             },
             complete: () => {

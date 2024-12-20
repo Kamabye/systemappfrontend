@@ -6,7 +6,7 @@ import { Consulta } from 'src/app/models/consulta';
 
 import { ConsultaService } from 'src/app/services/consulta.service';
 
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-datosconsulta',
@@ -45,7 +45,7 @@ export class DatosconsultaComponent implements OnInit {
 
           },
           error: err => {
-            swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+            Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
             console.error("Error al obtener el paciente: ", err);
           },
           complete: () => {
@@ -75,7 +75,7 @@ export class DatosconsultaComponent implements OnInit {
 
           },
           error: err => {
-            swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+            Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
             console.error("Error al obtener el paciente: ", err);
           },
           complete: () => {
