@@ -17,10 +17,11 @@
         <button class="page-item page-link" (click)="onPageChange(0)" [disabled]="currentPage === 0">1</button>
         <button class="page-item page-link" *ngIf="currentPage > 0" (click)="onPageChange(currentPage - 1)"
           [disabled]="true">{{currentPage+1}}</button>
-        <button class="page-item page-link" *ngIf="(currentPage+1) < (page?.totalPages ?? 0)" (click)="onPageChange((page?.totalPages ?? 1) -1)"
+        <button class="page-item page-link" *ngIf="(currentPage+1) < (page?.totalPages ?? 0)"
+          (click)="onPageChange((page?.totalPages ?? 1) -1)"
           [disabled]="currentPage+1 === page?.totalPages">{{page?.totalPages ?? 1 -1}}</button>
-        <button class="page-item page-link" *ngIf="(currentPage+1) < (page?.totalPages ?? 0)" (click)="onPageChange(currentPage + 1)"
-          [disabled]="currentPage+1 === page?.totalPages">&raquo;</button>
+        <button class="page-item page-link" *ngIf="(currentPage+1) < (page?.totalPages ?? 0)"
+          (click)="onPageChange(currentPage + 1)" [disabled]="currentPage+1 === page?.totalPages">&raquo;</button>
       </div>
     </nav>
 
@@ -55,18 +56,18 @@
           <th>{{paciente.direccion}}</th>
           <th>{{paciente.edadCalculada}}</th>
           <th>
-            <button type="submit" class="btn btn-primary btn-lg"
-              [routerLink]="['/home/consulta/find',paciente.idPaciente]">
-              <i class="fa-solid fa-eye"></i> Expediente</button>
+            <a type="submit" class="btn btn-primary btn-lg" [routerLink]="['/home/consulta/find',paciente.idPaciente]">
+              <i class="fa-solid fa-eye"></i> Expediente</a>
           </th>
           <th>
-            <button type="submit" class="btn btn-warning btn-lg"
-              [routerLink]="['/home/consulta/form',paciente.idPaciente]"><i class="fa-solid fa-file-circle-plus"></i> Nuevo
-              Examen</button>
+            <a type="submit" class="btn btn-warning btn-lg"
+              [routerLink]="['/home/consulta/form',paciente.idPaciente]"><i class="fa-solid fa-file-circle-plus"></i>
+              Nuevo
+              Examen</a>
           </th>
           <th>
-            <button type="submit" class="btn btn-success btn-lg"
-              [routerLink]="['/home/paciente/form',paciente.idPaciente]"><i class="fas fa-user-edit"></i> Editar</button>
+            <a type="submit" class="btn btn-success btn-lg"
+              [routerLink]="['/home/paciente/form',paciente.idPaciente]"><i class="fas fa-user-edit"></i> Editar</a>
           </th>
         </tr>
       </tbody>
