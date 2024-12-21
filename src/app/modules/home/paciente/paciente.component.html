@@ -44,7 +44,6 @@
           <th>Paciente</th>
           <th>Celular</th>
           <th>Direccion</th>
-          <th>Edad Calculada</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -53,7 +52,6 @@
           <th>{{paciente.nombres}} {{paciente.primerApellido}} {{paciente.segundoApellido}}</th>
           <th>{{paciente.celular}}</th>
           <th>{{paciente.direccion}}</th>
-          <th>{{paciente.edadCalculada}}</th>
           <th>
             <a type="submit" class="btn btn-primary btn-lg" [routerLink]="['/home/consulta/find',paciente.idPaciente]">
               <i class="fa-solid fa-eye"></i> Expediente</a>
