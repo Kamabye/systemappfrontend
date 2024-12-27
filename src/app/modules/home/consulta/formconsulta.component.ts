@@ -27,8 +27,37 @@ export class FormconsultaComponent implements OnInit {
   ngOnInit() {
     console.info("FormconsultaComponent ngOnInit()")
 
+    this.cargarconsulta();
     this.cargarpaciente()
 
+  }
+  cargarconsulta() {
+    console.info("FormpconsultaComponent cargarconsulta()")
+    this.activateRoute.params.subscribe(params => {
+
+      let idConsulta = params['idConsulta']
+
+      if (idConsulta) {
+        this.consultaService.getConsulta(idConsulta).subscribe({
+          next: data => {
+            if (data.body !== null) {
+              this.consulta = data.body;
+              console.info(this.consulta);
+            } else {
+              console.error('El cuerpo de la respuesta es nulo.');
+            }
+
+          },
+          error: err => {
+            Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+            console.error("Error al obtener la consulta: ", err);
+          },
+          complete: () => {
+            console.log('Consulta loaded');
+          }
+        });
+      }
+    });
   }
 
   cargarpaciente(): void {

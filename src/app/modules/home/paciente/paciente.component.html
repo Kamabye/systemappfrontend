@@ -53,12 +53,12 @@
           <th>{{paciente.celular}}</th>
           <th>{{paciente.direccion}}</th>
           <th>
-            <a type="submit" class="btn btn-primary btn-lg" [routerLink]="['/home/consulta/find',paciente.idPaciente]" [queryParams]="{ q: 'angular', page: 2 }">
+            <a type="submit" class="btn btn-primary btn-lg" [routerLink]="['/home/consulta/find',paciente.idPaciente]"
+              [queryParams]="{ q: 'angular', page: 2 }">
               <i class="fa-solid fa-eye"></i> Expediente</a>
             <a type="submit" class="btn btn-warning btn-lg"
               [routerLink]="['/home/consulta/form',paciente.idPaciente]"><i class="fa-solid fa-file-circle-plus"></i>
-              Nuevo
-              Examen</a>
+              Nuevo Examen</a>
             <a type="submit" class="btn btn-success btn-lg"
               [routerLink]="['/home/paciente/form',paciente.idPaciente]"><i class="fas fa-user-edit"></i> Editar</a>
           </th>

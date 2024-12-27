@@ -104,7 +104,8 @@
           </ng-template>
         </div>
         <div class="col-sm-6">
-          <button type="submit" class="btn btn-danger" (click)='eliminarPaciente()'>Eliminar</button>
+          <button type="submit" class="btn btn-danger" (click)='eliminarPaciente()'
+            *ngIf="paciente.idPaciente">Eliminar</button>
         </div>
       </div>
 

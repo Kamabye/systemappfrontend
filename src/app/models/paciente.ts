@@ -5,7 +5,7 @@ export class Paciente {
     nombres : string = '';
     primerApellido : string = '';
     segundoApellido : string = '';
-    edad: number = 0;
+    edad: number | null = null;
     edadCalculada : number = 0;
 
     fechaNacimiento: Date = new Date();

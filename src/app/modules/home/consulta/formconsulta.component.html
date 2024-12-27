@@ -1520,14 +1520,16 @@
                 <div class="card-footer">
                     <div class="col-sm-6">
                         <button type="submit" class="btn btn-success" (click)='crearConsulta()'
-                          *ngIf="!consulta.idConsulta; else elseBlock">Crear</button>
+                            *ngIf="!consulta.idConsulta; else elseBlock">Crear</button>
                         <ng-template #elseBlock>
-                          <button type="submit" class="btn btn-primary" (click)='actualizarConsulta()'>Actualizar</button>
+                            <button type="submit" class="btn btn-primary"
+                                (click)='actualizarConsulta()'>Actualizar</button>
                         </ng-template>
-                      </div>
-                      <div class="col-sm-6">
-                        <button type="submit" class="btn btn-danger" (click)='eliminarConsulta()'>Eliminar</button>
-                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-danger" (click)='eliminarConsulta()'
+                            *ngIf="consulta.idConsulta">Eliminar</button>
+                    </div>
                 </div>
             </form>
         </div>
