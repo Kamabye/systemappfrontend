@@ -1,40 +1,79 @@
+<p>consulta.component.html</p>
 <div class="row">
-
+  <div class="col">
     <h1>Consultas Registradas</h1>
-  
-    <div class="card">
-      <div class="card-header">
-        <nav class="navbar bg-body-tertiary">
-          <div class="container-fluid">
-            <a href="/home/paciente" class="btn btn-success"><i class="fas fa-home"></i> Inicio</a>
-          </div>
-        </nav>
-      </div>
-      <!-- /.card-header -->
-      <div class="card-body table-responsive">
-        <table class="table table-hover" *ngIf="consultas.length > 0">
-          <thead>
-            <tr>
-                <th>Fecha Exámen</th>
-                <th>SubjetivoLejosDerecho</th>
-                <th>SubjetivoLejosIzquierdo</th>
-                <th>Ver</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <tr *ngFor="let consulta of consultas">
-              <th>{{consulta.fechaModificacion | date:'dd-MMMM-yyyy'}}</th>
-              <th>{{consulta.subLejDer}}</th>
-              <th>{{consulta.subLejIzq}}</th>
-              <th>
-                <button type="submit" class="btn btn-success btn-lg"
-                  [routerLink]="['/home/consulta/view/',consulta.idConsulta]"><i class="fas fa-search"></i>Ver</button>
-              </th>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- /.card-body -->
-    </div>
-  
   </div>
+
+</div>
+
+<div class="row">
+  <div class="col text-start">
+    <a href="/home/paciente" class="btn btn-success"><i class="fas fa-home"></i> Inicio</a>
+  </div>
+  <div class="col text-end">
+    <h1>
+      <a type="submit" class="btn btn-warning btn-lg" [routerLink]="['/home/consulta/form',paciente.idPaciente]"><i
+          class="fa-solid fa-file-circle-plus"></i> Nuevo Examen</a>
+    </h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="table-responsive">
+      <table class="table align-middle table-hover" *ngIf="consultas.length > 0">
+        <thead>
+          <tr>
+            <th>Fecha Exámen</th>
+            <th>Subjetivo Lejos</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr *ngFor="let consulta of consultas">
+            <th>{{consulta.fechaModificacion | date:'dd-MMMM-yyyy'}}</th>
+            <th>
+              <div class="col">
+                Derecha:
+              </div>
+              <div class="col">
+
+                {{consulta.subLejDer >= 0 ? '+' + consulta.subLejDer : consulta.subLejDer | number:'1.2-2' :'en-US'}}
+                =
+                {{consulta.subLejAstigDer >= 0 ? '+' + consulta.subLejAstigDer : consulta.subLejAstigDer |
+                number:'1.2-2'
+                :'en-US'}}
+                X
+                {{consulta.subLejAngDer}}°
+              </div>
+              <div class="col">
+                Izquierda:
+              </div>
+              <div class="col">
+
+                {{consulta.subLejIzq >= 0 ? '+' + consulta.subLejIzq : consulta.subLejIzq | number:'1.2-2' :'en-US'}}
+                =
+                {{consulta.subLejAstigIzq >= 0 ? '+' + consulta.subLejAstigIzq : consulta.subLejAstigIzq |
+                number:'1.2-2'
+                :'en-US'}}
+                X
+                {{consulta.subLejAngIzq}}°
+              </div>
+
+
+
+
+            </th>
+            <th>
+              <a type="submit" class="btn btn-success btn-lg"
+                [routerLink]="['/home/consulta/view/',consulta.idConsulta]"><i class="fas fa-search"></i>Ver</a>
+              <a type="submit" class="btn btn-warning btn-lg"
+                [routerLink]="['/home/consulta/edit',consulta.idConsulta]"><i class="fas fa-user-edit"></i> Editar</a>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

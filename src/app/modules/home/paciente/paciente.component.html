@@ -5,10 +5,10 @@
 </div>
 
 <div class="row">
-  <div class="col">
-    <button class="btn btn-rounded btn-success btn-lg" type="button" [routerLink]="['/home/paciente/form']"><i
+  <div class="col text-start">
+    <a class="btn btn-rounded btn-success btn-lg" type="button" [routerLink]="['/home/paciente/form']"><i
         class="fas fa-user-plus"></i> Nuevo Paciente
-    </button>
+    </a>
   </div>
   <div class="col text-center">
     <nav aria-label="Page navigation example">
@@ -27,7 +27,7 @@
     </nav>
 
   </div>
-  <div class="col">
+  <div class="col text-end">
     <form class="d-flex" role="search">
       <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Search"
         [formControl]="searchControl" ngDefaultControl="">
@@ -38,7 +38,7 @@
 
 <div class="row">
   <div class="table-responsive">
-    <table class="table  align-middle table-hover" *ngIf="pacientes.length > 0">
+    <table class="table align-middle table-hover" *ngIf="pacientes.length > 0">
       <thead>
         <tr>
           <th>Paciente</th>
@@ -53,7 +53,7 @@
           <th>{{paciente.celular}}</th>
           <th>{{paciente.direccion}}</th>
           <th>
-            <a type="submit" class="btn btn-primary btn-lg" [routerLink]="['/home/consulta/find',paciente.idPaciente]">
+            <a type="submit" class="btn btn-primary btn-lg" [routerLink]="['/home/consulta/find',paciente.idPaciente]" [queryParams]="{ q: 'angular', page: 2 }">
               <i class="fa-solid fa-eye"></i> Expediente</a>
             <a type="submit" class="btn btn-warning btn-lg"
               [routerLink]="['/home/consulta/form',paciente.idPaciente]"><i class="fa-solid fa-file-circle-plus"></i>
