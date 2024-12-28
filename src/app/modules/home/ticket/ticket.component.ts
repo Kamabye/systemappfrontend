@@ -21,14 +21,4 @@ export class TicketComponent implements OnInit {
     ];
     total = this.items.reduce((acc, item) => acc + item.price, 0);
 
-    printTicket() {
-        const printContents = document.getElementById('ticket')!.innerHTML;
-        const originalContents = document.body.innerHTML;
-
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-        window.location.reload(); // Recargar la página para restaurar el contenido original
-    }
-
 }

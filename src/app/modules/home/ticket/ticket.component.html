@@ -2,20 +2,19 @@
 
 <div class="row">
     <div class="col" id="ticket">
-        <h2>Nombre del Comercio</h2>
-        <p>Dirección del Comercio</p>
-        <p>Teléfono del Comercio</p>
+        <h1>Nombre del Comercio</h1>
+        <h1>Dirección del Comercio</h1>
+        <h1>Teléfono del Comercio</h1>
         <hr>
-        <p><strong>Fecha:</strong> {{ currentDate }}</p>
-        <p><strong>Cliente:</strong> {{ customerName }}</p>
+        <h1><strong>Fecha:</strong> {{ currentDate }}</h1>
+        <h1><strong>Cliente:</strong> {{ customerName }}</h1>
         <hr>
         <div *ngFor="let item of items">
-            <p>{{ item.name }} - {{ item.price }}</p>
+            <h1>{{ item.name }} - {{ item.price }}</h1>
         </div>
         <hr>
-        <p><strong>Total:</strong> {{ total }}</p>
+        <h1><strong>Total:</strong> {{ total }}</h1>
         <hr>
-        <p>¡Gracias por su compra!</p>
+        <h1>¡Gracias por su compra!</h1>
     </div>
-    <button (click)="printTicket()">Imprimir Ticket</button>
 </div>
