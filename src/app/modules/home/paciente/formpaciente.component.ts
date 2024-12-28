@@ -111,7 +111,7 @@ export class FormpacienteComponent implements OnInit {
       data => {
         this.router.navigate(['/home/paciente'])
         Swal.fire('El paciente', `El paciente ${data.body?.nombres} fue eliminado con éxito!`, 'success')
-      })
+      });
   }
 
 }

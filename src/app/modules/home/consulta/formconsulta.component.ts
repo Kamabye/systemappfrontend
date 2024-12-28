@@ -144,7 +144,12 @@ export class FormconsultaComponent implements OnInit {
   }
 
   eliminarConsulta() {
-    throw new Error('Method not implemented.');
+    console.log('FormConsultaComponente eliminarConsulta');
+    this.consultaService.eliminarConsulta(this.consulta.idConsulta).subscribe(
+          data => {
+            this.router.navigate(['/home/consulta/find',this.paciente.idPaciente]);
+            Swal.fire('Mensaje', `La consulta ${data.body?.idConsulta} fue eliminada con éxito!`, 'success');
+          });
   }
 
   
