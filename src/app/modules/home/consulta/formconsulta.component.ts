@@ -159,8 +159,8 @@ export class FormconsultaComponent implements OnInit {
     this.consultaService.patchUpdateConsulta(this.consulta).subscribe({
           next: data => {
             if (data.body !== null) {
-              //Por defecto se redirecciona al home/paciente, pero podria redirigir a las consultas del paciente
-              this.router.navigate(['/home/paciente'])
+              
+              this.router.navigate(['/home/consulta/find',this.paciente.idPaciente])
               Swal.fire('Mensaje:', `La consulta ${data.body?.idConsulta} fue modificada con éxito!`, 'success')
             } else {
               console.error('El cuerpo de la respuesta es nulo.');
