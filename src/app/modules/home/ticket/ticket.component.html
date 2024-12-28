@@ -1,17 +1,21 @@
-<div id="ticket">
-    <h2>Nombre del Comercio</h2>
-    <p>Dirección del Comercio</p>
-    <p>Teléfono del Comercio</p>
-    <hr>
-    <p><strong>Fecha:</strong> {{ currentDate }}</p>
-    <p><strong>Cliente:</strong> {{ customerName }}</p>
-    <hr>
-    <div *ngFor="let item of items">
-        <p>{{ item.name }} - {{ item.price  }}</p>
+<p>ticket.component.html</p>
+
+<div class="row">
+    <div class="col" id="ticket">
+        <h2>Nombre del Comercio</h2>
+        <p>Dirección del Comercio</p>
+        <p>Teléfono del Comercio</p>
+        <hr>
+        <p><strong>Fecha:</strong> {{ currentDate }}</p>
+        <p><strong>Cliente:</strong> {{ customerName }}</p>
+        <hr>
+        <div *ngFor="let item of items">
+            <p>{{ item.name }} - {{ item.price }}</p>
+        </div>
+        <hr>
+        <p><strong>Total:</strong> {{ total }}</p>
+        <hr>
+        <p>¡Gracias por su compra!</p>
     </div>
-    <hr>
-    <p><strong>Total:</strong> {{ total  }}</p>
-    <hr>
-    <p>¡Gracias por su compra!</p>
+    <button (click)="printTicket()">Imprimir Ticket</button>
 </div>
-<button (click)="printTicket()">Imprimir Ticket</button>

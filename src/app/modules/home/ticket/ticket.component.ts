@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
     selector: 'app-ticket',
-    templateUrl: './ticket.component.html',
-    styleUrls: ['./ticket.component.css']
+    templateUrl: './ticket.component.html'
 })
 
 export class TicketComponent implements OnInit {
