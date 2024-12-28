@@ -24,7 +24,7 @@ export class Consulta {
     addDer: number = 0.00;
     addIzq: number = 0.00;
 
-    dip: number = 0.00;
+    dip: number | null = null;
 
     rx: string = "";
 

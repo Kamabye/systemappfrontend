@@ -28,32 +28,31 @@ export class PacienteComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.info("PacienteComponent ngOnInit()");
-
+    console.log("PacienteComponent ngOnInit()");
 
     this.searchControl.setValue('');
 
     this.searchControl.valueChanges.pipe(
       debounceTime(1000), // Espera 1000ms después de que el usuario deje de escribir
       distinctUntilChanged() // Evita emitir si el valor es el mismo que el anterior
-    ).subscribe(searchTerm => {
+    ).subscribe(searchString => {
       this.pacientes = [];
       this.currentPage = 0;
-      this.fetchPacientes(searchTerm);
+      this.fetchPacientes(searchString);
 
     });
     ;
 
-
-
     this.loadPacientes();
   }
 
-  fetchPacientes(searchTerm: string) {
-    this.pacienteService.getPacientesByString(this.currentPage, this.pageSize, searchTerm).pipe(
+  fetchPacientes(searchString: string) {
+
+    this.pacienteService.getPacientesByString(this.currentPage, this.pageSize, searchString).pipe(
       switchMap((response: any) => {
         this.page = response.body;
         this.pacientes = this.page?.content ?? [];
+        console.log("PacienteComponent fetchPacientes");
         return of(response); // Emitir la respuesta para que la suscripción la reciba
       })
     ).subscribe();
@@ -65,24 +64,26 @@ export class PacienteComponent implements OnInit {
         if (data) {
           this.page = data.body!;
           this.pacientes = this.page?.content ?? [];
+          console.log("PacienteComponent loadPacientes sucess");
         } else {
           Swal.fire('Sin datos', '', 'warning')
-          console.error('No data in response');
+          console.info(`no se encontraron datos de pacientes ${data}`);
           this.pacientes = [];
         }
       },
       error: err => {
-        Swal.fire('Error al cargar los datos', `${err.error.mensaje}`, 'warning')
+        Swal.fire('Error al obtener los pacientes', `${err.error.mensaje}`, 'warning')
         console.error("Error al obtener los pacientes: ", err);
       },
       complete: () => {
-        console.log('Pacientes loaded');
+        console.log('loadPacientes complete');
       }
     }
     );
   }
 
   public eliminarPaciente(paciente: Paciente): void {
+    console.log('PacienteComponent eliminarPaciente');
 
     const SwalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -117,6 +118,7 @@ export class PacienteComponent implements OnInit {
   }
 
   onPageChange(page: number): void {
+    console.log('PacienteComponent onPageChange');
     this.currentPage = page;
     this.loadPacientes();
   }

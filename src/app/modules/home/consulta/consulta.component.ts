@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-
 import { FormControl } from '@angular/forms';
 
 import Swal from 'sweetalert2';
@@ -21,44 +19,63 @@ export class ConsultaComponent implements OnInit {
 
     public paciente: Paciente = new Paciente();
     consultas: Consulta[] = [];
-    page: Page<Consulta> | undefined;
-    currentPage = 0;
-    pageSize = 3;
-    searchControl = new FormControl();
+    //page: Page<Consulta> | undefined;
+    //currentPage = 0;
+    //pageSize = 3;
+    //searchControl = new FormControl();
 
-    constructor(private pacienteService: PacienteService, private consultaService: ConsultaService, private router: Router, private activateRoute: ActivatedRoute) { }
+    constructor(
+        private pacienteService: PacienteService,
+        private consultaService: ConsultaService,
+        private router: Router,
+        private activateRoute: ActivatedRoute) { }
 
     ngOnInit(): void {
+        console.log("ConsultaComponent ngOnInit()")
         this.cargarpaciente();
     }
 
     cargarpaciente(): void {
-        console.info("ConsultaComponent cargarpaciente()")
-        this.activateRoute.params.subscribe(params => {
+        console.log("ConsultaComponent cargarpaciente()")
+        this.activateRoute.paramMap.subscribe(params => {
 
-            let idPaciente = params['idPaciente']
+            const idPacienteString = params.get('idPaciente'); // Obtiene el valor del parámetro 'idPaciente' (como string)
 
-            if (idPaciente) {
-                this.pacienteService.getPaciente(idPaciente).subscribe({
-                    next: data => {
-                        if (data.body !== null) {
-                            this.paciente = data.body;
-                            console.info(this.paciente);
-                            console.info("Datos del paciente");
-                            this.loadConsultas();
-                        } else {
-                            console.error('El cuerpo de la respuesta es nulo.');
+            if (idPacienteString) {
+                const idPaciente = Number(idPacienteString); // Intenta convertir a número
+                if (!isNaN(idPaciente)) { // Verifica si la conversión fue exitosa
+
+                    console.info("idPaciente presente. Cargando paciente...");
+                    this.pacienteService.getPaciente(idPaciente).subscribe({
+                        next: data => {
+                            if (data.body !== null) {
+                                this.paciente = data.body;
+                                //console.info(this.paciente);
+                                //console.info("Datos del paciente");
+                                this.loadConsultas();
+                            } else {
+                                console.error('El cuerpo de la respuesta es nulo.');
+                            }
+
+                        },
+                        error: err => {
+                            Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+                            console.error("Error al obtener el paciente: ", err);
+                        },
+                        complete: () => {
+                            console.log('ConsultaComponent cargarPaciente complete');
                         }
+                    });
 
-                    },
-                    error: err => {
-                        Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
-                        console.error("Error al obtener el paciente: ", err);
-                    },
-                    complete: () => {
-                        console.log('Pacientes loaded');
-                    }
-                });
+                } else {
+
+                    console.error('El parámetro "idPaciente" no es un número válido.');
+                    //Aquí podrías redireccionar a una página de error o mostrar un mensaje al usuario
+                }
+            } else {
+
+                console.error('El parámetro "idPaciente" no está presente en la URL.');
+                //Aquí podrías redireccionar a una página de error o mostrar un mensaje al usuario
             }
         });
 
@@ -66,36 +83,26 @@ export class ConsultaComponent implements OnInit {
     }
 
     loadConsultas() {
-        console.info("Cargar consultas ConsultaComponent ngOnInit()");
-        this.consultaService.getConsultasByPaciente(this.currentPage, this.pageSize, this.paciente.idPaciente).subscribe({
+        console.log("ConsultaComponent loadConsultas()");
+        this.consultaService.getConsultasByPaciente(this.paciente.idPaciente).subscribe({
             next: data => {
                 if (data) {
-                    this.page = data.body!;
                     this.consultas = data.body?.content ?? [];
                 } else {
-                    console.error('No data in response');
-                    this.consultas = [];
+                    this.router.navigate(['/home/paciente'])
+                    Swal.fire('Mensaje', `paciente: ${this.paciente.idPaciente} no tiene consultas!`, 'warning')
+                    console.error('El paciente no tiene consultas');
                 }
             },
             error: err => {
                 Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
-                console.error("Error al obtener los pacientes: ", err);
+                console.error("Error al obtener las consultas: ", err);
             },
             complete: () => {
-                console.log('Pacientes loaded');
+                console.log('ConsultaComponent loadConsultas complete');
             }
         }
         );
     }
-
-    eliminarConsulta(_t38: Consulta) {
-        throw new Error('Method not implemented.');
-    }
-
-    onPageChange(page: number): void {
-        this.currentPage = page;
-        this.loadConsultas();
-    }
-
 
 }

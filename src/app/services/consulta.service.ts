@@ -33,15 +33,9 @@ export class ConsultaService {
         //return this.http.get<Page<Paciente>>(`${this.urlEndPointPacienteKamabye}`, { params, observe: 'response' });
     }
 
-    getConsultasByPaciente(pageNumber: number, pageSize: number, idPaciente: number): Observable<HttpResponse<Page<Consulta>>> {
+    getConsultasByPaciente(idPaciente: number): Observable<HttpResponse<Page<Consulta>>> {
 
-        const params = new HttpParams()
-            .set('pageNumber', pageNumber.toString())
-            .set('pageSize', pageSize.toString());
-
-        //return this.http.get<Page<Paciente[]>>(`${this.urlEndPointPaciente}?page=${page}&size=${size}`, { observe: 'response' });
         return this.http.get<Page<Consulta>>(`${this.urlEndPointConsulta}/${idPaciente}`, { observe: 'response' });
-        //return this.http.get<Page<Paciente>>(`${this.urlEndPointPacienteKamabye}`, { params, observe: 'response' });
     }
 
     getConsulta(idConsulta: number): Observable<HttpResponse<Consulta>> {
@@ -61,9 +55,9 @@ export class ConsultaService {
         return this.http.post<Consulta>(this.urlEndPointConsulta, consulta, { observe: 'response' });
     }
 
-    actualizarConsulta(consulta: Consulta): Observable<HttpResponse<Consulta>> {
+    patchUpdateConsulta(consulta: Consulta): Observable<HttpResponse<Consulta>> {
         //return this.http.put<Paciente>(`${this.urlEndPointPaciente}/${paciente.idPaciente}`, paciente, { headers: this.httpHeaders, observe: 'response' });
-        return this.http.put<Consulta>(`${this.urlEndPointConsulta}`, consulta, { headers: this.httpHeaders, observe: 'response' });
+        return this.http.patch<Consulta>(`${this.urlEndPointConsulta}`, consulta, { headers: this.httpHeaders, observe: 'response' });
     }
 
     eliminarConsulta(idConsulta: number): Observable<HttpResponse<Consulta>> {

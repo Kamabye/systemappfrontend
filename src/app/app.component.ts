@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
 
   ngOnInit(): void {
-    console.info("AppComponent ngOnInit()");
+    console.log("AppComponent ngOnInit()");
   }
 
 }

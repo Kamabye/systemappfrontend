@@ -20,74 +20,101 @@ export class FormconsultaComponent implements OnInit {
   public paciente: Paciente = new Paciente();
   public consulta: Consulta = new Consulta();
 
-  constructor(private pacienteService: PacienteService, private consultaService: ConsultaService, private router: Router, private activateRoute: ActivatedRoute) {
-
-  }
+  constructor(
+    private pacienteService: PacienteService,
+    private consultaService: ConsultaService,
+    private router: Router,
+    private activateRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    console.info("FormconsultaComponent ngOnInit()")
+    console.info("FormConsultaComponent ngOnInit()");
 
-    this.cargarconsulta();
-    this.cargarpaciente()
+    this.activateRoute.paramMap.subscribe(params => {
+      const idPacienteString = params.get('idPaciente'); // Obtiene el valor del parámetro 'idPaciente' (como string)
+      if (idPacienteString) {
+        const idPaciente = Number(idPacienteString); // Intenta convertir a número
+        if (!isNaN(idPaciente)) { // Verifica si la conversión fue exitosa
+
+          console.info("idPaciente presente. Cargando paciente...");
+          this.cargarpaciente(idPaciente);
+
+        } else {
+
+          console.error('El parámetro "idPaciente" no es un número válido.');
+          //Aquí podrías redireccionar a una página de error o mostrar un mensaje al usuario
+        }
+      } else {
+
+        console.error('El parámetro "idPaciente" no está presente en la URL.');
+        //Aquí podrías redireccionar a una página de error o mostrar un mensaje al usuario
+      }
+
+
+      const idConsultaString = params.get('idConsulta'); // Obtiene el valor del parámetro 'idPaciente' (como string)
+      if (idConsultaString) {
+        const idConsulta = Number(idConsultaString); // Intenta convertir a número
+        if (!isNaN(idConsulta)) { // Verifica si la conversión fue exitosa
+
+          console.info("idConsulta presente. Cargando consulta...");
+          this.cargarconsulta(idConsulta);
+
+        } else {
+
+          console.error('El parámetro "idConsulta" no es un número válido.');
+          //Aquí podrías redireccionar a una página de error o mostrar un mensaje al usuario
+        }
+      } else {
+
+        console.error('El parámetro "idConsulta" no está presente en la URL.');
+        //Aquí podrías redireccionar a una página de error o mostrar un mensaje al usuario
+      }
+
+    });
 
   }
-  cargarconsulta() {
-    console.info("FormpconsultaComponent cargarconsulta()")
-    this.activateRoute.params.subscribe(params => {
+  cargarconsulta(idConsulta: number) {
+    console.info("FormpconsultaComponent cargarconsulta(idConsulta)")
 
-      let idConsulta = params['idConsulta']
+    this.consultaService.getConsulta(idConsulta).subscribe({
+      next: data => {
+        if (data.body !== null) {
+          this.consulta = data.body;
+          this.cargarPacienteByIdConsulta(this.consulta.idConsulta);
+        } else {
+          console.error('El cuerpo de la respuesta es nulo.');
+        }
 
-      if (idConsulta) {
-        this.consultaService.getConsulta(idConsulta).subscribe({
-          next: data => {
-            if (data.body !== null) {
-              this.consulta = data.body;
-              console.info(this.consulta);
-            } else {
-              console.error('El cuerpo de la respuesta es nulo.');
-            }
-
-          },
-          error: err => {
-            Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
-            console.error("Error al obtener la consulta: ", err);
-          },
-          complete: () => {
-            console.log('Consulta loaded');
-          }
-        });
+      },
+      error: err => {
+        Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+        console.error("Error al obtener la consulta: ", err);
+      },
+      complete: () => {
+        console.log('FormpconsultaComponent cargarconsulta complete:');
       }
     });
   }
 
-  cargarpaciente(): void {
-    console.info("FormpconsultaComponent cargarpaciente()")
-    this.activateRoute.params.subscribe(params => {
+  cargarpaciente(idPaciente: number): void {
+    console.log("FormpconsultaComponent cargarpaciente(idPaciente)");
+    this.pacienteService.getPaciente(idPaciente).subscribe({
+      next: data => {
+        if (data.body !== null) {
+          this.paciente = data.body;
+          console.info(this.paciente);
+        } else {
+          console.error('El cuerpo de la respuesta es nulo.');
+        }
 
-      let idPaciente = params['idPaciente']
-
-      if (idPaciente) {
-        this.pacienteService.getPaciente(idPaciente).subscribe({
-          next: data => {
-            if (data.body !== null) {
-              this.paciente = data.body;
-              console.info(this.paciente);
-            } else {
-              console.error('El cuerpo de la respuesta es nulo.');
-            }
-
-          },
-          error: err => {
-            Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
-            console.error("Error al obtener el paciente: ", err);
-          },
-          complete: () => {
-            console.log('Pacientes loaded');
-          }
-        });
+      },
+      error: err => {
+        Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+        console.error("Error al obtener el paciente: ", err);
+      },
+      complete: () => {
+        console.log('FormConsultaComponent cargarPaciente complete:');
       }
     });
-
 
   }
 
@@ -98,8 +125,9 @@ export class FormconsultaComponent implements OnInit {
       next: data => {
         if (data) {
           this.consulta = data.body!;
+          Swal.fire('Mensaje', `Consulta: ${data.body?.idConsulta} creada con éxito!`, 'success')
+          console.log('Consulta creada con exito');
           this.router.navigate(['/home/paciente'])
-          Swal.fire('Mensaje', `consulta: ${data.body?.idConsulta} creado con éxito!`, 'success')
         } else {
           console.error('El cuerpo de la respuesta es nulo.');
         }
@@ -110,7 +138,7 @@ export class FormconsultaComponent implements OnInit {
         console.error("Error al crear la consulta: ", err);
       },
       complete: () => {
-        console.log('Consulta guardada exitosamente');
+        console.log('FormConsultaComponente crearConsulta complete');
       }
     });
   }
@@ -118,8 +146,54 @@ export class FormconsultaComponent implements OnInit {
   eliminarConsulta() {
     throw new Error('Method not implemented.');
   }
+
+  
   actualizarConsulta() {
-    throw new Error('Method not implemented.');
+    console.log('FormConsultaComponente actualizarConsulta');
+    console.info(this.consulta);
+    this.consultaService.patchUpdateConsulta(this.consulta).subscribe({
+          next: data => {
+            if (data.body !== null) {
+              //Por defecto se redirecciona al home/paciente, pero podria redirigir a las consultas del paciente
+              this.router.navigate(['/home/paciente'])
+              Swal.fire('Mensaje:', `La consulta ${data.body?.idConsulta} fue modificada con éxito!`, 'success')
+            } else {
+              console.error('El cuerpo de la respuesta es nulo.');
+            }
+    
+          },
+          error: err => {
+            Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+            console.error("Error al obtener la consulta: ", err);
+          },
+          complete: () => {
+            console.log('FormConsultaComponente actualizarConsulta complete:');
+          }
+        });
+  }
+
+  cargarPacienteByIdConsulta(idConsulta: number) {
+    console.info("FormConsultaComponente cargarPacienteByIdConsulta");
+    this.consultaService.getPacienteByIdConsulta(idConsulta).subscribe({
+      next: data => {
+        if (data.body !== null) {
+          this.paciente = data.body;
+          //console.info(this.paciente);
+          //this.consulta.paciente = this.paciente;
+          //console.info(this.consulta);
+        } else {
+          console.error('El cuerpo de la respuesta es nulo.');
+        }
+
+      },
+      error: err => {
+        Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+        console.error("Error al obtener el paciente: ", err);
+      },
+      complete: () => {
+        console.log('FormConsultaComponente cargarPacienteByIdConsulta complete:');
+      }
+    });
   }
 
 

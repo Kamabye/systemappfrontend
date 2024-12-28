@@ -16,7 +16,7 @@
     <div class="col">
         <div class="table-responsive">
             <form #formulario="ngForm">
-                <table id="tablePacientes" class="table table-bordered text-nowrap table-head-fixed table-hover">
+                <table id="tablePacientes" class="table align-middle table-bordered text-nowrap table-head-fixed table-hover">
                     <thead>
                         <tr>
                             <th></th>
@@ -1505,6 +1505,31 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <td>DISTANCIA INTERPUPILAR</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label>DIP:</label> <input [(ngModel)]="consulta.dip" name="dip" type="text"
+                                                class="form-control" placeholder="DIP">
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <!-- text input -->
+                                        <div class="form-group">
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 <div class="row">
@@ -1518,29 +1543,24 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <div class="col-sm-6">
-                        <button type="submit" class="btn btn-success" (click)='crearConsulta()'
-                            *ngIf="!consulta.idConsulta; else elseBlock">Crear</button>
-                        <ng-template #elseBlock>
-                            <button type="submit" class="btn btn-primary"
-                                (click)='actualizarConsulta()'>Actualizar</button>
-                        </ng-template>
+                    <div class="row">
+                        <div class="col-sm-6 text-start">
+                            <button type="submit" class="btn btn-success" (click)='crearConsulta()'
+                                *ngIf="!consulta.idConsulta; else elseBlock">Crear</button>
+                            <ng-template #elseBlock>
+                                <button type="submit" class="btn btn-primary"
+                                    (click)='actualizarConsulta()'>Actualizar</button>
+                            </ng-template>
+                        </div>
+                        <div class="col-sm-6 text-end">
+                            <button type="submit" class="btn btn-danger" (click)='eliminarConsulta()'
+                                *ngIf="consulta.idConsulta">Eliminar</button>
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <button type="submit" class="btn btn-danger" (click)='eliminarConsulta()'
-                            *ngIf="consulta.idConsulta">Eliminar</button>
-                    </div>
+
                 </div>
             </form>
         </div>
     </div>
 
-</div>
-
-<div class="container-fluid">
-    <div class="container-fluid">
-        <div class="card">
-
-        </div>
-    </div>
 </div>

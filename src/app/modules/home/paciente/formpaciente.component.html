@@ -21,21 +21,21 @@
           <!-- text input -->
           <div class="form-group">
             <label>Nombre:</label> <input [(ngModel)]="paciente.nombres" name="nombres" type="text" class="form-control"
-              placeholder="Nombres" autocomplete="off">
+              placeholder="Nombres">
           </div>
         </div>
         <div class="col-sm-4">
           <!-- text input -->
           <div class="form-group">
             <label>Primer Apellido:</label> <input [(ngModel)]="paciente.primerApellido" name="primerApellido"
-              type="text" class="form-control" placeholder="Primer Apellido" autocomplete="off">
+              type="text" class="form-control" placeholder="Primer Apellido">
           </div>
         </div>
         <div class="col-sm-4">
           <!-- text input -->
           <div class="form-group">
             <label>Segundo Apellido:</label> <input [(ngModel)]="paciente.segundoApellido" name="segundoApellido"
-              type="text" class="form-control" placeholder="Segundo Apellido" autocomplete="off">
+              type="text" class="form-control" placeholder="Segundo Apellido" >
           </div>
         </div>
       </div>
@@ -44,14 +44,14 @@
           <!-- text input -->
           <div class="form-group">
             <label>Celular:</label> <input [(ngModel)]="paciente.celular" name="celular" type="text"
-              class="form-control" placeholder="Celular" autocomplete="off">
+              class="form-control" placeholder="Celular" >
           </div>
         </div>
         <div class="col-sm-4">
           <!-- text input -->
           <div class="form-group">
             <label>Telefono:</label> <input [(ngModel)]="paciente.telefono" name="telefono" type="text"
-              class="form-control" placeholder="Teléfono" autocomplete="off">
+              class="form-control" placeholder="Teléfono" >
           </div>
         </div>
 
@@ -59,7 +59,7 @@
           <!-- text input -->
           <div class="form-group">
             <label>Edad:</label> <input [(ngModel)]="paciente.edad" name="edad" type="text" class="form-control"
-              placeholder="Edad" autocomplete="off">
+              placeholder="Edad" >
           </div>
         </div>
       </div>
@@ -96,14 +96,14 @@
     <!-- /.card-body -->
     <div class="card-footer">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-6 text-start">
           <button type="submit" class="btn btn-success" (click)='crearpaciente()'
             *ngIf="!paciente.idPaciente; else elseBlock">Crear</button>
           <ng-template #elseBlock>
             <button type="submit" class="btn btn-primary" (click)='actualizarpaciente()'>Actualizar</button>
           </ng-template>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 text-end">
           <button type="submit" class="btn btn-danger" (click)='eliminarPaciente()'
             *ngIf="paciente.idPaciente">Eliminar</button>
         </div>

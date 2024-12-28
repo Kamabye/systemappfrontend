@@ -58,22 +58,29 @@ export class FormpacienteComponent implements OnInit {
   }
 
   public crearpaciente(): void {
+    console.log('FormPacienteComponente crearpaciente()');
     this.pacienteService.crearPaciente(this.paciente)
-      .subscribe(
-        data => {
+      .subscribe({
+        next: data => {
           if (data.body !== null) {
-            this.router.navigate(['/home/paciente'])
-            Swal.fire('Mensaje', `paciente: ${data.body.email} creado con éxito!`, 'success')
+            this.paciente = data.body;
+            //Swal.fire('Mensaje', `paciente: ${data.body.email} creado con éxito!`, 'success')
+            console.log('Paciente creado con exito');
+            this.router.navigate(['/home/consulta/form', this.paciente.idPaciente])
           } else {
             console.error('El cuerpo de la respuesta es nulo.');
           }
 
         },
-        error => {
-            this.router.navigate(['/home/paciente'])
-            Swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
-            console.error("Error al crear el paciente: ", error);
+        error: err => {
+          this.router.navigate(['/home/paciente'])
+          Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
+          console.error("Error al crear el paciente: ", err);
+        },
+        complete: () => {
+          console.log('Pacientes loaded');
         }
+      }
       );
   }
 
@@ -96,7 +103,7 @@ export class FormpacienteComponent implements OnInit {
       complete: () => {
         console.log('Pacientes loaded');
       }
-    })
+    });
   }
 
   public eliminarPaciente(): void {

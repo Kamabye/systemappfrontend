@@ -7,6 +7,6 @@ import { Component, OnInit } from '@angular/core';
 export class IndexHomeComponent implements OnInit {
 
   ngOnInit(): void {
-    console.info("IndexHomeComponent ngOnInit");
+    console.log("IndexHomeComponent ngOnInit");
   }
 }
