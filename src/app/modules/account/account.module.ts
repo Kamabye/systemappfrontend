@@ -39,6 +39,6 @@ const routes: Routes = [
   imports: [
     CommonModule, RouterModule.forChild(routes),FormsModule
   ],
-  exports: [RouterModule]
+  //exports: [RouterModule]
 })
 export class AccountModule { }

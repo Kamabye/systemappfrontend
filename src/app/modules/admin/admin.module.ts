@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -18,10 +18,12 @@ import { FormusuarioComponent } from './users/formusuario.component';
 
 const routes: Routes = [
   {
-    path: 'admin', component: DashboardComponent,
-    //loadChildren: () => import('src/app/modules/admin/admin.module').then(m => m.AdminModule),
+    path: '', component: DashboardComponent,
+
     children: [
 
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'rol', component: RolesComponent },
       { path: 'rol/form', component: FormrolComponent },
       { path: 'rol/form/:idRol', component: FormrolComponent },
@@ -35,6 +37,8 @@ const routes: Routes = [
       //{ path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
     ]
   },
+
+  { path: ' **', redirectTo: '/admin', pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -49,9 +53,8 @@ const routes: Routes = [
     FormusuarioComponent
   ],
   imports: [
-    CommonModule, RouterModule.forChild(routes),FormsModule
+    CommonModule, RouterModule.forChild(routes), ReactiveFormsModule, FormsModule
   ],
-  exports: [RouterModule],
-  providers: [],
+  //exports: [RouterModule],
 })
 export class AdminModule { }

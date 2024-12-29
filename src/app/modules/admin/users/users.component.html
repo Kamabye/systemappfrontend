@@ -30,8 +30,8 @@
           <tr *ngFor="let usuario of usuarios">
             <th>{{usuario.username}}</th>
             <th>{{usuario.nombres}}</th>
-            <th>{{usuario.apellidoPaterno}}</th>
-            <th>{{usuario.apellidoMaterno}}</th>
+            <th>{{usuario.primerApellido}}</th>
+            <th>{{usuario.segundoApellido}}</th>
             <th>{{usuario.email}}</th>
             <th *ngIf="usuario.estatus; else elseBlock">Activo</th>
             <ng-template #elseBlock>
@@ -40,7 +40,7 @@
             <th>{{usuario.createdAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
             <th>{{usuario.modifiedAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
             <th>
-              <button type="submit" class="btn btn-primary" [routerLink]="['/admin/user/form',usuario.id]">Editar</button>
+              <button type="submit" class="btn btn-primary" [routerLink]="['/admin/user/form',usuario.idUsuario]">Editar</button>
             </th>
             <th>
               <button type="submit" class="btn btn-danger" (click)='eliminarUsuario(usuario)'>Eliminar</button>

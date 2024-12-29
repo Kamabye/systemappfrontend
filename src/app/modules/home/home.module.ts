@@ -55,6 +55,6 @@ const routes: Routes = [
   imports: [
     CommonModule, RouterModule.forChild(routes), ReactiveFormsModule, FormsModule
   ],
-  exports: [RouterModule]
+  //exports: [RouterModule]
 })
 export class HomeModule { }

@@ -7,8 +7,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  templateUrl: './users.component.html'
 })
 export class UsersComponent implements OnInit {
 
@@ -56,7 +55,7 @@ export class UsersComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usuarioService.eliminarUsuario(usuario.id).subscribe(response => {
+        this.usuarioService.eliminarUsuario(usuario.idUsuario).subscribe(response => {
 
           this.usuarios = this.usuarios.filter(r => r != usuario)
           SwalWithBootstrapButtons.fire(

@@ -31,28 +31,21 @@ export class HeaderComponent implements OnInit {
     formData.append('username', this.credentials.username);
     formData.append('password', this.credentials.password);
 
-    this.authService.loginWithCredentials(formData).subscribe(
-        (response) => {
-            if (response.body != null) {
+    this.authService.loginWithCredentials(formData).subscribe({
+        next : data => {
+            if (data.body != null) {
                 console.info("JWT Authenticado");
-                this.token = response.body;
-                console.info(this.token);
-                this.authService.loguear(this.token);
-                if(this.authService.getRole() == "ADMIN"){
-                    console.info("Redireccionando a /admin");
-                    this.router.navigate(['/admin']);
-                }
-                else{
-                    console.info("Redireccionando a /account");
-                    this.router.navigate(['/account']);
-                }
-                
+                this.router.navigate(['/admin/user']);
             }              
         },
-        (error) => {
+        error: err => {
             // Manejar errores de autenticación
-            console.error('Error al iniciar sesión', error);
-        }
+            console.error('Error al iniciar sesión', err);
+        },
+        complete: () => {
+            console.log('login complete');
+          }
+    }
     );
 }
 

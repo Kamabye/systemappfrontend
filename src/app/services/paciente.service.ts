@@ -18,7 +18,7 @@ export class PacienteService {
 
     isProduction = environment.production;
 
-    private urlEndPointPaciente: string = `${environment.apiBaseURL}/pacientes`;
+    private urlEndPointPaciente: string = `${environment.apiBaseURL}/optica/pacientes`;
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

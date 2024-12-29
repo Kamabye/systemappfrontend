@@ -15,7 +15,7 @@ import { Paciente } from '../models/paciente';
 
 export class ConsultaService {
 
-    private urlEndPointConsulta: string = `${environment.apiBaseURL}/consultas`;
+    private urlEndPointConsulta: string = `${environment.apiBaseURL}/optica/consultas`;
 
     private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 

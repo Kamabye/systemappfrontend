@@ -18,12 +18,12 @@
             </div>
             <div class="form-floating">
                 <input placeholder="Apellido Paterno" type="text" class="form-control" id="apellidoPaterno"
-                    name="apellidoPaterno" [(ngModel)]="usuario.apellidoPaterno">
+                    name="apellidoPaterno" [(ngModel)]="usuario.primerApellido">
                 <label for="apellidoPaterno">Apellido Paterno</label>
             </div>
             <div class="form-floating">
                 <input placeholder="Apellido Materno" type="text" class="form-control" id="apellidoMaterno"
-                    name="apellidoMaterno" [(ngModel)]="usuario.apellidoMaterno">
+                    name="apellidoMaterno" [(ngModel)]="usuario.segundoApellido">
                 <label for="apellidoMaterno">Apellido Materno</label>
             </div>
             <div class="form-floating">
@@ -45,7 +45,7 @@
             </div>
         </div>
         <button type="submit" class="btn btn-success" (click)='crearUsuarioFormData()'
-            *ngIf="!usuario.id; else elseBlock">Crear</button>
+            *ngIf="!usuario.idUsuario; else elseBlock">Crear</button>
         <ng-template #elseBlock>
             <button type="submit" class="btn btn-primary" (click)='actualizarUsuarioFormData()'>Actualizar</button>
         </ng-template>

@@ -1,105 +1,65 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+
+import { map, tap, finalize } from 'rxjs/operators';
+
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 
-
 export class AuthService {
 
-  public isAuthenticated = false;
-
-  private urlAuth: string = 'http://localhost:8081/system/apiv1/auth';
-
-  token: string | null = '';
+  private urlAuth: string = `${environment.apiBaseURL}/auth`;
 
   decodedToken: any;
 
-
-
-  constructor(private http: HttpClient, public jwtHelper: JwtHelperService) { }
+  constructor(private http: HttpClient) { }
 
   loginWithCredentials(credentials: FormData): Observable<HttpResponse<string>> {
 
+    const startTime = performance.now(); // Registra el tiempo de inicio
+
     return this.http.post(`${this.urlAuth}`, credentials, { observe: 'response', responseType: 'text' })
+      .pipe(
+
+        tap({
+          next: data => {
+            this.setToken(data.body!);
+            console.log(`next pipe tap loginWithCredentials AuthService`)
+          }, // No es necesario hacer nada con la respuesta en el tap
+          error: err => { console.error('Error pipe tap loginWithCredentials AuthService:', err) }, // Manejo de errores
+          complete: () => { console.log(`Complete pipe.tap loginWithCredentials AuthService`) }
+        }
+        ),
+        finalize(() => {
+          const endTime = performance.now(); // Registra el tiempo de finalización
+          const elapsedTime = endTime - startTime; // Calcula el tiempo transcurrido
+          console.log(`Finalize() pipe loginWithCredentials AuthService : Tiempo de respuesta: ${elapsedTime} ms`);
+        })
+      );
 
   }
 
-  isSessionActive(): boolean {
-    console.info("AuthService isSessionActive()");
-    if (this.getToken() != null) {
-      console.info(this.getToken());
-      if (this.getIsTokenValid(this.getToken())) {
-        console.info("AuthService token válido");
-        return true;
-      }
-      else{
-        console.info("AuthService token no válido");
-        return false;
-      }
-    }
-    else{
-      console.info("AuthService token no presente");
-      return false;
-    }
-  }
-
-  loguear(token: string): void {
-    console.info("AuthService loguear()");
-    if (this.getIsTokenValid(token)) {
-      console.info("AuthService loguear Token Válido");
-      this.setToken(token);
-      console.info(this.getToken());
-      this.decodedTokenMethod(this.getToken());
-      console.info(this.decodedToken);
-      this.isAuthenticated = true;
-    }
-    else {
-      console.info("AuthService loguear Token Inválido")
-      this.removeToken();
-      this.isAuthenticated = false;
-    }
-
-  }
-
-  setToken(token: string): void {
+  private setToken(response: string) {
     console.info("AuthService setToken()")
-    localStorage.setItem('token', token);
+    localStorage.setItem('token', response);
   }
 
   getToken(): string | null {
     console.info("AuthService getToken()")
-    this.token = localStorage.getItem('token');
-    return this.token;
+    return localStorage.getItem('token');
+  }
+
+  logout(): void {
+    this.removeToken();
   }
 
   removeToken(): void {
     console.info("AuthService removeToken()")
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token');
   }
-
-  decodedTokenMethod(token: string | null): void {
-    if (token != null) {
-      this.decodedToken = this.jwtHelper.decodeToken(token);
-    }
-  }
-
-
-  getIsTokenValid(token: string | null): boolean {
-
-    return !this.jwtHelper.isTokenExpired(token);
-
-  }
-
-  logout(): void {
-    localStorage.removeItem('token');
-    this.isAuthenticated = false;
-  }
-
-  getRole(): string {
-    return "ADMIN";
-  }
+  
 }
