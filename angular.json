@@ -17,8 +17,7 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
-              "zone.js",
-              "src/polyfills.ts"
+              "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -26,7 +25,6 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
               "src/assets/css/bootstrap.min.css"
             ],
             "scripts": [
@@ -90,8 +88,7 @@
           "options": {
             "polyfills": [
               "zone.js",
-              "zone.js/testing",
-              "src/polyfills.ts"
+              "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
@@ -99,7 +96,6 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
             ],
             "scripts": []
           }

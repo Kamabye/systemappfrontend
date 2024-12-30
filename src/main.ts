@@ -19,7 +19,6 @@ import { routes } from './app/app.routes';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'; // Importa withInterceptorsFromDi
 
 import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { environment } from './environments/environment';
 
