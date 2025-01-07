@@ -56,10 +56,6 @@ export class ObraformComponent implements OnInit {
           })
       }
     });
-
-
-
-
   }
 
   cargarObra(): void {
@@ -102,6 +98,61 @@ export class ObraformComponent implements OnInit {
 
     this.obraService.crearObraFormData(formData,)
       .subscribe(
+        {
+        next : data => {
+          if (data.body !== null) {
+            this.router.navigate(['/admin/obra'])
+            Swal.fire('Mensaje', `Obra: ${data.body.nombre} creado con éxito!`, 'success')
+          } else {
+            console.error('El cuerpo de la respuesta es nulo.');
+          }
+
+        }
+      ,
+        error : err => {
+          this.router.navigate(['/account/obra'])
+          Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
+          console.error("Error al crear la obra: ", err);
+        }
+      }
+      );
+
+  }
+
+  crearObra(): void {
+
+    this.obraService.crearObra(this.obra)
+      .subscribe(
+        {
+        next : data => {
+          if (data.body !== null) {
+            this.router.navigate(['/admin/obra'])
+            Swal.fire('Mensaje', `Obra: ${data.body.nombre} creado con éxito!`, 'success')
+          } else {
+            console.error('El cuerpo de la respuesta es nulo.');
+          }
+
+        }
+      ,
+        error : err => {
+          this.router.navigate(['/account/obra'])
+          Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
+          console.error("Error al crear la obra: ", err);
+        }
+      }
+      );
+
+  }
+
+  actualizarObra(): void {
+    const formData = new FormData();
+    formData.set('audio', this.audio);
+    const obraJSON = JSON.stringify(this.obra, null, 2);
+    formData.set('obraJSON', obraJSON);
+
+
+    this.obraService.actualizarObraFormData(formData, this.obra.idObra)
+      .subscribe(
         response => {
           if (response.body != null) {
             this.router.navigate(['/account/obra'])
@@ -119,6 +170,8 @@ export class ObraformComponent implements OnInit {
       );
 
   }
+
+
   actualizarObraFormData(): void {
     const formData = new FormData();
     formData.set('audio', this.audio);
@@ -126,7 +179,7 @@ export class ObraformComponent implements OnInit {
     formData.set('obraJSON', obraJSON);
 
 
-    this.obraService.actualizarObraFormData(formData, this.obra.id)
+    this.obraService.actualizarObraFormData(formData, this.obra.idObra)
       .subscribe(
         response => {
           if (response.body != null) {

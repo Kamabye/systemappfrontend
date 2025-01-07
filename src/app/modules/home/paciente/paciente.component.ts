@@ -40,7 +40,7 @@ export class PacienteComponent implements OnInit {
       this.currentPage = 0;
       this.fetchPacientes(searchString);
 
-    });
+    })
     ;
 
     this.loadPacientes();

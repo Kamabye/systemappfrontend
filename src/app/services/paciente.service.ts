@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
@@ -8,7 +8,7 @@ import { Page } from '../interfaces/page';
 
 import { Paciente } from '../models/paciente';
 
-import { tap, finalize } from 'rxjs/operators';
+import { tap, finalize, catchError } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -48,6 +48,10 @@ export class PacienteService {
                     const endTime = performance.now(); // Registra el tiempo de finalización
                     const elapsedTime = endTime - startTime; // Calcula el tiempo transcurrido
                     console.log(`Finalize() pipe getPacientesByString PacienteService : Tiempo de respuesta: ${elapsedTime} ms`);
+                }),
+                catchError(error => {
+                    console.error('Error capturado:', error);
+                    return of(new HttpResponse<Page<Paciente>>({ status: error.status })); // Devuelve un HttpResponse con el código de error
                 })
 
             );

@@ -24,7 +24,6 @@ export class AuthService {
 
     return this.http.post(`${this.urlAuth}`, credentials, { observe: 'response', responseType: 'text' })
       .pipe(
-
         tap({
           next: data => {
             this.setToken(data.body!);
@@ -61,5 +60,5 @@ export class AuthService {
     console.info("AuthService removeToken()")
     localStorage.removeItem('access_token');
   }
-  
+
 }

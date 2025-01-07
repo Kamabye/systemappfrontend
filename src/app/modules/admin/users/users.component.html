@@ -16,10 +16,11 @@
           <tr>
             <th scope="col">Username</th>
             <th scope="col">Nombres</th>
-            <th scope="col">Apellido Paterno</th>
-            <th scope="col">Apellido Materno</th>
+            <th scope="col">Primer Apellido</th>
+            <th scope="col">Segundo Apellido</th>
             <th scope="col">Email</th>
             <th scope="col">Estatus</th>
+            <th scope="col">Roles</th>
             <th scope="col">Creado</th>
             <th scope="col">Modificado</th>
             <th scope="col">Acciones</th>
@@ -37,6 +38,9 @@
             <ng-template #elseBlock>
               <th>Bloqueado</th>
             </ng-template>
+            <th>
+              <div class="row" *ngFor="let rol of usuario.roles">{{rol.rol}}</div>
+            </th>
             <th>{{usuario.createdAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
             <th>{{usuario.modifiedAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
             <th>

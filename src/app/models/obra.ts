@@ -1,7 +1,7 @@
 import { Partitura } from "./partitura";
 
 export class Obra {
-    id: number = 0;
+    idObra: number = 0;
     nombre : string = '';
     compositor : string = '';
     arreglista : string = '';

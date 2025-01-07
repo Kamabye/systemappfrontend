@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { tap, finalize } from 'rxjs/operators';
 
 import { Usuario } from '../models/usuario';
+import { Page } from '../interfaces/page';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,34 @@ export class UsuarioService {
   getUsuarios(): Observable<HttpResponse<Usuario[]>> {
     //return of(USUARIOS);
     return this.http.get<Usuario[]>(this.urlEndPointUser, { observe: 'response' });
+  }
+
+  getUsuariosPage(pageNumber: number, pageSize: number): Observable<HttpResponse<Page<Usuario>>> {
+
+    const startTime = performance.now(); // Registra el tiempo de inicio
+
+    const params = new HttpParams()
+            .set('pageNumber', pageNumber.toString())
+            .set('pageSize', pageSize.toString());
+    //return of(USUARIOS);
+    return this.http.get<Page<Usuario>>(this.urlEndPointUser, { params, observe: 'response' })
+      .pipe(
+        tap({
+          next: data => {
+            console.log(`next pipe tap getPacientesByString PacienteService`)
+          }, // No es necesario hacer nada con la respuesta en el tap
+          error: err => { console.error('Error pipe tap getPacientesByString PacienteService:', err) }, // Manejo de errores
+          complete: () => { console.log(`Complete pipe.tap getPacientesByString PacienteService`) }
+        }
+        ),
+        finalize(() => {
+          const endTime = performance.now(); // Registra el tiempo de finalización
+          const elapsedTime = endTime - startTime; // Calcula el tiempo transcurrido
+          console.log(`Finalize() pipe getPacientesByString PacienteService : Tiempo de respuesta: ${elapsedTime} ms`);
+        })
+
+      )
+      ;
   }
 
   eliminarUsuario(idUsuario: number): Observable<HttpResponse<Usuario>> {

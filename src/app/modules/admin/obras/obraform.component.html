@@ -47,13 +47,9 @@
           [(ngModel)]="obra.embedVideo" style="height: 100px"></textarea>
         <label for="embedVideo">URL Video</label>
       </div>
-      <div class="mb-3">
-        <label for="formFile" class="form-label">Seleccionar archivo de audio</label>
-        <input class="form-control" type="file" id="audio" name="audio" (change)="handleFileInput($event)">
-      </div>
     </div>
-    <button type="submit" class="btn btn-success" (click)='crearObraFormData()'
-      *ngIf="!obra.id; else elseBlock">Crear</button>
+    <button type="submit" class="btn btn-success" (click)='crearObra()'
+      *ngIf="!obra.idObra; else elseBlock">Crear</button>
     <ng-template #elseBlock>
       <button type="submit" class="btn btn-primary" (click)='actualizarObraFormData()'>Actualizar</button>
     </ng-template>

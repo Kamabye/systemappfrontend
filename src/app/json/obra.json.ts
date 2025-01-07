@@ -3,7 +3,7 @@ import { PARTITURAS } from "./partituras.json";
 
 export const OBRAS: Obra[] = [
     {
-        id: 1,
+        idObra: 1,
         nombre: 'Oriundos de Tlahuitoltepec',
         compositor : 'Eleazar Hernández Vásquez',
         arreglista : 'Eleazar Hernández Vásquez',
@@ -17,7 +17,7 @@ export const OBRAS: Obra[] = [
         partituras : PARTITURAS,
     },
     {
-        id: 2,
+        idObra: 2,
         nombre: 'Xaab Newex',
         compositor : 'Xaab Newex',
         arreglista : 'Jose Luis Hernandez Vásquez',
@@ -31,7 +31,7 @@ export const OBRAS: Obra[] = [
         partituras : PARTITURAS,
     },
     {
-        id: 3,
+        idObra: 3,
         nombre: 'Tu Sonrisa',
         compositor : 'Tu Sonrisa',
         arreglista : 'Pedro Hernandez Vasquez',
@@ -45,7 +45,7 @@ export const OBRAS: Obra[] = [
         partituras : PARTITURAS,
     },
     {
-        id: 4,
+        idObra: 4,
         nombre: 'Leticia Gallardo',
         compositor : 'Compositor4',
         arreglista : 'arreglista4',

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Page } from 'src/app/interfaces/page';
 
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -13,24 +14,37 @@ export class UsersComponent implements OnInit {
 
   usuarios: Usuario[] = [];
 
+  page: Page<Usuario> | undefined;
+
+  currentPage = 0;
+  pageSize = 10;
+
   constructor(private usuarioService: UsuarioService) { }
 
   ngOnInit() {
     console.info("UsersComponent ngOnInit()");
-    this.usuarioService.getUsuarios().subscribe(
-      (response) => {
+    this.usuarioService.getUsuariosPage(this.currentPage, this.pageSize).subscribe({
+      next: data => {
 
-        if (response.body !== null) {
-          this.usuarios = response.body;
+        if (data) {
+          this.page = data.body!;
+          this.usuarios = this.page?.content ?? [];
+          console.log('Se encontraron usuarios');
         } else {
-          console.error('El cuerpo de la respuesta es nulo.');
+          Swal.fire('Sin datos', '', 'warning')
+          console.info(`no se encontraron datos de usuarios ${data}`);
+          this.usuarios = [];
         }
 
       },
-      (error) => {
-        Swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
-        console.error("Error al obtener los usuarios: ", error);
+      error: err => {
+        Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
+        console.error("Error al obtener los usuarios: ", err);
+      },
+      complete: () => {
+        console.log('Usuarios complete');
       }
+    }
     );
   }
 

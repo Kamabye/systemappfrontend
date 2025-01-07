@@ -1,19 +1,19 @@
+<p>roles.component.html</p>
 <div class="row">
-  <h1>roles.component.html</h1>
-    <div class="row">
-      
-      <h1>Roles de Sistema</h1>
-  
+  <div class="row">
+
+    <h1>Roles de Sistema</h1>
+
+  </div>
+  <div class="row ">
+    <div class="col text-start">
+      <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/admin/rol/form']">Nuevo Rol</button>
     </div>
-    <div class="row">
-      <div>
-        <button class="btn btn-rounded btn-primary" type="button" [routerLink]="['/admin/rol/form']">Nuevo Rol</button>
-      </div>
-  
-    </div>
-    <div class="row">
-  
-      <table class="table table-hover" *ngIf="roles.length > 0">
+
+  </div>
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table align-middle table-hover" *ngIf="roles.length > 0">
         <thead>
           <tr>
             <th scope="col">Rol</th>
@@ -41,7 +41,10 @@
           </tr>
         </tbody>
       </table>
-  
     </div>
-  
+
+
+
   </div>
+
+</div>
