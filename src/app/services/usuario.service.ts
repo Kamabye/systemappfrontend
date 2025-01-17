@@ -47,7 +47,7 @@ export class UsuarioService {
         finalize(() => {
           const endTime = performance.now(); // Registra el tiempo de finalización
           const elapsedTime = endTime - startTime; // Calcula el tiempo transcurrido
-          console.log(`Finalize() pipe getPacientesByString PacienteService : Tiempo de respuesta: ${elapsedTime} ms`);
+          console.log(`Finalize() pipe getPacientesByString PacienteService : Tiempo de respuesta : ${elapsedTime} ms`);
         })
 
       )
