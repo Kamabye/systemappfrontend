@@ -6,27 +6,45 @@
           [(ngModel)]="obra.nombre">
         <label for="nombre">Nombre</label>
       </div>
+    </div>
+
+    <div class="col">
       <div class="form-floating">
         <input placeholder="Compositor" type="text" class="form-control" id="compositor" name="compositor"
           [(ngModel)]="obra.compositor">
         <label for="compositor">Compositor</label>
       </div>
+    </div>
+
+    <div class="col">
       <div class="form-floating">
         <input placeholder="Arreglista" type="text" class="form-control" id="arreglista" name="arreglista"
           [(ngModel)]="obra.arreglista">
         <label for="arreglista">Arreglista</label>
       </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col">
+
       <div class="form-floating">
         <input placeholder="Letrista" type="text" class="form-control" id="letrista" name="letrista"
           [(ngModel)]="obra.letrista">
         <label for="letrista">Letrista</label>
       </div>
+    </div>
+
+    <div class="col">
       <div class="form-floating">
         <input placeholder="Genero" type="text" class="form-control" id="genero" name="genero"
           [(ngModel)]="obra.genero">
         <label for="genero">Genero</label>
       </div>
+    </div>
 
+    <div class="col">
       <div class="input-group">
         <span class="input-group-text">$</span>
         <div class="form-floating">
@@ -36,76 +54,49 @@
         </div>
         <span class="input-group-text">.00</span>
       </div>
+    </div>
 
+  </div>
+
+  <div class="row">
+    <div class="col">
       <div class="form-floating">
         <textarea class="form-control" placeholder="URL Audio" id="embedAudio" name="embedAudio"
           [(ngModel)]="obra.embedAudio" style="height: 100px"></textarea>
         <label for="embedAudio">URL Audio</label>
       </div>
+    </div>
+    <div class="col">
+
       <div class="form-floating">
         <textarea class="form-control" placeholder="URL Video" id="embedVideo" name="embedVideo"
           [(ngModel)]="obra.embedVideo" style="height: 100px"></textarea>
         <label for="embedVideo">URL Video</label>
       </div>
     </div>
+  </div>
+
+</form>
+
+<form #formulario="ngForm">
+  <div class="row">
+
+    <div class="col">
+
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Seleccionar archivo de audio</label>
+        <input class="form-control" type="file" id="audio" name="audio" (change)="handleFileInput($event)" accept="audio/*">
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <div class="col">
     <button type="submit" class="btn btn-success" (click)='crearObra()'
       *ngIf="!obra.idObra; else elseBlock">Crear</button>
     <ng-template #elseBlock>
       <button type="submit" class="btn btn-primary" (click)='actualizarObraFormData()'>Actualizar</button>
     </ng-template>
   </div>
-
-  <div class="accordion" id="accordionExample">
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-          aria-expanded="true" aria-controls="collapseOne">
-          Accordion Item #1
-        </button>
-      </h2>
-      <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin
-          adds the appropriate classes that we use to style each element. These classes control the overall appearance,
-          as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or
-          overriding our default variables. It's also worth noting that just about any HTML can go within the
-          <code>.accordion-body</code>, though the transition does limit overflow.
-        </div>
-      </div>
-    </div>
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-          aria-expanded="false" aria-controls="collapseTwo">
-          Accordion Item #2
-        </button>
-      </h2>
-      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin
-          adds the appropriate classes that we use to style each element. These classes control the overall appearance,
-          as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or
-          overriding our default variables. It's also worth noting that just about any HTML can go within the
-          <code>.accordion-body</code>, though the transition does limit overflow.
-        </div>
-      </div>
-    </div>
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Accordion Item #3
-        </button>
-      </h2>
-      <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin
-          adds the appropriate classes that we use to style each element. These classes control the overall appearance,
-          as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or
-          overriding our default variables. It's also worth noting that just about any HTML can go within the
-          <code>.accordion-body</code>, though the transition does limit overflow.
-        </div>
-      </div>
-    </div>
-  </div>
-</form>
+</div>

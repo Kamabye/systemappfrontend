@@ -7,7 +7,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 export const routes: Routes = [
 
   //Se esta redireccionando al módulo Home cuando no hay una subruta definida
-    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: '', redirectTo: '/admin', pathMatch: 'full' },
     {
       //path: 'home', component: IndexComponent, loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
       path: 'home', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)

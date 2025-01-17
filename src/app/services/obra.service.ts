@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ObraService {
-
+  
   private urlEndPointObra: string = `${environment.apiBaseURL}/obra`;
   private urlEndPointPartitura: string = `${environment.apiBaseURL}/partitura`;
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -67,6 +67,10 @@ export class ObraService {
     return this.http.post<Obra>(this.urlEndPointObra, obra, { observe: 'response' });
   }
 
+  comprarObra(obra: Obra) : Observable<HttpResponse<Obra>> {
+    return this.http.post<Obra>(this.urlEndPointObra, obra, { observe: 'response' });
+  }
+
   actualizarObraFormData(formData: FormData, idObra: number): Observable<HttpResponse<Obra>> {
     return this.http.put<Obra>(`${this.urlEndPointObra}/${idObra}`, formData, { observe: 'response' });
   }
@@ -87,5 +91,9 @@ export class ObraService {
     console.info("El id Obra es " + idObra);
     const objetoEncontrado = OBRAS.find(objeto => objeto.idObra == idObra);
     return of(objetoEncontrado);
+  }
+
+  uploadAudio(formData: FormData, idObra: number): Observable<HttpResponse<Obra>> {
+    return this.http.patch<Obra>(`${this.urlEndPointObra}/upload/${idObra}`, formData, { reportProgress: true, observe: 'response' });
   }
 }

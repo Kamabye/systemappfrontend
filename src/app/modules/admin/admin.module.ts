@@ -18,6 +18,10 @@ import { FormusuarioComponent } from './users/formusuario.component';
 import { ObrasComponent } from './obras/obras.component';
 import { ObraformComponent } from './obras/obraform.component';
 
+import { ShopCartComponent } from './shopcart/shopcart.component';
+import { ReturnComponent } from './return/return.component';
+import { ReturnV2Component } from './return/returnv2.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -36,6 +40,11 @@ const routes: Routes = [
       { path: 'obra', component: ObrasComponent },
       { path: 'obra/form', component: ObraformComponent },
       { path: 'obra/form/:idObra', component: ObraformComponent },
+
+      { path: 'shopcart', component: ShopCartComponent },
+      //{ path: 'cancel', component: ShopCartComponent },
+      { path: 'return', component: ReturnComponent },
+      { path: 'returnv2', component: ReturnV2Component },
       
 
 
@@ -57,7 +66,10 @@ const routes: Routes = [
     UsersComponent,
     FormusuarioComponent,
     ObrasComponent,
-    ObraformComponent
+    ObraformComponent,
+    ShopCartComponent,
+    ReturnComponent,
+    ReturnV2Component
   ],
   imports: [
     CommonModule, RouterModule.forChild(routes), ReactiveFormsModule, FormsModule

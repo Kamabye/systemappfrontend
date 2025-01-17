@@ -8,6 +8,7 @@ export class Obra {
     letrista : string = '';
     precio: number = 0;
     genero : string = '';
+
     embedAudio : string = '';
     embedVideo : string = '';
     

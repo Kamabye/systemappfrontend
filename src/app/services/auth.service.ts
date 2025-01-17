@@ -15,6 +15,7 @@ export class AuthService {
   private urlAuth: string = `${environment.apiBaseURL}/auth`;
 
   decodedToken: any;
+  isLoggedInGuard: boolean = true;
 
   constructor(private http: HttpClient) { }
 

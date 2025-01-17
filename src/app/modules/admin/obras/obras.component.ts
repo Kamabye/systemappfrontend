@@ -1,22 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { Obra } from 'src/app/models/obra';
-
-import { ObraService } from 'src/app/services/obra.service';
-
-import Swal from 'sweetalert2';
 
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { FormControl } from '@angular/forms';
 
-import { Page } from 'src/app/interfaces/page';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import Swal from 'sweetalert2';
+
 import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
+
+import { Page } from 'src/app/interfaces/page';
+
+import { PayPalService } from 'src/app/services/paypal.service';
+import { Obra } from 'src/app/models/obra';
+
+import { ObraService } from 'src/app/services/obra.service';
+
+import { OrderRequestPayPalV2 } from 'src/app/models/orderrequestpaypalv2';
+import { AmountPayPalV2 } from 'src/app/models/amountpaypalv2';
+import { PurchaseUnitPayPalV2 } from 'src/app/models/purchaseunitpaypalv2';
+import { ItemPayPalV2 } from 'src/app/models/itempaypalv2';
+
 
 @Component({
   selector: 'app-obras',
   templateUrl: './obras.component.html'
 })
 export class ObrasComponent implements OnInit {
+  item: ItemPayPalV2 = new ItemPayPalV2();
+  purchaseUnits: PurchaseUnitPayPalV2 = new PurchaseUnitPayPalV2();
+  amount: AmountPayPalV2 = new AmountPayPalV2();
+  orderRequestPayPalV2: OrderRequestPayPalV2 = new OrderRequestPayPalV2();
 
   public obras: Obra[] = [];
   page: Page<Obra> | undefined;
@@ -27,7 +42,7 @@ export class ObrasComponent implements OnInit {
   pageSize = 10;
   searchControl = new FormControl();
 
-  constructor(private obraService: ObraService, private domSanitizer1: DomSanitizer) {
+  constructor(private obraService: ObraService, private domSanitizer1: DomSanitizer, private payPalService: PayPalService, private router: Router, private activateRoute: ActivatedRoute) {
     this.domSanitizer = domSanitizer1;
   }
   ngOnInit(): void {
@@ -145,11 +160,55 @@ export class ObrasComponent implements OnInit {
     );
   }
 
-  agregarObraShopCart(_t46: Obra) {
+  agregarObraShopCart() {
     throw new Error('Method not implemented.');
   }
-  comprarObra(_t46: Obra) {
-    throw new Error('Method not implemented.');
+  comprarObra(obra: Obra) {
+    console.info("Se va a comprar una obra");
+
+    this.amount.value = obra.precio.toString();
+
+    this.purchaseUnits.amount = this.amount;
+    
+    this.purchaseUnits.amount.breakdown.item_total.value = obra.precio.toString();
+
+    this.item.name = obra.nombre;
+
+    this.item.unit_amount.value = obra.precio.toString();
+
+    this.purchaseUnits.items.push(this.item);
+
+    this.orderRequestPayPalV2.purchase_units.push(this.purchaseUnits);
+
+    console.info(this.orderRequestPayPalV2);
+
+    this.payPalService.createOrderRequest(this.orderRequestPayPalV2).subscribe({
+      next: data => {
+        console.info("Se ha creado la orden paypal");
+        //console.info(data.body);
+        if (data) {
+          const payeraction = data.body!.links.find(link => link.rel === 'payer-action');
+          if (payeraction) {
+            window.location.href = payeraction.href;
+          } else {
+            console.error("No se encontró el link de aprobación");
+          }
+        }
+        else {
+          console.error("Respuesta nulla");
+        }
+
+
+      }
+      ,
+      error: err => {
+        this.router.navigate(['/admin/obra'])
+        Swal.fire('Mensaje', `${err.error.error}`, 'warning')
+        console.error("Error al crear la orden: ", err);
+      }
+    });
+
+    this.orderRequestPayPalV2 = new OrderRequestPayPalV2();
   }
 
   onPageChange(page: number): void {

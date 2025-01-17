@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Obra } from 'src/app/models/obra';
@@ -78,7 +79,7 @@ export class ObraformComponent implements OnInit {
           error => {
             this.router.navigate(['/admin/obras'])
             Swal.fire('Mensaje: ', `${error.error.mensaje}`, 'warning')
-            console.error("Error al obtener el usuario: ", error);
+            console.error("Error al obtener la obra: ", error);
           })
       }
     })
@@ -99,22 +100,22 @@ export class ObraformComponent implements OnInit {
     this.obraService.crearObraFormData(formData,)
       .subscribe(
         {
-        next : data => {
-          if (data.body !== null) {
-            this.router.navigate(['/admin/obra'])
-            Swal.fire('Mensaje', `Obra: ${data.body.nombre} creado con éxito!`, 'success')
-          } else {
-            console.error('El cuerpo de la respuesta es nulo.');
-          }
+          next: data => {
+            if (data.body !== null) {
+              this.router.navigate(['/admin/obra'])
+              Swal.fire('Mensaje', `Obra: ${data.body.nombre} creado con éxito!`, 'success')
+            } else {
+              console.error('El cuerpo de la respuesta es nulo.');
+            }
 
+          }
+          ,
+          error: err => {
+            this.router.navigate(['/account/obra'])
+            Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
+            console.error("Error al crear la obra: ", err);
+          }
         }
-      ,
-        error : err => {
-          this.router.navigate(['/account/obra'])
-          Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
-          console.error("Error al crear la obra: ", err);
-        }
-      }
       );
 
   }
@@ -124,22 +125,39 @@ export class ObraformComponent implements OnInit {
     this.obraService.crearObra(this.obra)
       .subscribe(
         {
-        next : data => {
-          if (data.body !== null) {
-            this.router.navigate(['/admin/obra'])
-            Swal.fire('Mensaje', `Obra: ${data.body.nombre} creado con éxito!`, 'success')
-          } else {
-            console.error('El cuerpo de la respuesta es nulo.');
-          }
+          next: data => {
+            if (data.body !== null) {
+              const formData = new FormData();
+              formData.append('audioFile', this.audio);
 
+              this.obraService.uploadAudio(formData, data.body.idObra).subscribe({
+
+                next: data2 => {
+                  this.router.navigate(['/admin/obra']);
+                  Swal.fire('Mensaje', `Obra: ${data2.body!.nombre} creado con éxito!`, 'success');
+                },
+                error: err => {
+                  this.router.navigate(['/admin/obra'])
+                  Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
+                  console.error("Error al crear la obra: ", err);
+                }
+              });
+
+
+
+              
+            } else {
+              console.error('El cuerpo de la respuesta es nulo.');
+            }
+
+          }
+          ,
+          error: err => {
+            this.router.navigate(['/admin/obra'])
+            Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
+            console.error("Error al crear la obra: ", err);
+          }
         }
-      ,
-        error : err => {
-          this.router.navigate(['/account/obra'])
-          Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
-          console.error("Error al crear la obra: ", err);
-        }
-      }
       );
 
   }

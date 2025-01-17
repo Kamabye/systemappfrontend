@@ -74,7 +74,7 @@
             </div>
           </th>
           <th>{{obra.genero}}</th>
-          <th>{{obra.precio}}</th>
+          <th>${{obra.precio}}</th>
           <th>
             <div class="row">
               {{obra.embedAudio}}
@@ -87,6 +87,10 @@
           </th>
           <th>
             <div class="row">
+              <button type="submit" class="btn btn-success"
+                [routerLink]="['/account/obra/view',obra.idObra]">Ver</button>
+            </div>
+            <div class="row">
               <button type="submit" class="btn btn-primary"
                 [routerLink]="['/account/obra/form',obra.idObra]">Editar</button>
             </div>
@@ -97,7 +101,7 @@
               <button type="submit" class="btn btn-info" (click)='comprarObra(obra)'>Comprar</button>
             </div>
             <div class="row">
-              <button type="submit" class="btn btn-warning" (click)='agregarObraShopCart(obra)'>Carrito</button>
+              <button type="submit" class="btn btn-warning" (click)='agregarObraShopCart()'>Agregar al Carrito</button>
             </div>
 
           </th>
