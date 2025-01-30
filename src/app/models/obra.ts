@@ -6,8 +6,8 @@ export class Obra {
     compositor : string = '';
     arreglista : string = '';
     letrista : string = '';
-    precio: number = 0;
     genero : string = '';
+    precio: number = 0;
 
     embedAudio : string = '';
     embedVideo : string = '';

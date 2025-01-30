@@ -18,9 +18,14 @@ import { FormusuarioComponent } from './users/formusuario.component';
 import { ObrasComponent } from './obras/obras.component';
 import { ObraformComponent } from './obras/obraform.component';
 
+import { PartiturasComponent } from './partituras/partituras.component';
+import { PartiturasformComponent } from './partituras/partiturasform.component';
+import { PartiturasuploadComponent } from './partituras/partiturasupload.component';
+
 import { ShopCartComponent } from './shopcart/shopcart.component';
 import { ReturnComponent } from './return/return.component';
 import { ReturnV2Component } from './return/returnv2.component';
+
 
 const routes: Routes = [
   {
@@ -40,6 +45,10 @@ const routes: Routes = [
       { path: 'obra', component: ObrasComponent },
       { path: 'obra/form', component: ObraformComponent },
       { path: 'obra/form/:idObra', component: ObraformComponent },
+      { path: 'partitura/:idObra', component: PartiturasComponent },
+      { path: 'partitura/form', component: PartiturasformComponent },
+      { path: 'partitura/form/:idObra', component: PartiturasformComponent },
+      { path: 'partitura/upload/:idObra', component: PartiturasuploadComponent },
 
       { path: 'shopcart', component: ShopCartComponent },
       //{ path: 'cancel', component: ShopCartComponent },
@@ -67,9 +76,10 @@ const routes: Routes = [
     FormusuarioComponent,
     ObrasComponent,
     ObraformComponent,
-    ShopCartComponent,
-    ReturnComponent,
-    ReturnV2Component
+    PartiturasComponent,
+    PartiturasformComponent,
+    PartiturasuploadComponent,
+    ReturnComponent
   ],
   imports: [
     CommonModule, RouterModule.forChild(routes), ReactiveFormsModule, FormsModule

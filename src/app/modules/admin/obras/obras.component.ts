@@ -25,9 +25,19 @@ import { ItemPayPalV2 } from 'src/app/models/itempaypalv2';
 
 @Component({
   selector: 'app-obras',
+  //standalone: true,
   templateUrl: './obras.component.html'
 })
 export class ObrasComponent implements OnInit {
+
+  currentPage = 0;
+  pageSize = 10;
+
+  audio: HTMLAudioElement = new Audio();
+  isPlaying = false;
+  currentTime = 0;
+  duration = 0;
+
   item: ItemPayPalV2 = new ItemPayPalV2();
   purchaseUnits: PurchaseUnitPayPalV2 = new PurchaseUnitPayPalV2();
   amount: AmountPayPalV2 = new AmountPayPalV2();
@@ -36,64 +46,75 @@ export class ObrasComponent implements OnInit {
   public obras: Obra[] = [];
   page: Page<Obra> | undefined;
 
-  public domSanitizer: DomSanitizer;
+  private domSanitizer: DomSanitizer;
 
-  currentPage = 0;
-  pageSize = 10;
-  searchControl = new FormControl();
+
+  nameObraInput = new FormControl();
 
   constructor(private obraService: ObraService, private domSanitizer1: DomSanitizer, private payPalService: PayPalService, private router: Router, private activateRoute: ActivatedRoute) {
     this.domSanitizer = domSanitizer1;
   }
+
   ngOnInit(): void {
     console.info("ObrasComponent ngOnInit");
     //this.cargarObras();
-    this.searchControl.setValue('');
+    this.nameObraInput.setValue('');
 
-    this.searchControl.valueChanges.pipe(
-      debounceTime(1000), // Espera 1000ms después de que el usuario deje de escribir
-      distinctUntilChanged() // Evita emitir si el valor es el mismo que el anterior
-    ).subscribe(searchString => {
-      this.obras = [];
-      this.currentPage = 0;
-      this.fetchObras(searchString);
+    this.nameObraInput
+      .valueChanges
+      .pipe(
+        debounceTime(1000), // Espera 1000ms después de que el usuario deje de escribir
+        distinctUntilChanged(), // Evita emitir si el valor es el mismo que el anterior
+        switchMap(searchValue => {
+          console.info('Se va hacer una búsqueda SearchForm');
+          return this.obraService.getObras(this.currentPage, this.pageSize, searchValue);
+        }
+        )
+      )
+      .subscribe({
+        next: data => {
+          console.info('Se ha buscado una obra por medio de un valor SearchForm');
+          this.page = data.body!;
+          this.obras = this.page.content ?? [];
+          this.currentPage = 0;
+        },
+        error: err => {
+          console.error("Error: ", err);
 
-    })
+        },
+        complete: () => {
+          console.info("Complete nameObraInput");
+        }
+      }
+      )
       ;
 
     this.cargarObras();
 
-
-  }
-
-  fetchObras(searchString: string) {
-
-    this.obraService.getObrasbyNombre(this.currentPage, this.pageSize, searchString).pipe(
-      switchMap((response: any) => {
-        //this.page = response.body;
-        //this.obras = this.page?.content ?? [];
-        this.obras = response.body;
-        console.log("ObrasComponent fetchPacientes");
-        return of(response); // Emitir la respuesta para que la suscripción la reciba
-      })
-    ).subscribe();
+    this.audio.src = 'assets/audio/my-song.mp3'; // Reemplaza con la ruta de tu archivo
+    this.audio.onloadedmetadata = () => {
+      this.duration = this.audio.duration;
+    };
+    setInterval(() => {
+      this.updateProgress();
+    }, 1000);
   }
 
   cargarObras() {
     this.obraService.getObras(this.currentPage, this.pageSize, "").subscribe({
-      next: data => {
-        //console.info("ObrasComponent response");
+      next: (data) => {
         if (data) {
           if (data.status === 204) {
             Swal.fire('Mensaje: ', 'No hay datos para mostrar', 'warning');
           }
           else {
-            this.obras = data.body!;
+            this.page = data.body!;
+            this.obras = this.page.content!;
           }
         }
 
       },
-      error: err => {
+      error: (err) => {
         Swal.fire('Mensaje: ', `${err.error.error}`, 'error')
         console.error("Error al obtener las obras: ", err);
       },
@@ -116,27 +137,42 @@ export class ObrasComponent implements OnInit {
     })
 
     swalWithBootstrapButtons.fire({
-      title: '¿Estás seguro?',
-      text: `Estas seguro de eliminar el objeto ${obra.nombre}`,
+      title: '¿Estás seguro de eliminar este objeto?',
+      text: `ID Objeto: ${obra.idObra}`,
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Sí, Eliminiar',
-      cancelButtonText: 'No, cancelar!',
+      confirmButtonText: 'Sí, Eliminar',
+      cancelButtonText: 'No, Cancelar!',
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        this.obraService.eliminarObra(obra.idObra).subscribe(response => {
-
-          this.obras = this.obras.filter(r => r != obra)
-          swalWithBootstrapButtons.fire(
-            'Eliminado!',
-            `Obra ${response.body?.nombre} eliminado con éxito`,
-            'success'
-          )
-        })
+        this.obraService.eliminarObra(obra.idObra).subscribe({
+          next: data => {
+            this.obras = this.obras.filter(r => r != obra);
+            swalWithBootstrapButtons.fire({
+              title: 'Eliminado!',
+              text: `IDObra: ${data.body?.idObra} eliminado con éxito`,
+              icon: 'success'
+            }
+            );
+          },
+          error: err => {
+            console.error("Error en eliminar Obra: ", err);
+          },
+          complete() {
+            console.info("Complete eliminar Obra");
+          },
+        });
 
       }
-    })
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire({
+          title: "Cancelled",
+          text: "Your imaginary file is safe :)",
+          icon: "error"
+        });
+      }
+    });
   }
 
 
@@ -169,7 +205,7 @@ export class ObrasComponent implements OnInit {
     this.amount.value = obra.precio.toString();
 
     this.purchaseUnits.amount = this.amount;
-    
+
     this.purchaseUnits.amount.breakdown.item_total.value = obra.precio.toString();
 
     this.item.name = obra.nombre;
@@ -215,6 +251,23 @@ export class ObrasComponent implements OnInit {
     console.log('PacienteComponent onPageChange');
     this.currentPage = page;
     this.cargarObras();
+  }
+
+  playPause() {
+    if (this.isPlaying) {
+      this.audio.pause();
+    } else {
+      this.audio.play();
+    }
+    this.isPlaying = !this.isPlaying;
+  }
+
+  updateProgress() {
+    this.currentTime = this.audio.currentTime;
+  }
+
+  onInputChange() {
+    throw new Error('Method not implemented.');
   }
 
 }

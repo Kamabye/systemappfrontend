@@ -2,8 +2,9 @@ import { Obra } from "./obra";
 
 export class Partitura {
 
-    id : number = 0;
+    idPartitura : number = 0;
     instrumento : string = '';
 
-    obra : Obra = new Obra();
+    //Hay que valida como se hace la relación Muchos a Uno con Angular TypeScript
+    //obra : Obra = new Obra();
 }

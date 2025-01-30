@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-returnv2',
+    standalone: true,
     templateUrl: './returnv2.component.html'
 })
 

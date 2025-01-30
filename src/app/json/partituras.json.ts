@@ -3,23 +3,19 @@ import { Partitura } from "../models/partitura";
 
 export const PARTITURAS : Partitura[] = [
     {
-        id : 1,
-        instrumento : 'instrumento1',
-        obra : new Obra()
+        idPartitura : 1,
+        instrumento : 'instrumento1'
     },
     {
-        id : 2,
-        instrumento : 'instrumento2',
-        obra : new Obra()
+        idPartitura : 2,
+        instrumento : 'instrumento2'
     },
     {
-        id : 3,
-        instrumento : 'instrumento3',
-        obra : new Obra()
+        idPartitura : 3,
+        instrumento : 'instrumento3'
     },
     {
-        id : 4,
-        instrumento : 'instrumento4',
-        obra : new Obra()
+        idPartitura : 4,
+        instrumento : 'instrumento4'
     },
 ]

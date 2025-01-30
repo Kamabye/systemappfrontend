@@ -18,6 +18,7 @@ import { PurchaseUnitPayPalV2 } from 'src/app/models/purchaseunitpaypalv2';
 
 @Component({
     selector: 'app-shopcart',
+    standalone: true,
     templateUrl: './shopcart.component.html'
 })
 export class ShopCartComponent implements OnInit {

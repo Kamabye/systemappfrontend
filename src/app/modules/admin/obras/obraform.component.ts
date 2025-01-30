@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-obraform',
+  //standalone: true,
   templateUrl: './obraform.component.html'
 })
 export class ObraformComponent implements OnInit {
@@ -60,7 +61,7 @@ export class ObraformComponent implements OnInit {
   }
 
   cargarObra(): void {
-    console.info("ObraformComponent cargarObra()")
+    console.info("ObraformComponent cargarObra()");
     this.activateRoute.params.subscribe(params => {
 
       let idObra = params['idObra']
@@ -120,36 +121,52 @@ export class ObraformComponent implements OnInit {
 
   }
 
+  /**
+ * Suma dos números.
+ *
+ * @param a - El primer número.
+ * @param b - El segundo número.
+ * @returns La suma de a y b.
+ *
+ * @example
+ * add(2, 3); // Devuelve 5
+ */
   crearObra(): void {
 
     this.obraService.crearObra(this.obra)
       .subscribe(
         {
-          next: data => {
-            if (data.body !== null) {
+          next: obra => {
+
+            //Si el idObra es diferente de 0 es porque se creó correctamente
+            if (obra.idObra > 0) {
               const formData = new FormData();
               formData.append('audioFile', this.audio);
 
-              this.obraService.uploadAudio(formData, data.body.idObra).subscribe({
+              this.obraService.uploadAudio(formData, obra.idObra).subscribe({
 
-                next: data2 => {
-                  this.router.navigate(['/admin/obra']);
-                  Swal.fire('Mensaje', `Obra: ${data2.body!.nombre} creado con éxito!`, 'success');
+                next: obra2 => {
+                  this.router.navigate(['/admin/partitura/upload', obra2.idObra]);
+                  Swal.fire('Mensaje', `Obra: ${obra2.nombre} creado con éxito!`, 'success');
                 },
                 error: err => {
                   this.router.navigate(['/admin/obra'])
                   Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
-                  console.error("Error al crear la obra: ", err);
+                  console.error("Error al subir el audio: ", err);
+                },
+                complete: () => {
+                  //Siempre hay que limpiar todas las variables
+                  this.limpiarVariables();
                 }
               });
 
-
-
-              
-            } else {
-              console.error('El cuerpo de la respuesta es nulo.');
             }
-
+            // En caso contrario hubo un error y se retornó un Objeto vacío
+            else {
+              this.router.navigate(['/admin/obra'])
+              Swal.fire('Mensaje', `Hubo un error`, 'warning')
+              console.error("Error al crear la obra: ");
+            }
           }
           ,
           error: err => {
@@ -216,4 +233,10 @@ export class ObraformComponent implements OnInit {
       );
 
   }
+
+  limpiarVariables(): void {
+    this.obra = new Obra();
+    this.partituras = [];
+  }
+
 }
