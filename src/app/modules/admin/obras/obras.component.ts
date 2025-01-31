@@ -36,7 +36,7 @@ export class ObrasComponent implements OnInit {
 
   currentPage = 0;
   pageSize = 10;
-  
+
   item: ItemPayPalV2 = new ItemPayPalV2();
   purchaseUnits: PurchaseUnitPayPalV2 = new PurchaseUnitPayPalV2();
   amount: AmountPayPalV2 = new AmountPayPalV2();
@@ -259,15 +259,24 @@ export class ObrasComponent implements OnInit {
   }
 
   playAudio(idObra: number, playerIndex: number) {
-    this.obraService.getAudioObra(idObra).subscribe(blob => {
-      this.audioUrls[playerIndex] = URL.createObjectURL(blob); // Crea una URL para el Blob
+    this.obraService.getAudioObra(idObra).subscribe({
+      next: blob => {
+        this.audioUrls[playerIndex] = URL.createObjectURL(blob); // Crea una URL para el Blob
 
-      this.audios[playerIndex] = this.audioPlayerRefs.toArray()[playerIndex].nativeElement; // Obtén la referencia al elemento <audio>
-      this.audios[playerIndex].src = this.audioUrls[playerIndex]; // Asigna la URL al elemento <audio>
+        this.audios[playerIndex] = this.audioPlayerRefs.toArray()[playerIndex].nativeElement; // Obtén la referencia al elemento <audio>
+        this.audios[playerIndex].src = this.audioUrls[playerIndex]; // Asigna la URL al elemento <audio>
 
-      this.audios[playerIndex].load(); // Carga el audio
-      this.audios[playerIndex].play(); // Reproduce el audio
-      this.isPlaying[playerIndex] = true;
+        this.audios[playerIndex].load(); // Carga el audio
+        this.audios[playerIndex].play(); // Reproduce el audio
+        this.isPlaying[playerIndex] = true;
+      },
+      error: err => {
+        Swal.fire('Mensaje', `${err.error.error}`, 'warning')
+        console.error("Error al reproducir: ", err);
+      },
+      complete: () => {
+
+      }
     });
   }
 
