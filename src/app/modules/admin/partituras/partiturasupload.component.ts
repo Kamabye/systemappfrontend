@@ -35,42 +35,73 @@ export class PartiturasuploadComponent implements OnInit {
   }
   cargarPartiturasObra() {
     console.info("PartiturasUploadComponent cargarPartiturasObra()");
-    this.activateRoute.params.subscribe(params => {
+    this.activateRoute.paramMap.subscribe(params => {
 
-      let idObra = params['idObra'];
+      const idObraString = params.get('idObra');
 
-      if (idObra) {
-        this.obraService.getObra(idObra).subscribe({
-          next: response => {
+      if (idObraString) {
+        const idObra = Number(idObraString);
 
-            this.obra = response.body!;
-            this.partituraService.getPartituras(this.obra.idObra).subscribe({
-              next: data => {
-                this.obra.partituras = data.body!;
-                console.info(this.obra);
-                this.cdr.detectChanges();
-              },
-              error: err => {
-                this.router.navigate(['/admin/obras'])
-                Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
-                console.error("Error al obtener las partituras: ", err);
+        if (!isNaN(idObra)) {
 
-              },
-              complete: () => {
-                console.info("Complete partituras upload getPartiturasObra");
-              }
-            });
+          this.obraService.getObra(idObra).subscribe({
+            next: response => {
 
-          },
-          error: err => {
-            this.router.navigate(['/admin/obras'])
-            Swal.fire('Mensaje: ', `${err.error.mensaje}`, 'warning')
-            console.error("Error al obtener la obra: ", err);
-          },
-          complete: () => {
-            console.info("Complete partituras upload cargarObra");
-          }
-        })
+              this.obra = response.body!;
+              this.partituraService.getPartituras(this.obra.idObra).subscribe({
+                next: data => {
+                  this.obra.partituras = data.body!;
+                  console.info(this.obra);
+                  this.cdr.detectChanges();
+                },
+                error: err => {
+                  this.router.navigate(['/admin/obras'])
+                  Swal.fire({
+                    title: "¡Algo pasó!",
+                    text: `Error: ${err.error.error}`,
+                    icon: "error"
+                  });
+                  console.error("Error: ", err.error.error);
+
+                },
+                complete: () => {
+                  console.info("Complete partituras upload getPartiturasObra");
+                }
+              });
+
+            },
+            error: err => {
+              this.router.navigate(['/admin/obras'])
+              Swal.fire({
+                title: "¡Algo pasó!",
+                text: `Error: ${err.error.error}`,
+                icon: "error"
+              });
+              console.error("Error: ", err.error.error);
+            },
+            complete: () => {
+              console.info("Complete partituras upload cargarObra");
+            }
+          });
+        }
+        else {
+          this.router.navigate(['/admin/obra'])
+          Swal.fire({
+            title: "¡Algo pasó!",
+            text: `Error: idObra inválido`,
+            icon: "error"
+          });
+          console.error("Error: idObra inválido");
+        }
+      }
+      else {
+        this.router.navigate(['/admin/obra'])
+        Swal.fire({
+          title: "¡Algo pasó!",
+          text: `Error: idObra no presente`,
+          icon: "error"
+        });
+        console.error("Error: idObra no presente");
       }
     })
   }

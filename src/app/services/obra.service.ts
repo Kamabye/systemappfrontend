@@ -97,6 +97,27 @@ export class ObraService {
       ;
   }
 
+  actualizarObra(obra: Obra): Observable<Obra> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.patch<Obra>(`${this.urlEndPointObra}`, obra, { headers, observe: 'response' })
+      //pipe encadena multiples operadores tap, map, filter, reduce, mergeMap para transformar los datos emitidos por Observable
+      .pipe(
+        //tap permite visualizar los datos emitidos por observable, actuaizar variables locales, notifcicacion, o llamada a servicio
+        tap(
+          data => console.info('HttpResponse', data)
+        ),
+        //Extrae el cuerpo del HttpResponse y lo retorna como Observable<Obra>
+        map(response => response.body!),
+        //Captura errores y permite transformarlo en otro Observable, reintentar la petición, mostrar un error personalizado o emitir un valor por defecto
+        catchError(error => {
+          console.error('Error:', error);
+          return of(new Obra()); // Emitir un array vacío en caso de error
+        })
+      )
+      ;
+  }
+
   comprarObra(obra: Obra): Observable<HttpResponse<Obra>> {
     return this.http.post<Obra>(this.urlEndPointObra, obra, { observe: 'response' });
   }
@@ -125,7 +146,7 @@ export class ObraService {
 
 
 
-  getAudioObra(idObra: number): Observable<HttpResponse<Blob>> {
-    return this.http.get<Blob>(`${this.urlEndPointPartitura}/play/${idObra}`, { observe: 'response' });
+  getAudioObra(idObra: number): Observable<Blob> {
+    return this.http.get(`${this.urlEndPointObra}/play/${idObra}`, { responseType: 'blob' });
   }
 }

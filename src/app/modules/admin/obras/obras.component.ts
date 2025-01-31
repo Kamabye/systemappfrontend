@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit, ViewChildren } from '@angular/core';
 
 import { FormControl } from '@angular/forms';
 
@@ -30,14 +28,15 @@ import { ItemPayPalV2 } from 'src/app/models/itempaypalv2';
 })
 export class ObrasComponent implements OnInit {
 
+  @ViewChildren('audioPlayer') audioPlayerRefs: any;
+  audioUrls: any[] = [];
+  audios: HTMLAudioElement[] = [];
+  isPlaying: boolean[] = [false, false, false]; // Array para trackear el estado de cada reproductor
+
+
   currentPage = 0;
   pageSize = 10;
-
-  audio: HTMLAudioElement = new Audio();
-  isPlaying = false;
-  currentTime = 0;
-  duration = 0;
-
+  
   item: ItemPayPalV2 = new ItemPayPalV2();
   purchaseUnits: PurchaseUnitPayPalV2 = new PurchaseUnitPayPalV2();
   amount: AmountPayPalV2 = new AmountPayPalV2();
@@ -46,14 +45,9 @@ export class ObrasComponent implements OnInit {
   public obras: Obra[] = [];
   page: Page<Obra> | undefined;
 
-  private domSanitizer: DomSanitizer;
-
-
   nameObraInput = new FormControl();
 
-  constructor(private obraService: ObraService, private domSanitizer1: DomSanitizer, private payPalService: PayPalService, private router: Router, private activateRoute: ActivatedRoute) {
-    this.domSanitizer = domSanitizer1;
-  }
+  constructor(private obraService: ObraService, private payPalService: PayPalService, private router: Router, private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     console.info("ObrasComponent ngOnInit");
@@ -79,7 +73,13 @@ export class ObrasComponent implements OnInit {
           this.currentPage = 0;
         },
         error: err => {
-          console.error("Error: ", err);
+
+          Swal.fire({
+            title: "¡Algo pasó!",
+            text: `Error: ${err.error.error}`,
+            icon: "error"
+          });
+          console.error("Error: ", err.error.error);
 
         },
         complete: () => {
@@ -90,14 +90,6 @@ export class ObrasComponent implements OnInit {
       ;
 
     this.cargarObras();
-
-    this.audio.src = 'assets/audio/my-song.mp3'; // Reemplaza con la ruta de tu archivo
-    this.audio.onloadedmetadata = () => {
-      this.duration = this.audio.duration;
-    };
-    setInterval(() => {
-      this.updateProgress();
-    }, 1000);
   }
 
   cargarObras() {
@@ -115,8 +107,12 @@ export class ObrasComponent implements OnInit {
 
       },
       error: (err) => {
-        Swal.fire('Mensaje: ', `${err.error.error}`, 'error')
-        console.error("Error al obtener las obras: ", err);
+        Swal.fire({
+          title: "¡Algo pasó!",
+          text: `Error: ${err.error.error}`,
+          icon: "error"
+        });
+        console.error("Error: ", err.error.error);
       },
       complete: () => {
         console.log('loadObras complete');
@@ -134,7 +130,7 @@ export class ObrasComponent implements OnInit {
         cancelButton: 'btn btn-danger'
       },
       buttonsStyling: false
-    })
+    });
 
     swalWithBootstrapButtons.fire({
       title: '¿Estás seguro de eliminar este objeto?',
@@ -157,7 +153,12 @@ export class ObrasComponent implements OnInit {
             );
           },
           error: err => {
-            console.error("Error en eliminar Obra: ", err);
+            Swal.fire({
+              title: "¡Algo pasó!",
+              text: `Error: ${err.error.error}`,
+              icon: "error"
+            });
+            console.error("Error: ", err.error.error);
           },
           complete() {
             console.info("Complete eliminar Obra");
@@ -253,21 +254,28 @@ export class ObrasComponent implements OnInit {
     this.cargarObras();
   }
 
-  playPause() {
-    if (this.isPlaying) {
-      this.audio.pause();
-    } else {
-      this.audio.play();
-    }
-    this.isPlaying = !this.isPlaying;
-  }
-
-  updateProgress() {
-    this.currentTime = this.audio.currentTime;
-  }
-
   onInputChange() {
     throw new Error('Method not implemented.');
+  }
+
+  playAudio(idObra: number, playerIndex: number) {
+    this.obraService.getAudioObra(idObra).subscribe(blob => {
+      this.audioUrls[playerIndex] = URL.createObjectURL(blob); // Crea una URL para el Blob
+
+      this.audios[playerIndex] = this.audioPlayerRefs.toArray()[playerIndex].nativeElement; // Obtén la referencia al elemento <audio>
+      this.audios[playerIndex].src = this.audioUrls[playerIndex]; // Asigna la URL al elemento <audio>
+
+      this.audios[playerIndex].load(); // Carga el audio
+      this.audios[playerIndex].play(); // Reproduce el audio
+      this.isPlaying[playerIndex] = true;
+    });
+  }
+
+  pauseAudio(playerIndex: number) {
+    if (this.audios[playerIndex]) {
+      this.audios[playerIndex].pause();
+      this.isPlaying[playerIndex] = false;
+    }
   }
 
 }

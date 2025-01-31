@@ -147,12 +147,20 @@ export class ObraformComponent implements OnInit {
 
                 next: obra2 => {
                   this.router.navigate(['/admin/partitura/upload', obra2.idObra]);
-                  Swal.fire('Mensaje', `Obra: ${obra2.nombre} creado con éxito!`, 'success');
+                  Swal.fire({
+                    title: "¡Genial!",
+                    text: `¡Obra "${obra2.nombre}" creada con éxito!`,
+                    icon: "success"
+                  });
                 },
                 error: err => {
                   this.router.navigate(['/admin/obra'])
-                  Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
-                  console.error("Error al subir el audio: ", err);
+                  Swal.fire({
+                    title: "¡Algo pasó!",
+                    text: `Error: ${err.error.error}`,
+                    icon: "error"
+                  });
+                  console.error("Error: ", err.error.error);
                 },
                 complete: () => {
                   //Siempre hay que limpiar todas las variables
@@ -179,28 +187,71 @@ export class ObraformComponent implements OnInit {
 
   }
 
-  actualizarObra(): void {
-    const formData = new FormData();
-    formData.set('audio', this.audio);
-    const obraJSON = JSON.stringify(this.obra, null, 2);
-    formData.set('obraJSON', obraJSON);
+   /**
+ * Suma dos números.
+ *
+ * @param a - El primer número.
+ * @param b - El segundo número.
+ * @returns La suma de a y b.
+ *
+ * @example
+ * add(2, 3); // Devuelve 5
+ */
+   actualizarObra(): void {
 
-
-    this.obraService.actualizarObraFormData(formData, this.obra.idObra)
+    this.obraService.actualizarObra(this.obra)
       .subscribe(
-        response => {
-          if (response.body != null) {
-            this.router.navigate(['/account/obra'])
-            Swal.fire('Mensaje', `Obra: ${response.body.nombre} creado con éxito!`, 'success')
-          } else {
-            console.error('El cuerpo de la respuesta es nulo.');
-          }
+        {
+          next: obra => {
 
-        },
-        error => {
-          this.router.navigate(['/account/obra'])
-          Swal.fire('Mensaje', `${error.error.mensaje}`, 'warning')
-          console.error("Error al crear la obra: ", error);
+            //Si el idObra es diferente de 0 es porque se creó correctamente
+            if (obra.idObra > 0) {
+              const formData = new FormData();
+              formData.append('audioFile', this.audio);
+
+              this.obraService.uploadAudio(formData, obra.idObra).subscribe({
+
+                next: obra2 => {
+                  this.router.navigate(['/admin/partitura/upload', obra2.idObra]);
+                  Swal.fire({
+                    title: "¡Genial!",
+                    text: `¡Obra "${obra2.nombre}" actualizada con éxito!`,
+                    icon: "success"
+                  });
+                },
+                error: err => {
+                  this.router.navigate(['/admin/obra'])
+                  Swal.fire({
+                    title: "¡Algo pasó!",
+                    text: `Error: ${err.error.error}`,
+                    icon: "error"
+                  });
+                  console.error("Error: ", err.error.error);
+                },
+                complete: () => {
+                  //Siempre hay que limpiar todas las variables
+                  this.limpiarVariables();
+                }
+              });
+
+            }
+            // En caso contrario hubo un error y se retornó un Objeto vacío
+            else {
+              this.router.navigate(['/admin/obra'])
+              Swal.fire('Mensaje', `Hubo un error`, 'warning')
+              console.error("Error al actualizar la obra: ");
+            }
+          }
+          ,
+          error: err => {
+            this.router.navigate(['/admin/obra'])
+            Swal.fire({
+              title: "¡Algo pasó!",
+              text: `Error: ${err.error.error}`,
+              icon: "error"
+            });
+            console.error("Error: ", err.error.error);
+          }
         }
       );
 

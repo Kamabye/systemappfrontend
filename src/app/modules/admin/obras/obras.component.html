@@ -27,7 +27,8 @@
 
   </div>
   <div class="col text-end input-group">
-    <input [formControl]="nameObraInput" type="search" class="form-control" placeholder="Buscar..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+    <input [formControl]="nameObraInput" type="search" class="form-control" placeholder="Buscar..."
+      aria-label="Recipient's username" aria-describedby="basic-addon2">
     <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
   </div>
 </div>
@@ -52,7 +53,7 @@
     </thead>
 
     <tbody class="table-group-divider">
-      <ng-container *ngFor="let obra of obras">
+      <ng-container *ngFor="let obra of obras; let i = index">
         <tr>
           <th><input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="..."></th>
           <th>{{obra.nombre}}</th>
@@ -74,8 +75,9 @@
           <th>{{obra.genero}}</th>
           <th>${{obra.precio}}</th>
           <th>
-            <audio #audio controls (play)="isPlaying = true" (pause)="isPlaying = false"></audio>
-
+            <button (click)="playAudio(obra.idObra,i)">Play {{ i + 1 }}</button>
+            <button (click)="pauseAudio(i)">Pause {{ i + 1 }}</button>
+            <audio #audioPlayer controls></audio>
           </th>
           <th>
             <div class="row">
@@ -89,12 +91,11 @@
           </th>
           <th>
             <div class="row">
-              <button type="submit" class="btn btn-success"
-                [routerLink]="['/account/obra/view',obra.idObra]">Ver</button>
+              <button type="submit" class="btn btn-success" [routerLink]="['/admin/obra/view',obra.idObra]">Ver</button>
             </div>
             <div class="row">
               <button type="submit" class="btn btn-primary"
-                [routerLink]="['/account/obra/form',obra.idObra]">Editar</button>
+                [routerLink]="['/admin/obra/form',obra.idObra]">Editar</button>
             </div>
             <div class="row">
               <button type="submit" class="btn btn-danger" (click)='eliminarObra(obra)'>Eliminar</button>
@@ -105,7 +106,10 @@
             <div class="row">
               <button type="submit" class="btn btn-warning" (click)='agregarObraShopCart()'>Agregar al Carrito</button>
             </div>
-
+            <div class="row">
+              <button type="submit" class="btn btn-dark"
+                [routerLink]="['/admin/partitura/upload',obra.idObra]">EditarPartituras</button>
+            </div>
           </th>
         </tr>
       </ng-container>

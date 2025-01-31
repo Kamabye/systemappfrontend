@@ -96,7 +96,7 @@
     <button type="submit" class="btn btn-success" (click)='crearObra()'
       *ngIf="!obra.idObra; else elseBlock">Crear</button>
     <ng-template #elseBlock>
-      <button type="submit" class="btn btn-primary" (click)='actualizarObraFormData()'>Actualizar</button>
+      <button type="submit" class="btn btn-primary" (click)='actualizarObra()'>Actualizar</button>
     </ng-template>
   </div>
 </div>
