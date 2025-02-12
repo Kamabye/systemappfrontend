@@ -187,17 +187,17 @@ export class ObraformComponent implements OnInit {
 
   }
 
-   /**
- * Suma dos números.
- *
- * @param a - El primer número.
- * @param b - El segundo número.
- * @returns La suma de a y b.
- *
- * @example
- * add(2, 3); // Devuelve 5
- */
-   actualizarObra(): void {
+  /**
+* Suma dos números.
+*
+* @param a - El primer número.
+* @param b - El segundo número.
+* @returns La suma de a y b.
+*
+* @example
+* add(2, 3); // Devuelve 5
+*/
+  actualizarObra(): void {
 
     this.obraService.actualizarObra(this.obra)
       .subscribe(
@@ -206,33 +206,15 @@ export class ObraformComponent implements OnInit {
 
             //Si el idObra es diferente de 0 es porque se creó correctamente
             if (obra.idObra > 0) {
-              const formData = new FormData();
-              formData.append('audioFile', this.audio);
 
-              this.obraService.uploadAudio(formData, obra.idObra).subscribe({
-
-                next: obra2 => {
-                  this.router.navigate(['/admin/partitura/upload', obra2.idObra]);
-                  Swal.fire({
-                    title: "¡Genial!",
-                    text: `¡Obra "${obra2.nombre}" actualizada con éxito!`,
-                    icon: "success"
-                  });
-                },
-                error: err => {
-                  this.router.navigate(['/admin/obra'])
-                  Swal.fire({
-                    title: "¡Algo pasó!",
-                    text: `Error: ${err.error.error}`,
-                    icon: "error"
-                  });
-                  console.error("Error: ", err.error.error);
-                },
-                complete: () => {
-                  //Siempre hay que limpiar todas las variables
-                  this.limpiarVariables();
-                }
+              this.router.navigate(['/admin/partitura/upload', obra.idObra]);
+              Swal.fire({
+                title: "¡Genial!",
+                text: `¡Obra "${obra.nombre}" actualizada con éxito!`,
+                icon: "success"
               });
+
+              this.limpiarVariables();
 
             }
             // En caso contrario hubo un error y se retornó un Objeto vacío

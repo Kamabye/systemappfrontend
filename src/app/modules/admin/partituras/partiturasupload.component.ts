@@ -51,7 +51,7 @@ export class PartiturasuploadComponent implements OnInit {
               this.partituraService.getPartituras(this.obra.idObra).subscribe({
                 next: data => {
                   this.obra.partituras = data.body!;
-                  console.info(this.obra);
+                  //console.info(this.obra);
                   this.cdr.detectChanges();
                 },
                 error: err => {
@@ -106,8 +106,59 @@ export class PartiturasuploadComponent implements OnInit {
     })
   }
 
-  eliminarPartitura(_t23: Partitura) {
-    throw new Error('Method not implemented.');
+  eliminarPartitura(partitura: Partitura) {
+
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+      title: '¿Estás seguro de eliminar este objeto?',
+      text: `ID Objeto: ${partitura.idPartitura}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, Eliminar',
+      cancelButtonText: 'No, Cancelar!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.partituraService.eliminarPartitura(partitura.idPartitura).subscribe({
+          next: data => {
+            this.obra.partituras = this.obra.partituras.filter(r => r != partitura);
+            this.cdr.detectChanges();
+            swalWithBootstrapButtons.fire({
+              title: 'Eliminado!',
+              text: `IDPartitura: ${data.body?.idPartitura} eliminado con éxito`,
+              icon: 'success'
+            }
+            );
+          },
+          error: err => {
+            Swal.fire({
+              title: "¡Algo pasó!",
+              text: `Error: ${err.error.error}`,
+              icon: "error"
+            });
+            console.error("Error: ", err.error.error);
+          },
+          complete() {
+            console.info("Complete eliminar Partitura");
+          },
+        });
+
+      }
+      else if (result.dismiss === Swal.DismissReason.cancel) {
+        swalWithBootstrapButtons.fire({
+          title: "Cancelled",
+          text: "Your imaginary file is safe :)",
+          icon: "error"
+        });
+      }
+    });
   }
 
   handleFileInput(event: any): void {
@@ -123,9 +174,12 @@ export class PartiturasuploadComponent implements OnInit {
         this.partituraService.uploadPartitura(data.idPartitura, formData).subscribe({
           next: data => {
             this.obra.partituras.push(data);
-            //this.router.navigate([this.router.url]);
-            console.info(this.obra);
             this.cdr.detectChanges();
+            Swal.fire({
+              title: "¡Genial!",
+              text: `¡Partitura: "${data.instrumento}" creada con éxito!`,
+              icon: "success"
+            });
           },
           error: err => {
             console.error("Error: ", err);
