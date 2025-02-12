@@ -44,7 +44,7 @@ export class PartituraService {
       .pipe(
         //tap permite visualizar los datos emitidos por observable, actuaizar variables locales, notifcicacion, o llamada a servicio
         tap(
-          data => console.info('HttpResponse', data)
+          //data => console.info('HttpResponse', data)
         ),
         //Extrae el cuerpo del HttpResponse y lo retorna como Observable<Obra>
         map(response => response.body!),
@@ -64,7 +64,7 @@ export class PartituraService {
       .pipe(
         //tap permite visualizar los datos emitidos por observable, actuaizar variables locales, notifcicacion, o llamada a servicio
         tap(
-          data => console.info('HttpResponse', data)
+          //data => console.info('HttpResponse', data)
         ),
         //Extrae el cuerpo del HttpResponse y lo retorna como Observable<Obra>
         map(response => response.body!),
