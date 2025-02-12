@@ -33,6 +33,7 @@ export class AuthService {
           next: data => {
 
             this.setToken(data.body!);
+            //console.info(this.getToken.toString);
             //const decoded: any = jwtDecode(data.body!);
             //console.log(decoded); // Muestra el rol del usuario
             //const authorities = decoded.authorities; // Asumiendo que 'role' es la clave en tu JWT
@@ -58,7 +59,6 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    console.info("AuthService getToken()")
     return localStorage.getItem('token');
   }
 
@@ -67,17 +67,29 @@ export class AuthService {
   }
 
   removeToken(): void {
-    console.info("AuthService removeToken()")
-    localStorage.removeItem('access_token');
+    console.info('Token removido');
+    localStorage.removeItem('token');
   }
 
   isAuthenticated(): boolean {
+    //console.info("Validar authentication del guard");
     const token = localStorage.getItem('token'); // Obtén el JWT del localStorage
-    if (token) {
+    const decoded: any = jwtDecode(token!);
+    //console.info("Token almacenado decodificado");
+
+    const expirationDate = new Date(decoded.exp * 1000);
+    const now = new Date();
+
+    console.info(decoded.exp);
+    if (decoded && expirationDate > now) {
       // Aquí podrías agregar lógica para verificar la validez del token (decodificarlo, verificar la fecha de expiración, etc.)
       // Por ahora, simplemente verificamos si existe.
+      //console.info(expirationDate);
+      //console.info(now);
+      //console.info('Token válido');
       return true; // Si el token existe, asumimos que está autenticado (simplificado)
     }
+    //console.info('Token Inválido');
     return false;
   }
 

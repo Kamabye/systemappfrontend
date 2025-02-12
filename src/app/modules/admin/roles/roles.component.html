@@ -33,7 +33,7 @@
             <th>{{rol.createdBy}}</th>
             <th>{{rol.modifiedBy}}</th>
             <th>
-              <button type="submit" class="btn btn-primary" [routerLink]="['/admin/rol/form',rol.id]">Editar</button>
+              <button type="submit" class="btn btn-primary" [routerLink]="['/admin/rol/form',rol.idRol]">Editar</button>
             </th>
             <th>
               <button type="submit" class="btn btn-danger" (click)='eliminarRol(rol)'>Eliminar</button>

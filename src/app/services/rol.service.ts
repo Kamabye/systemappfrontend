@@ -38,10 +38,12 @@ export class RolService {
   }
 
   actualizarRol(rol: Rol): Observable<HttpResponse<Rol>> {
-    return this.http.put<Rol>(`${this.urlEndPointRol}/${rol.id}`, rol, { headers: this.httpHeaders, observe: 'response' });
+    
+    return this.http.put<Rol>(`${this.urlEndPointRol}/${rol.idRol}`, rol, { headers: this.httpHeaders, observe: 'response' });
   }
 
   eliminarRol(idRol: number): Observable<HttpResponse<Rol>> {
+    console.info(idRol);
     return this.http.delete<Rol>(`${this.urlEndPointRol}/${idRol}`, { observe: 'response' });
   }
 }

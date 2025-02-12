@@ -56,16 +56,31 @@ export class RolesComponent implements OnInit {
       reverseButtons: true
     }).then((result) => {
       if (result.isConfirmed) {
-        this.rolService.eliminarRol(rol.id).subscribe(
-          response => {
+
+        console.info(rol);
+        this.rolService.eliminarRol(rol.idRol).subscribe({
+          next: data => {
 
             this.roles = this.roles.filter(r => r !== rol)
             SwalWithBootstrapButtons.fire(
               'Eliminado!',
-              `Rol ${response.body?.rol} eliminado con éxito`,
+              `Rol ${data.body?.rol} eliminado con éxito`,
               'success'
             )
-          })
+          },
+          error: err => {
+            Swal.fire({
+              title: "¡Algo pasó!",
+              text: `Error: ${err.error.error}`,
+              icon: "error"
+            });
+            console.error("Error: ", err.error.error);
+          },
+          complete() {
+            console.info("Complete eliminar Rol");
+          }
+        }
+        )
 
       }
     })

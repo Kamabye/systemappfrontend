@@ -5,7 +5,7 @@
             <label for="rol">Escribe el rol</label>
         </div>
         <button type="submit" class="btn btn-success" (click)='crearRol()'
-            *ngIf="!rol.id; else elseBlock">Crear</button>
+            *ngIf="!rol.idRol; else elseBlock">Crear</button>
         <ng-template #elseBlock>
             <button type="submit" class="btn btn-primary" (click)='actualizarRol()'>Actualizar</button>
         </ng-template>

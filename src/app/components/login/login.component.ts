@@ -41,13 +41,17 @@ export class LoginComponent implements OnInit {
 
                         console.log(authorities);
                         if (authorities.includes('ROLE_Administrador')) {
+                            console.info("Redireccionar a admin");
                             this.router.navigate(['/admin']);
                         } else if (authorities.includes('ROLE_Editor')) {
+                            console.info("Redireccionar a user");
                             this.router.navigate(['/user']);
                         }
                         else {
+                            console.info("Redireccionar a home");
                             this.router.navigate(['/home']);
                         }
+                        console.info("Redireccionar a quien sabe donde");
                     }
                 },
                 error: err => {

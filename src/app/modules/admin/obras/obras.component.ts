@@ -162,7 +162,7 @@ export class ObrasComponent implements OnInit {
           },
           complete() {
             console.info("Complete eliminar Obra");
-          },
+          }
         });
 
       }

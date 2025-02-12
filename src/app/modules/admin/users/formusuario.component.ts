@@ -53,7 +53,7 @@ export class FormusuarioComponent implements OnInit {
 
   onSelectChange(event: any) {
     const opcionesSeleccionadas = Array.from(event.target.selectedOptions, (option: any) => option.value);
-    this.usuario.roles = this.roles.filter(rol => opcionesSeleccionadas.includes(rol.id.toString()));
+    this.usuario.roles = this.roles.filter(rol => opcionesSeleccionadas.includes(rol.idRol.toString()));
   }
 
   handleFileInput(event: any): void {
@@ -148,7 +148,7 @@ export class FormusuarioComponent implements OnInit {
     const usuarioJSON = JSON.stringify(this.usuario, null, 2);
     formData.set('usuarioJSON', usuarioJSON);
 
-    this.usuarioService.actualizarUsuarioFormData(formData).subscribe(
+    this.usuarioService.actualizarUsuarioFormData(this.usuario.idUsuario,formData).subscribe(
       response => {
         if (response.body !== null) {
           this.router.navigate(['/admin/user'])

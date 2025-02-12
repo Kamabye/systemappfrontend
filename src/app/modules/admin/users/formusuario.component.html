@@ -40,14 +40,14 @@
             <div class="">
                 <select class="form-select" multiple aria-label="Multiple select example" *ngIf="roles.length > 0"
                     (change)="onSelectChange($event)">
-                    <option *ngFor="let rol of roles" [value]="rol.id">{{rol.rol}}</option>
+                    <option *ngFor="let rol of roles" [value]="rol.idRol">{{rol.rol}}</option>
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-success" (click)='crearUsuarioFormData()'
+        <button type="submit" class="btn btn-success" (click)='crearUsuario()'
             *ngIf="!usuario.idUsuario; else elseBlock">Crear</button>
         <ng-template #elseBlock>
-            <button type="submit" class="btn btn-primary" (click)='actualizarUsuarioFormData()'>Actualizar</button>
+            <button type="submit" class="btn btn-primary" (click)='actualizarUsuario()'>Actualizar</button>
         </ng-template>
     </div>
 </form>

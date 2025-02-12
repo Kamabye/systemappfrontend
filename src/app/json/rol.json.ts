@@ -3,7 +3,7 @@ import { IRol } from "../interfaces/rol.interface"
 
 export const IROLES: IRol[] = [
   {
-    id: 1,
+    idRol: 1,
     rol: 'Admin',
     createdAt: new Date(),
     modifiedAt: new Date(),
@@ -11,7 +11,7 @@ export const IROLES: IRol[] = [
     modifiedBy: new Date(),
   },
   {
-    id: 2,
+    idRol: 2,
     rol: 'Super',
     createdAt: new Date(),
     modifiedAt: new Date(),
@@ -19,7 +19,7 @@ export const IROLES: IRol[] = [
     modifiedBy: new Date(),
   },
   {
-    id: 3,
+    idRol: 3,
     rol: 'User',
     createdAt: new Date(),
     modifiedAt: new Date(),
@@ -27,7 +27,7 @@ export const IROLES: IRol[] = [
     modifiedBy: new Date(),
   },
   {
-    id: 4,
+    idRol: 4,
     rol: 'Temp',
     createdAt: new Date(),
     modifiedAt: new Date(),

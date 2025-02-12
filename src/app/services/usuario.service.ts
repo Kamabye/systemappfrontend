@@ -71,11 +71,11 @@ export class UsuarioService {
   }
 
   actualizarUsuario(usuario: Usuario): Observable<HttpResponse<Usuario>> {
-    return this.http.put<Usuario>(`${this.urlEndPointUser}/${usuario.idUsuario}`, usuario, { headers: this.httpHeaders, observe: 'response' });
+    return this.http.put<Usuario>(`${this.urlEndPointUser}`, usuario, { headers: this.httpHeaders, observe: 'response' });
   }
 
-  actualizarUsuarioFormData(formData: FormData): Observable<HttpResponse<Usuario>> {
-    return this.http.put<Usuario>(`${this.urlEndPointUser}`, formData, { observe: 'response' });
+  actualizarUsuarioFormData(idUsuario: number, formData: FormData): Observable<HttpResponse<Usuario>> {
+    return this.http.put<Usuario>(`${this.urlEndPointUser}/${idUsuario}`, formData, { observe: 'response' });
   }
 
 }
