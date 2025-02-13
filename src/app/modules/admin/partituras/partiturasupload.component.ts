@@ -170,6 +170,7 @@ export class PartiturasuploadComponent implements OnInit {
   }
 
   crearInstrumento() {
+    this.cargando = true;
     this.partituraService.crearPartitura(this.obra!.idObra, this.partitura).subscribe({
       next: data => {
         const formData = new FormData();
@@ -183,7 +184,6 @@ export class PartiturasuploadComponent implements OnInit {
                 break;
               case HttpEventType.UploadProgress:
                 if (event.total) { // Check if total is defined
-                  this.cargando = true;
                   this.progreso = Math.round((event.loaded / event.total) * 100);
                   this.cdr.detectChanges();
                   console.log(`Progreso: ${this.progreso}%`);
