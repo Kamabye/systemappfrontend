@@ -59,23 +59,23 @@ export class LoginComponent implements OnInit {
             this.authService.loginWithCredentials(body).subscribe({
                 next: data => {
                     if (data.body != null) {
-                        console.info("JWT Authenticado");
+                        //console.info("JWT Authenticado");
                         const decoded: any = jwtDecode(data.body!);
                         const authorities: string[] = decoded.authorities;
 
-                        console.log(authorities);
+                        //console.log(authorities);
                         if (authorities.includes('ROLE_Administrador')) {
-                            console.info("Redireccionar a admin");
+                            //console.info("Redireccionar a admin");
                             this.router.navigate(['/admin']);
                         } else if (authorities.includes('ROLE_Editor')) {
-                            console.info("Redireccionar a user");
+                            //console.info("Redireccionar a user");
                             this.router.navigate(['/editor']);
                         } else if (authorities.includes('ROLE_Lector')) {
-                            console.info("Redireccionar a user");
+                            //console.info("Redireccionar a user");
                             this.router.navigate(['/lector']);
                         }
                         else {
-                            console.info("Redireccionar a home");
+                            //console.info("Redireccionar a home");
                             this.router.navigate(['/home']);
                         }
 
