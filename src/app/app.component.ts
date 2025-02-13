@@ -13,6 +13,6 @@ import { RouterOutlet } from '@angular/router'; // Importa RouterOutlet
 export class AppComponent implements OnInit {
 
   ngOnInit(): void {
-    console.log("AppComponent ngOnInit()");
+    //console.log("AppComponent ngOnInit()");
   }
 }

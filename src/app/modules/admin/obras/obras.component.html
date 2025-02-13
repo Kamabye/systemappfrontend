@@ -33,10 +33,16 @@
   </div>
 </div>
 
-<div class="row">
+<div class="d-flex justify-content-center" *ngIf="cargando">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div class="row" *ngIf="obras.length > 0">
 
   <div class="table-responsive">
-    <table class="table table-hover align-middle" *ngIf="obras.length > 0">
+    <table class="table table-hover align-middle">
 
       <thead class="table-light">
         <tr>

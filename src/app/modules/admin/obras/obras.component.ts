@@ -28,6 +28,8 @@ import { ItemPayPalV2 } from 'src/app/models/itempaypalv2';
 })
 export class ObrasComponent implements OnInit {
 
+  cargando: boolean = false; // Variable para controlar la visibilidad del spinner
+
   @ViewChildren('audioPlayer') audioPlayerRefs: any;
   audioUrls: any[] = [];
   audios: HTMLAudioElement[] = [];
@@ -93,6 +95,7 @@ export class ObrasComponent implements OnInit {
   }
 
   cargarObras() {
+    this.cargando = true; // Mostrar el spinner antes de la petición
     this.obraService.getObras(this.currentPage, this.pageSize, "").subscribe({
       next: (data) => {
         if (data) {
@@ -116,6 +119,7 @@ export class ObrasComponent implements OnInit {
       },
       complete: () => {
         console.log('loadObras complete');
+        this.cargando = false;
       }
     }
     );

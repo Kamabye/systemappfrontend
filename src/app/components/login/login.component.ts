@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormsModule, NgForm } from '@angular/forms'; // Importa FormsModule
 import { jwtDecode } from 'jwt-decode';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -20,11 +21,34 @@ export class LoginComponent implements OnInit {
     constructor(private authService: AuthService, private router: Router) { }
 
     ngOnInit(): void {
-        console.info("Ingresamos a ngOnInit login");
+
+        //Al inicial validamos si hay una sesion activa para redireccionar.
+        //console.info("Ingresamos a ngOnInit login");
+
+        if (this.authService.isAuthenticated()) {
+            //            console.info("JWT Authenticado");
+            const decoded: any = jwtDecode(this.authService.getToken()!);
+            const authorities: string[] = decoded.authorities;
+
+            console.log(authorities);
+            if (authorities.includes('ROLE_Administrador')) {
+                console.info("Redireccionar a admin");
+                this.router.navigate(['/admin']);
+            } else if (authorities.includes('ROLE_Editor')) {
+                console.info("Redireccionar a user");
+                this.router.navigate(['/editor']);
+            } else if (authorities.includes('ROLE_Lector')) {
+                console.info("Redireccionar a user");
+                this.router.navigate(['/lector']);
+            }
+
+        }
+
+
     }
 
     login(form: NgForm): void {
-        console.info("Ingresamos a login");
+        //console.info("Ingresamos a login");
         //console.info(this.credentials);
 
         if (form.valid) { // Verifica si el formulario es válido
@@ -37,7 +61,7 @@ export class LoginComponent implements OnInit {
                     if (data.body != null) {
                         console.info("JWT Authenticado");
                         const decoded: any = jwtDecode(data.body!);
-                        const authorities : string[]  = decoded.authorities;
+                        const authorities: string[] = decoded.authorities;
 
                         console.log(authorities);
                         if (authorities.includes('ROLE_Administrador')) {
@@ -45,18 +69,25 @@ export class LoginComponent implements OnInit {
                             this.router.navigate(['/admin']);
                         } else if (authorities.includes('ROLE_Editor')) {
                             console.info("Redireccionar a user");
-                            this.router.navigate(['/user']);
+                            this.router.navigate(['/editor']);
+                        } else if (authorities.includes('ROLE_Lector')) {
+                            console.info("Redireccionar a user");
+                            this.router.navigate(['/lector']);
                         }
                         else {
                             console.info("Redireccionar a home");
                             this.router.navigate(['/home']);
                         }
-                        console.info("Redireccionar a quien sabe donde");
+
                     }
                 },
                 error: err => {
-                    // Manejar errores de autenticación
-                    console.error('Error al iniciar sesión', err);
+                    Swal.fire({
+                        title: "¡Algo pasó!",
+                        text: `Error: ${err.error}`,
+                        icon: "error"
+                    });
+                    console.error("Error: ", err.error);
                 },
                 complete: () => {
                     console.log('login complete');

@@ -8,14 +8,18 @@ import { authGuard } from './Utils/AuthGuard';
 export const routes: Routes = [
 
   //Se esta redireccionando al módulo Home cuando no hay una subruta definida
-    { path: '', redirectTo: '/admin', pathMatch: 'full' },
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
     {
       //path: 'admin', component: DashboardComponent, loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
       path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule), canActivate: [authGuard], data: { authorities: ['ROLE_Administrador'] }
     },
     {
       //path: 'home', component: IndexComponent, loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
-      path: 'user', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule), canActivate: [authGuard], data: { authorities: ['ROLE_Administrador', 'ROLE_Editor'] }
+      path: 'editor', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule), canActivate: [authGuard], data: { authorities: ['ROLE_Administrador', 'ROLE_Editor'] }
+    },
+    {
+      //path: 'home', component: IndexComponent, loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
+      path: 'lector', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule), canActivate: [authGuard], data: { authorities: ['ROLE_Administrador', 'ROLE_Editor', 'ROLE_Lector'] }
     },
     {
       //path: 'home', component: IndexComponent, loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
