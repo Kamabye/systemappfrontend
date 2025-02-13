@@ -201,6 +201,7 @@ export class PartiturasuploadComponent implements OnInit {
                 });
                 console.log('Respuesta completa', event.body);
                 this.cargando = false; // Ocultar el progreso en caso de error
+                this.progreso = 0;
                 this.cdr.detectChanges();
                 break;
               default:
@@ -210,6 +211,7 @@ export class PartiturasuploadComponent implements OnInit {
           error: err => {
             console.error("Error: ", err);
             this.cargando = false; // Ocultar el progreso en caso de error
+            this.progreso = 0;
           },
           complete: () => {
             //this.cargando = false; // Ocultar el progreso en caso de error
@@ -227,6 +229,7 @@ export class PartiturasuploadComponent implements OnInit {
         });
         console.error("Error: ", err.error.error);
         this.cargando = false; // Mostrar el progreso
+        this.progreso = 0;
       },
       complete: () => {
         //this.cargando = false; // Mostrar el progreso
