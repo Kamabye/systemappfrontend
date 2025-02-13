@@ -174,17 +174,18 @@ export class PartiturasuploadComponent implements OnInit {
       next: data => {
         const formData = new FormData();
         formData.append('partituraPDF', this.partituraPDF);
-        this.cargando = true; // Mostrar el progreso
-
         this.partituraService.uploadPartitura(data.idPartitura, formData).subscribe({
           next: event => {
             switch (event.type) {
               case HttpEventType.Sent:
+                this.cargando = true;
                 console.log('Petición enviada!');
                 break;
               case HttpEventType.UploadProgress:
                 if (event.total) { // Check if total is defined
+                  this.cargando = true;
                   this.progreso = Math.round((event.loaded / event.total) * 100);
+                  this.cdr.detectChanges();
                   console.log(`Progreso: ${this.progreso}%`);
                 }
                 break;
@@ -192,12 +193,18 @@ export class PartiturasuploadComponent implements OnInit {
                 console.log('Cabeceras recibidas', event.headers);
                 break;
               case HttpEventType.Response:
+                this.obra.partituras.push(data);
+                Swal.fire({
+                  title: "¡Genial!",
+                  text: `¡Partitura: "${data.instrumento}" creada con éxito!`,
+                  icon: "success"
+                });
                 console.log('Respuesta completa', event.body);
-                this.cargando = false; // Ocultar el progreso
+                this.cargando = false; // Ocultar el progreso en caso de error
+                this.cdr.detectChanges();
                 break;
               default:
                 console.log('Otro evento', event);
-                this.cargando = false; // Mostrar el progreso
             }
           },
           error: err => {
@@ -205,17 +212,11 @@ export class PartiturasuploadComponent implements OnInit {
             this.cargando = false; // Ocultar el progreso en caso de error
           },
           complete: () => {
-            this.cargando = false; // Ocultar el progreso en caso de error
+            //this.cargando = false; // Ocultar el progreso en caso de error
           }
         });
-        this.obra.partituras.push(data);
-        this.cdr.detectChanges();
-        Swal.fire({
-          title: "¡Genial!",
-          text: `¡Partitura: "${data.instrumento}" creada con éxito!`,
-          icon: "success"
-        });
-        this.cargando = false; // Mostrar el progreso
+
+        //this.cargando = false; // Mostrar el progreso
       },
       error: err => {
 
@@ -228,9 +229,10 @@ export class PartiturasuploadComponent implements OnInit {
         this.cargando = false; // Mostrar el progreso
       },
       complete: () => {
-        this.cargando = false; // Mostrar el progreso
+        //this.cargando = false; // Mostrar el progreso
       }
     });
+    //this.cargando = false; // Mostrar el progreso
   }
 
   viewPartitura(idPartitura: number) {
