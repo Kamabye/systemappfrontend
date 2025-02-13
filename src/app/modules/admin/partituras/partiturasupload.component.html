@@ -11,13 +11,19 @@
 </div>
 
 <div class="row">
-    <div class="col"  *ngIf="obra">
+    <div class="col" *ngIf="obra">
         <h1>Obra: {{obra.nombre}}</h1>
         <h1>Compositor: {{obra.compositor}}</h1>
     </div>
 
 </div>
-<div class="row"  *ngIf="obra">
+
+<div class="progress" role="progressbar" aria-label="Basic example" [attr.aria-valuenow]="progreso" aria-valuemin="0"
+    aria-valuemax="100" *ngIf="cargando">
+    <div class="progress-bar" [style.width.%]="progreso"></div>
+</div>
+
+<div class="row" *ngIf="obra">
     <div class="table-responsive">
         <table class="table align-middle table-hover" *ngIf="obra.partituras.length > 0">
             <thead>
@@ -34,7 +40,8 @@
                     <th>{{partitura.idPartitura}}</th>
                     <th>{{partitura.instrumento}}</th>
                     <th>
-                        <button type="submit" class="btn btn-primary" (click)='viewPartitura(partitura.idPartitura)' data-bs-toggle="modal" data-bs-target="#vistaPrevia">VistaPrevia</button>
+                        <button type="submit" class="btn btn-primary" (click)='viewPartitura(partitura.idPartitura)'
+                            data-bs-toggle="modal" data-bs-target="#vistaPrevia">VistaPrevia</button>
                     </th>
                     <th>
                         <button type="submit" class="btn btn-primary"
@@ -53,9 +60,8 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop"
-    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-    aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -67,36 +73,37 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-floating">
-                              <input placeholder="Instrumento" type="text" class="form-control" id="instrumento" name="instrumento"
-                                [(ngModel)]="partitura.instrumento">
-                              <label for="instrumento">Instrumento</label>
+                                <input placeholder="Instrumento" type="text" class="form-control" id="instrumento"
+                                    name="instrumento" [(ngModel)]="partitura.instrumento">
+                                <label for="instrumento">Instrumento</label>
                             </div>
-                          </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col">
 
                             <div class="mb-3">
-                              <label for="formFilePDF" class="form-label">Seleccionar partitura PDF</label>
-                              <input class="form-control" type="file" id="partituraPDF" name="partituraPDF" (change)="handleFileInput($event)" accept=".pdf, application/pdf">
+                                <label for="formFilePDF" class="form-label">Seleccionar partitura PDF</label>
+                                <input class="form-control" type="file" id="partituraPDF" name="partituraPDF"
+                                    (change)="handleFileInput($event)" accept=".pdf, application/pdf">
                             </div>
-                          </div>
+                        </div>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)='crearInstrumento()'>Upload</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)='crearInstrumento()'>Upload</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop"
-    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-    aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -108,36 +115,37 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-floating">
-                              <input placeholder="Instrumento" type="text" class="form-control" id="instrumento" name="instrumento"
-                                [(ngModel)]="partitura.instrumento">
-                              <label for="instrumento">Instrumento</label>
+                                <input placeholder="Instrumento" type="text" class="form-control" id="instrumento"
+                                    name="instrumento" [(ngModel)]="partitura.instrumento">
+                                <label for="instrumento">Instrumento</label>
                             </div>
-                          </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col">
 
                             <div class="mb-3">
-                              <label for="formFilePDF" class="form-label">Seleccionar partitura PDF</label>
-                              <input class="form-control" type="file" id="partituraPDF" name="partituraPDF" (change)="handleFileInput($event)" accept=".pdf, application/pdf">
+                                <label for="formFilePDF" class="form-label">Seleccionar partitura PDF</label>
+                                <input class="form-control" type="file" id="partituraPDF" name="partituraPDF"
+                                    (change)="handleFileInput($event)" accept=".pdf, application/pdf">
                             </div>
-                          </div>
+                        </div>
                     </div>
-                    
+
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)='crearInstrumento()'>Upload</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)='crearInstrumento()'>Upload</button>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="vistaPrevia"
-    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="vistaPreviaLabel"
-    aria-hidden="true">
+<div class="modal fade" id="vistaPrevia" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="vistaPreviaLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -150,8 +158,8 @@
                         <div class="col">
                             <div *ngIf="pdfUrl">
                                 <embed [src]="pdfUrl" type="application/pdf" width="100%" height="600px">
-                              </div>
-                          </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

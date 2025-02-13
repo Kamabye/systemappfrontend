@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Partitura } from '../models/partitura';
@@ -57,24 +57,8 @@ export class PartituraService {
       ;
   }
 
-  uploadPartitura(idPartitura: number, formData: FormData): Observable<Partitura> {
-
-    return this.http.patch<Partitura>(`${this.urlEndPointPartitura}/upload/${idPartitura}`, formData, { reportProgress: true, observe: 'response' })
-      //pipe encadena multiples operadores tap, map, filter, reduce, mergeMap para transformar los datos emitidos por Observable
-      .pipe(
-        //tap permite visualizar los datos emitidos por observable, actuaizar variables locales, notifcicacion, o llamada a servicio
-        tap(
-          //data => console.info('HttpResponse', data)
-        ),
-        //Extrae el cuerpo del HttpResponse y lo retorna como Observable<Obra>
-        map(response => response.body!),
-        //Captura errores y permite transformarlo en otro Observable, reintentar la petición, mostrar un error personalizado o emitir un valor por defecto
-        catchError(error => {
-          console.error('Error:', error);
-          return of(new Partitura()); // Emitir un array vacío en caso de error
-        })
-      )
-      ;
+  uploadPartitura(idPartitura: number, formData: FormData): Observable<HttpEvent<any>> {
+    return this.http.patch(`${this.urlEndPointPartitura}/upload/${idPartitura}`, formData, { reportProgress: true, observe: 'events' });
   }
 
   getVistaPreviaPartitura(idPartitura: number): Observable<Blob> {
@@ -109,7 +93,7 @@ export class PartituraService {
   }
 
   eliminarPartitura(idPartitura: number): Observable<HttpResponse<Partitura>> {
-      return this.http.delete<Partitura>(`${this.urlEndPointPartitura}/${idPartitura}`, { observe: 'response' });
-    }
+    return this.http.delete<Partitura>(`${this.urlEndPointPartitura}/${idPartitura}`, { observe: 'response' });
+  }
 
 }

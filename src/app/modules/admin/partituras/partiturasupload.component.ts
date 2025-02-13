@@ -1,3 +1,4 @@
+import { HttpEventType } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,6 +18,9 @@ import Swal from 'sweetalert2';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PartiturasuploadComponent implements OnInit {
+
+  progreso: number = 0;
+  cargando: boolean = false; // Para controlar la visibilidad del progreso
 
   pdfUrl: SafeUrl | null = null;
   partituraPDF!: File;
@@ -170,30 +174,61 @@ export class PartiturasuploadComponent implements OnInit {
       next: data => {
         const formData = new FormData();
         formData.append('partituraPDF', this.partituraPDF);
+        this.cargando = true; // Mostrar el progreso
 
         this.partituraService.uploadPartitura(data.idPartitura, formData).subscribe({
-          next: data => {
-            this.obra.partituras.push(data);
-            this.cdr.detectChanges();
-            Swal.fire({
-              title: "¡Genial!",
-              text: `¡Partitura: "${data.instrumento}" creada con éxito!`,
-              icon: "success"
-            });
+          next: event => {
+            switch (event.type) {
+              case HttpEventType.Sent:
+                console.log('Petición enviada!');
+                break;
+              case HttpEventType.UploadProgress:
+                if (event.total) { // Check if total is defined
+                  this.progreso = Math.round((event.loaded / event.total) * 100);
+                  console.log(`Progreso: ${this.progreso}%`);
+                }
+                break;
+              case HttpEventType.ResponseHeader:
+                console.log('Cabeceras recibidas', event.headers);
+                break;
+              case HttpEventType.Response:
+                console.log('Respuesta completa', event.body);
+                this.cargando = false; // Ocultar el progreso
+                break;
+              default:
+                console.log('Otro evento', event);
+                this.cargando = false; // Mostrar el progreso
+            }
           },
           error: err => {
             console.error("Error: ", err);
+            this.cargando = false; // Ocultar el progreso en caso de error
           },
           complete: () => {
-
+            this.cargando = false; // Ocultar el progreso en caso de error
           }
         });
+        this.obra.partituras.push(data);
+        this.cdr.detectChanges();
+        Swal.fire({
+          title: "¡Genial!",
+          text: `¡Partitura: "${data.instrumento}" creada con éxito!`,
+          icon: "success"
+        });
+        this.cargando = false; // Mostrar el progreso
       },
       error: err => {
 
+        Swal.fire({
+          title: "¡Algo pasó!",
+          text: `Error: ${err.error.error}`,
+          icon: "error"
+        });
+        console.error("Error: ", err.error.error);
+        this.cargando = false; // Mostrar el progreso
       },
       complete: () => {
-
+        this.cargando = false; // Mostrar el progreso
       }
     });
   }
