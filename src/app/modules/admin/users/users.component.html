@@ -23,6 +23,8 @@
             <th scope="col">Roles</th>
             <th scope="col">Creado</th>
             <th scope="col">Modificado</th>
+            <th scope="col">CreadoPor</th>
+            <th scope="col">ModificadoPor</th>
             <th scope="col">Acciones</th>
             <th scope="col">Acciones</th>
           </tr>
@@ -41,8 +43,10 @@
             <th>
               <div class="row" *ngFor="let rol of usuario.roles">{{rol.rol}}</div>
             </th>
-            <th>{{usuario.createdAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
-            <th>{{usuario.modifiedAt | date:'dd/MM/yyyy HH:mm:ss'}}</th>
+            <th>{{usuario.createdAt}}</th>
+            <th>{{usuario.modifiedAt}}</th>
+            <th>{{usuario.createdBy}}</th>
+            <th>{{usuario.modifiedBy}}</th>
             <th>
               <button type="submit" class="btn btn-primary" [routerLink]="['/admin/user/form',usuario.idUsuario]">Editar</button>
             </th>

@@ -18,7 +18,6 @@ import Swal from 'sweetalert2';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PartiturasuploadComponent implements OnInit {
-
   progreso: number = 0;
   cargando: boolean = false; // Para controlar la visibilidad del progreso
 
@@ -27,9 +26,7 @@ export class PartiturasuploadComponent implements OnInit {
   //Este es el objeto que define la obra y a donde se cargarán los instrumentos
   obra: Obra = new Obra();
   //Este objeto servirá para guardar cada instrumento
-  partitura: Partitura = new Partitura();
-  // El caracter ! le dice a TypeScript que puede estar seguro que el valor no será null o undefined
-  pageObras!: Page<Obra>;
+  partituraUpload: Partitura = new Partitura();
 
   constructor(private obraService: ObraService, private partituraService: PartituraService, private router: Router, private activateRoute: ActivatedRoute, private cdr: ChangeDetectorRef) { }
 
@@ -50,13 +47,18 @@ export class PartiturasuploadComponent implements OnInit {
 
           this.obraService.getObra(idObra).subscribe({
             next: response => {
-
               this.obra = response.body!;
+              this.cdr.detectChanges();
               this.partituraService.getPartituras(this.obra.idObra).subscribe({
                 next: data => {
-                  this.obra.partituras = data.body!;
-                  //console.info(this.obra);
-                  this.cdr.detectChanges();
+
+                  if (data.body && data.body.length > 0) {
+
+                    this.obra.partituras = data.body!;
+                    //console.info(this.obra);
+                    this.cdr.detectChanges();
+                  }
+
                 },
                 error: err => {
                   this.router.navigate(['/admin/obras'])
@@ -171,8 +173,10 @@ export class PartiturasuploadComponent implements OnInit {
 
   crearInstrumento() {
     this.cargando = true;
-    this.partituraService.crearPartitura(this.obra!.idObra, this.partitura).subscribe({
+    this.partituraService.crearPartitura(this.obra!.idObra, this.partituraUpload).subscribe({
       next: data => {
+        //console.info("Se creó el instrumentos");
+        //console.info(data);
         const formData = new FormData();
         formData.append('partituraPDF', this.partituraPDF);
         this.partituraService.uploadPartitura(data.idPartitura, formData).subscribe({
@@ -180,45 +184,42 @@ export class PartiturasuploadComponent implements OnInit {
             switch (event.type) {
               case HttpEventType.Sent:
                 this.cargando = true;
-                console.log('Petición enviada!');
+                //console.log('Petición enviada!');
                 break;
               case HttpEventType.UploadProgress:
-                if (event.total) { // Check if total is defined
+                if (event.total) {
                   this.progreso = Math.round((event.loaded / event.total) * 100);
-                  this.cdr.detectChanges();
                   console.log(`Progreso: ${this.progreso}%`);
+                  this.cdr.detectChanges();
                 }
                 break;
               case HttpEventType.ResponseHeader:
                 console.log('Cabeceras recibidas', event.headers);
                 break;
               case HttpEventType.Response:
+                //console.log('Respuesta completa', event.body);
                 this.obra.partituras.push(data);
                 Swal.fire({
                   title: "¡Genial!",
                   text: `¡Partitura: "${data.instrumento}" creada con éxito!`,
                   icon: "success"
                 });
-                console.log('Respuesta completa', event.body);
-                this.cargando = false; // Ocultar el progreso en caso de error
-                this.progreso = 0;
-                this.cdr.detectChanges();
                 break;
               default:
                 console.log('Otro evento', event);
+                this.cdr.detectChanges();
             }
           },
           error: err => {
             console.error("Error: ", err);
-            this.cargando = false; // Ocultar el progreso en caso de error
-            this.progreso = 0;
           },
           complete: () => {
-            //this.cargando = false; // Ocultar el progreso en caso de error
+
+            this.cargando = false;
+            this.progreso = 0;
+            this.cdr.detectChanges();
           }
         });
-
-        //this.cargando = false; // Mostrar el progreso
       },
       error: err => {
 
@@ -232,7 +233,7 @@ export class PartiturasuploadComponent implements OnInit {
         this.progreso = 0;
       },
       complete: () => {
-        //this.cargando = false; // Mostrar el progreso
+        this.cdr.detectChanges();
       }
     });
     //this.cargando = false; // Mostrar el progreso
@@ -245,12 +246,16 @@ export class PartiturasuploadComponent implements OnInit {
         this.cdr.detectChanges();
       },
       error: err => {
-        console.error('Error:', err);
+        console.error("Error: ", err);
       },
       complete: () => {
 
       }
     });
+  }
+
+  actualizarPartitura(_t37: Partitura) {
+    throw new Error('Method not implemented.');
   }
 
 }

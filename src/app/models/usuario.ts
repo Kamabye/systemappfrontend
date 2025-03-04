@@ -17,5 +17,7 @@ export class Usuario {
     dateOfBirth: Date = new Date();
     createdAt: Date = new Date();
     modifiedAt: Date = new Date();
+    modifiedBy: string = '';
+    createdBy: string = '';
     roles : Rol[] = [];
 }

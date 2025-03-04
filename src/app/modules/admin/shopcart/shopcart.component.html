@@ -1,4 +1,77 @@
 <p>obras.component.html</p>
+
+
+<div class="row" *ngIf="shopCart.length > 0">
+
+  <div class="table-responsive">
+    <table class="table table-hover align-middle">
+
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Información</th>
+          <th scope="col">Genero</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Reproducir</th>
+          <th scope="col">Video</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody class="table-group-divider">
+        <ng-container *ngFor="let cartitem of shopCart; let i = index">
+          <tr>
+            <th>
+              <div class="row">
+                <h1>{{cartitem.producto.nombre}}</h1>
+              </div>
+              <div class="row">
+                Compositor: {{cartitem.cantidad}}
+              </div>
+              <div class="row">
+                Arreglista: {{cartitem.subtotal}}
+              </div>
+              <div class="row">
+                Letrista: {{cartitem.impuesto}}
+              </div>
+            </th>
+            <th>{{cartitem.total}}</th>
+            <th></th>
+            <th>
+              <div class="row">
+                
+              </div>
+            </th>
+            <th>
+              <div class="row">
+                
+              </div>
+            </th>
+            <th>
+              <div class="row">
+                <button type="submit" class="btn btn-success"
+                  [routerLink]="['/admin/obra/view',0]">Ver</button>
+              </div>
+              <div class="row">
+                <button type="submit" class="btn btn-primary"
+                  [routerLink]="['/admin/obra/form',0]">Editar</button>
+              </div>
+              <div class="row">
+                <button type="submit" class="btn btn-danger" (click)='eliminarCartItem(cartitem)'>Eliminar</button>
+              </div>
+              <div class="row">
+                <button type="submit" class="btn btn-dark"
+                  [routerLink]="['/admin/partitura/upload',0]">EditarPartituras</button>
+              </div>
+            </th>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+
 <div class="row">
   <h1>Obras</h1>
   <button type="submit" class="btn btn-danger" (click)='pagarV2()'>Pagar</button>

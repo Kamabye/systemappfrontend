@@ -137,50 +137,22 @@ export class ObraformComponent implements OnInit {
       .subscribe(
         {
           next: obra => {
+            this.router.navigate(['/admin/partitura/upload', obra.idObra]);
+            Swal.fire({
+              title: "¡Genial!",
+              text: `¡Obra "${obra.nombre}" creada con éxito!`,
+              icon: "success"
+            });
 
-            //Si el idObra es diferente de 0 es porque se creó correctamente
-            if (obra.idObra > 0) {
-              const formData = new FormData();
-              formData.append('audioFile', this.audio);
-
-              this.obraService.uploadAudio(formData, obra.idObra).subscribe({
-
-                next: obra2 => {
-                  this.router.navigate(['/admin/partitura/upload', obra2.idObra]);
-                  Swal.fire({
-                    title: "¡Genial!",
-                    text: `¡Obra "${obra2.nombre}" creada con éxito!`,
-                    icon: "success"
-                  });
-                },
-                error: err => {
-                  this.router.navigate(['/admin/obra'])
-                  Swal.fire({
-                    title: "¡Algo pasó!",
-                    text: `Error: ${err.error.error}`,
-                    icon: "error"
-                  });
-                  console.error("Error: ", err.error.error);
-                },
-                complete: () => {
-                  //Siempre hay que limpiar todas las variables
-                  this.limpiarVariables();
-                }
-              });
-
-            }
-            // En caso contrario hubo un error y se retornó un Objeto vacío
-            else {
-              this.router.navigate(['/admin/obra'])
-              Swal.fire('Mensaje', `Hubo un error`, 'warning')
-              console.error("Error al crear la obra: ");
-            }
           }
           ,
           error: err => {
             this.router.navigate(['/admin/obra'])
             Swal.fire('Mensaje', `${err.error.mensaje}`, 'warning')
             console.error("Error al crear la obra: ", err);
+          },
+          complete: () => {
+            this.limpiarVariables();
           }
         }
       );

@@ -9,20 +9,21 @@ import { Page } from 'src/app/interfaces/page';
 import { debounceTime, distinctUntilChanged, of, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PayPalService } from 'src/app/services/paypal.service';
+import { ShopCartService } from 'src/app/services/shopcart.service';
 import { PaymentPayPalDTO } from 'src/app/models/paymentPayPalDTO';
 import { ProductoDTOPalPay } from 'src/app/models/productoDTOPayPal';
 
 import { OrderRequestPayPalV2 } from 'src/app/models/orderrequestpaypalv2';
 import { AmountPayPalV2 } from 'src/app/models/amountpaypalv2';
 import { PurchaseUnitPayPalV2 } from 'src/app/models/purchaseunitpaypalv2';
+import { CartItem } from 'src/app/models/cartitem';
 
 @Component({
     selector: 'app-shopcart',
-    standalone: true,
+
     templateUrl: './shopcart.component.html'
 })
 export class ShopCartComponent implements OnInit {
-
     paymentPayPalDTO: PaymentPayPalDTO = new PaymentPayPalDTO();
     listaProductosDTO: ProductoDTOPalPay[] = [];
     productoDTOPalPay1: ProductoDTOPalPay = new ProductoDTOPalPay();
@@ -33,14 +34,34 @@ export class ShopCartComponent implements OnInit {
     orderRequestPayPalV2: OrderRequestPayPalV2 = new OrderRequestPayPalV2();
 
 
-
-    constructor(private payPalService: PayPalService, private router: Router, private activateRoute: ActivatedRoute) { }
+    page: Page<CartItem> | undefined;
+    public shopCart: CartItem[] = [];
+    constructor(private payPalService: PayPalService, private shopCartService: ShopCartService, private router: Router, private activateRoute: ActivatedRoute) { }
 
     ngOnInit(): void {
         console.info("ShopCartComponent ngOnInit");
 
+        this.cargarShopCart();
 
+    }
+    cargarShopCart() {
+        this.shopCartService.getUserShopCart(0, 100, "").subscribe({
+            next: data => {
+                this.page = data.body!;
+                this.shopCart = this.page.content!;
+            },
+            error: err => {
+                Swal.fire({
+                    title: "¡Algo pasó!",
+                    text: `Error: ${err.error.error}`,
+                    icon: "error"
+                });
+                console.error("Error: ", err.error.error);
+            },
+            complete() {
 
+            },
+        });
     }
 
     pagar() {
@@ -143,6 +164,10 @@ export class ShopCartComponent implements OnInit {
             }
         );
         this.orderRequestPayPalV2 = new OrderRequestPayPalV2();
+    }
+
+    eliminarCartItem(_t18: CartItem) {
+        throw new Error('Method not implemented.');
     }
 
 }

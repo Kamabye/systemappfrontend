@@ -79,7 +79,8 @@ const routes: Routes = [
     PartiturasComponent,
     PartiturasformComponent,
     PartiturasuploadComponent,
-    ReturnComponent
+    ReturnComponent,
+    ShopCartComponent
   ],
   imports: [
     CommonModule, RouterModule.forChild(routes), ReactiveFormsModule, FormsModule

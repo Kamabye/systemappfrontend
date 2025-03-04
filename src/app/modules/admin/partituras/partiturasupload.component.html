@@ -23,13 +23,14 @@
     <div class="progress-bar" [style.width.%]="progreso"></div>
 </div>
 
-<div class="row" *ngIf="obra">
+<div class="row" *ngIf="obra.partituras">
     <div class="table-responsive">
         <table class="table align-middle table-hover" *ngIf="obra.partituras.length > 0">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Instrumento</th>
+                    <th scope="col">Acciones</th>
                     <th scope="col">Acciones</th>
                     <th scope="col">Acciones</th>
                     <th scope="col">Acciones</th>
@@ -45,7 +46,11 @@
                     </th>
                     <th>
                         <button type="submit" class="btn btn-primary"
-                            [routerLink]="['/admin/user/form',partitura.idPartitura]">Editar</button>
+                            [routerLink]="['/admin/partitura/form',partitura.idPartitura]">Editar</button>
+                    </th>
+                    <th>
+                        <button type="submit" class="btn btn-danger"
+                            (click)='actualizarPartitura(partitura)'>Actualizar Partitura</button>
                     </th>
                     <th>
                         <button type="submit" class="btn btn-danger"
@@ -74,7 +79,7 @@
                         <div class="col">
                             <div class="form-floating">
                                 <input placeholder="Instrumento" type="text" class="form-control" id="instrumento"
-                                    name="instrumento" [(ngModel)]="partitura.instrumento">
+                                    name="instrumento" [(ngModel)]="partituraUpload.instrumento">
                                 <label for="instrumento">Instrumento</label>
                             </div>
                         </div>
@@ -116,7 +121,7 @@
                         <div class="col">
                             <div class="form-floating">
                                 <input placeholder="Instrumento" type="text" class="form-control" id="instrumento"
-                                    name="instrumento" [(ngModel)]="partitura.instrumento">
+                                    name="instrumento" [(ngModel)]="partituraUpload.instrumento">
                                 <label for="instrumento">Instrumento</label>
                             </div>
                         </div>

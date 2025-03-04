@@ -46,7 +46,7 @@ export class PartituraService {
         tap(
           //data => console.info('HttpResponse', data)
         ),
-        //Extrae el cuerpo del HttpResponse y lo retorna como Observable<Obra>
+        //Extrae el cuerpo del HttpResponse y lo retorna como Observable<Partitura>
         map(response => response.body!),
         //Captura errores y permite transformarlo en otro Observable, reintentar la petición, mostrar un error personalizado o emitir un valor por defecto
         catchError(error => {
