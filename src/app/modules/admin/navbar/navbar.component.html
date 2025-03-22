@@ -9,22 +9,13 @@
       <div class="collapse navbar-collapse" id="menucollapsenavbar">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" aria-current="page" [routerLink]="['/admin']">Inicio</a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
             <a class="nav-link active" aria-current="page" [routerLink]="['/admin/rol']">Roles</a>
           </li>
           <li class="nav-item" routerLinkActive="active">
             <a class="nav-link active" aria-current="page" [routerLink]="['/admin/user']">Usuarios</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin/obra">Obras</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/partitura">Partituras</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin">Link</a>
+            <a class="nav-link" [routerLink]="['/admin/obra']">Obras</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,19 +30,25 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Log In</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/sigin">Sig In</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/admin/shopcart">ShopCart</a>
-          </li>
         </ul>
+        <a type="button" class="btn btn-warning position-relative" [routerLink]="['/admin/shopcart']">
+          ShopCart
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{count}}
+            <span class="visually-hidden">unread messages</span>
+          </span>
+        </a>
+
+        <a type="button" class="btn btn-primary position-relative" routerLink="/login">
+          Login
+        </a>
+        <a type="button" class="btn btn-success position-relative" routerLink="/sigin">
+          Sigin
+        </a>
+        <a type="button" class="btn btn-danger position-relative" routerLink="/logout">
+          Logout
+        </a>
+
       </div>
     </div>
   </nav>

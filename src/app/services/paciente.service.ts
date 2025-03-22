@@ -40,7 +40,7 @@ export class PacienteService {
                     next: data => {
                         console.log(`next pipe tap getPacientesByString PacienteService`)
                     }, // No es necesario hacer nada con la respuesta en el tap
-                    error: err => { console.error('Error pipe tap getPacientesByString PacienteService:', err) }, // Manejo de errores
+                    error: err => { console.error('Error pipe tap getPacientesByString PacienteService:', err.error) }, // Manejo de errores
                     complete: () => { console.log(`Complete pipe.tap getPacientesByString PacienteService`) }
                 }
                 ),
@@ -50,7 +50,7 @@ export class PacienteService {
                     console.log(`Finalize() pipe getPacientesByString PacienteService : Tiempo de respuesta: ${elapsedTime} ms`);
                 }),
                 catchError(error => {
-                    console.error('Error capturado:', error);
+                    console.error('Error capturado:', error.error);
                     return of(new HttpResponse<Page<Paciente>>({ status: error.status })); // Devuelve un HttpResponse con el código de error
                 })
 

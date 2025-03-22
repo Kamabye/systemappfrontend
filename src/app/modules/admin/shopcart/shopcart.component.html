@@ -38,29 +38,17 @@
             <th></th>
             <th>
               <div class="row">
-                
+
               </div>
             </th>
             <th>
               <div class="row">
-                
+
               </div>
             </th>
             <th>
-              <div class="row">
-                <button type="submit" class="btn btn-success"
-                  [routerLink]="['/admin/obra/view',0]">Ver</button>
-              </div>
-              <div class="row">
-                <button type="submit" class="btn btn-primary"
-                  [routerLink]="['/admin/obra/form',0]">Editar</button>
-              </div>
               <div class="row">
                 <button type="submit" class="btn btn-danger" (click)='eliminarCartItem(cartitem)'>Eliminar</button>
-              </div>
-              <div class="row">
-                <button type="submit" class="btn btn-dark"
-                  [routerLink]="['/admin/partitura/upload',0]">EditarPartituras</button>
               </div>
             </th>
           </tr>
@@ -74,5 +62,5 @@
 
 <div class="row">
   <h1>Obras</h1>
-  <button type="submit" class="btn btn-danger" (click)='pagarV2()'>Pagar</button>
+  <button type="submit" class="btn btn-danger" (click)='pagarShopCart()'>Pagar {{totalShopCart}}</button>
 </div>

@@ -211,13 +211,9 @@ export class ObrasComponent implements OnInit {
 
     this.purchaseUnits.amount = this.amount;
 
-    this.purchaseUnits.amount.breakdown.item_total.value = obra.precio.toString();
-
     this.item.name = obra.nombre;
 
     this.item.unit_amount.value = obra.precio.toString();
-
-    this.purchaseUnits.items.push(this.item);
 
     this.orderRequestPayPalV2.purchase_units.push(this.purchaseUnits);
 

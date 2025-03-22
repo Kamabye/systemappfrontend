@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 
 import { DomSanitizer } from '@angular/platform-browser';
@@ -29,14 +29,16 @@ export class ShopCartComponent implements OnInit {
     productoDTOPalPay1: ProductoDTOPalPay = new ProductoDTOPalPay();
     productoDTOPalPay2: ProductoDTOPalPay = new ProductoDTOPalPay();
 
-    purchaseUnits: PurchaseUnitPayPalV2 = new PurchaseUnitPayPalV2();
+    purchaseUnit: PurchaseUnitPayPalV2 = new PurchaseUnitPayPalV2();
     amount: AmountPayPalV2 = new AmountPayPalV2();
     orderRequestPayPalV2: OrderRequestPayPalV2 = new OrderRequestPayPalV2();
 
 
     page: Page<CartItem> | undefined;
     public shopCart: CartItem[] = [];
-    constructor(private payPalService: PayPalService, private shopCartService: ShopCartService, private router: Router, private activateRoute: ActivatedRoute) { }
+    totalShopCart: number = 0;
+
+    constructor(private payPalService: PayPalService, private shopCartService: ShopCartService, private router: Router, private activateRoute: ActivatedRoute, private cdr: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         console.info("ShopCartComponent ngOnInit");
@@ -44,11 +46,20 @@ export class ShopCartComponent implements OnInit {
         this.cargarShopCart();
 
     }
+
+    getTotalShopCart(): number {
+
+        return this.shopCart.reduce((total, item) => total + (item.total * 1), 0);
+
+    }
+
     cargarShopCart() {
         this.shopCartService.getUserShopCart(0, 100, "").subscribe({
             next: data => {
                 this.page = data.body!;
                 this.shopCart = this.page.content!;
+                this.totalShopCart = this.getTotalShopCart();
+                this.cdr.detectChanges();
             },
             error: err => {
                 Swal.fire({
@@ -128,13 +139,49 @@ export class ShopCartComponent implements OnInit {
 
         this.amount.value = "230.00";
 
-        this.purchaseUnits.amount = this.amount;
+        this.purchaseUnit.amount = this.amount;
 
-        this.purchaseUnits.amount.breakdown.item_total.value = "230.00";
-
-        this.orderRequestPayPalV2.purchase_units.push(this.purchaseUnits);
+        this.orderRequestPayPalV2.purchase_units.push(this.purchaseUnit);
 
         console.info(this.orderRequestPayPalV2);
+
+        this.payPalService.createOrderRequest(this.orderRequestPayPalV2).subscribe(
+            {
+                next: data => {
+                    console.info("Se ha creado la orden paypal");
+                    console.info(data.body);
+                    if (data) {
+                        const payeraction = data.body!.links.find(link => link.rel === 'payer-action');
+                        if (payeraction) {
+                            window.location.href = payeraction.href;
+                        } else {
+                            console.error("No se encontró el link de aprobación");
+                        }
+                    }
+                    else {
+                        console.error("Respuesta nulla");
+                    }
+
+
+                }
+                ,
+                error: err => {
+                    this.router.navigate(['/admin/shopcart'])
+                    Swal.fire('Mensaje', `${err.error.error}`, 'warning')
+                    console.error("Error al crear la orden: ", err);
+                }
+            }
+        );
+        this.orderRequestPayPalV2 = new OrderRequestPayPalV2();
+    }
+
+    pagarShopCart() {
+
+        console.info("ShopCartComponent pagarShopCart");
+
+        this.purchaseUnit.amount.value = "" + this.totalShopCart;
+
+        this.orderRequestPayPalV2.purchase_units.push(this.purchaseUnit);
 
         this.payPalService.createOrderRequest(this.orderRequestPayPalV2).subscribe(
             {

@@ -13,7 +13,6 @@ import { Page } from '../interfaces/page';
     providedIn: 'root'
 })
 export class ShopCartService {
-
     private urlEndPointShopCart: string = `${environment.apiBaseURL}/shopcart`;
 
     constructor(private http: HttpClient) { }
@@ -65,6 +64,26 @@ export class ShopCartService {
                     const endTime = performance.now(); // Registra el tiempo de finalización
                     const elapsedTime = endTime - startTime; // Calcula el tiempo transcurrido
                     console.log(`Finalize() pipe getShopCart ShopCartService : Tiempo de respuesta: ${elapsedTime} ms`);
+                })
+
+            );
+    }
+
+    countCartItem(): Observable<HttpResponse<number>> {
+        const startTime = performance.now(); // Registra el tiempo de inicio
+
+        //Cualquier petición HttpClient retorna el tipado en un Observable<HttpResponse<T>>
+        return this.http.get<number>(`${this.urlEndPointShopCart}/user/count`, { observe: 'response' })
+            //pipe encadena multiples operadores tap, map, filter, reduce, mergeMap
+            .pipe(
+                //tap realiza una acción secundaria sin alterar los datos
+                tap(
+                    //data => console.log(`HttpResponse: `, data)
+                ),
+                finalize(() => {
+                    const endTime = performance.now(); // Registra el tiempo de finalización
+                    const elapsedTime = endTime - startTime; // Calcula el tiempo transcurrido
+                    console.log(`Finalize() pipe getObras ObraService : Tiempo de respuesta: ${elapsedTime} ms`);
                 })
 
             );
