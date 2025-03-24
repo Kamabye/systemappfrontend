@@ -23,9 +23,9 @@
     <div class="progress-bar" [style.width.%]="progreso"></div>
 </div>
 
-<div class="row" *ngIf="obra.partituras">
-    <div class="table-responsive">
-        <table class="table align-middle table-hover" *ngIf="obra.partituras.length > 0">
+<div class="row" *ngIf="obra?.partituras">
+    <div class="table-responsive" *ngIf="obra?.partituras!.length > 0">
+        <table class="table align-middle table-hover">
             <thead>
                 <tr>
                     <th scope="col">ID</th>

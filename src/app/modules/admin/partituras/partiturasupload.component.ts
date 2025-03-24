@@ -58,6 +58,9 @@ export class PartiturasuploadComponent implements OnInit {
                     //console.info(this.obra);
                     this.cdr.detectChanges();
                   }
+                  else {
+                    this.obra.partituras = [];
+                  }
 
                 },
                 error: err => {
@@ -184,30 +187,33 @@ export class PartiturasuploadComponent implements OnInit {
             switch (event.type) {
               case HttpEventType.Sent:
                 this.cargando = true;
-                //console.log('Petición enviada!');
+                console.log('Case Sent');
                 break;
               case HttpEventType.UploadProgress:
-                if (event.total) {
-                  this.progreso = Math.round((event.loaded / event.total) * 100);
-                  console.log(`Progreso: ${this.progreso}%`);
-                  this.cdr.detectChanges();
-                }
+                this.progreso = Math.round((100 * event.loaded) / (event.total || 1));
+                this.cdr.detectChanges();
+                console.log(`UploadProgress: ${this.progreso}%`);
+                //if (event.total) {
+                //this.progreso = Math.round((event.loaded / event.total) * 100);
+                //}
                 break;
               case HttpEventType.ResponseHeader:
-                console.log('Cabeceras recibidas', event.headers);
+                console.log('Case ResponseHeader', event.headers);
                 break;
               case HttpEventType.Response:
-                //console.log('Respuesta completa', event.body);
-                this.obra.partituras.push(data);
+                this.obra.partituras.push(event.body);
                 Swal.fire({
                   title: "¡Genial!",
-                  text: `¡Partitura: "${data.instrumento}" creada con éxito!`,
+                  text: `¡Partitura: ${data.instrumento} creada con éxito!`,
                   icon: "success"
                 });
+                console.log('Case Response', event.body);
+                this.cdr.detectChanges();
+
                 break;
               default:
-                console.log('Otro evento', event);
-                this.cdr.detectChanges();
+                console.log('Default', event);
+                break;
             }
           },
           error: err => {
